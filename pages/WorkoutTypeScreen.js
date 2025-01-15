@@ -5,8 +5,7 @@ import { useDispatch } from "react-redux";
 import { resetWorkoutCreation } from "../reducers/workoutCreation";
 
 export default function WorkoutTypeScreen({ navigation }) {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -40,14 +39,14 @@ export default function WorkoutTypeScreen({ navigation }) {
           activeOpacity={0.7}
           style={styles.btn}
           onPress={() => {
-            dispatch(resetWorkoutCreation())
-            navigation.navigate("muscleGroup")
+            dispatch(resetWorkoutCreation());
+            navigation.navigate("muscleGroup");
           }}
         >
           <LinearGradient
-            colors={["#3BC95F", "#1f532c"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+            colors={["#445B9F", "#3BC95F"]}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 1 }}
             style={styles.gradiant}
           >
             <Image
@@ -68,9 +67,9 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={() => navigation.navigate("WorkoutDifficulty")}
         >
           <LinearGradient
-            colors={["#3BC95F", "#1f532c"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+            colors={["#445B9F", "#3BC95F"]}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 1 }}
             style={styles.gradiant}
           >
             <Image

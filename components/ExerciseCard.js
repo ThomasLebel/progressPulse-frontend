@@ -5,6 +5,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import images from "../utils/images";
+import { Image } from "expo-image";
 
 const ExerciseCard = ({
   exerciseName,
@@ -20,6 +22,8 @@ const ExerciseCard = ({
   handleDelete,
   startExercise,
   accessibilityLabel,
+  image,
+  exerciseAddedImg
 }) => {
   const dispatch = useDispatch();
 
@@ -28,6 +32,11 @@ const ExerciseCard = ({
   const currentExercise = currentWorkout.performances.find(
     (e) => e.exercise === exerciseID
   );
+
+  const imagePath = images[muscleGroup.toLowerCase()][
+    image
+  ];
+
 
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -69,9 +78,12 @@ const ExerciseCard = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint="Vous serez redirigé vers une nouvelle page pour avoir plus détails sur l'exercice"
     >
-      <View style={{ marginTop: 20, marginBottom: 10 }}>
+      <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 40 }}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{exerciseName}</Text>
+        </View>
+        <View style={styles.imgContainer}>
+        <Image style={styles.img} source={image ? imagePath : exerciseAddedImg}></Image>
         </View>
         <LinearGradient
           colors={["#1C1C45", "#4645AB"]}
@@ -172,20 +184,21 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 16,
+    fontWeight: "400",
   },
   cardContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
+    paddingLeft: "42"
   },
   textContainer: {
     justifyContent: "space-around",
   },
   text: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
   },
   span: {
     fontWeight: "bold",
@@ -198,4 +211,20 @@ const styles = StyleSheet.create({
     bottom: -10,
     right: -5,
   },
+  imgContainer:{
+    width: 80,
+    height: 80,
+    backgroundColor: 'white',
+    position: "absolute",
+    zIndex: 9999,
+    top: 30,
+    left: -40,
+    borderRadius: "20%",
+    overflow: "hidden"
+  },
+  img: {
+    width:"100%",
+    height: "100%"
+
+  }
 });

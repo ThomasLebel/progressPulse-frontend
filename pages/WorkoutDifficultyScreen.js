@@ -37,9 +37,9 @@ export default function WorkoutDifficultyScreen({ navigation }) {
         onPress={() => handleNavigateToWorkout(data.name)}
       >
         <LinearGradient
-          colors={["#3BC95F", "#1f532c"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
+          colors={["#445B9F", "#3BC95F"]}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 1 }}
           style={styles.gradiant}
         >
           <Image source={data.source} style={styles.image} />

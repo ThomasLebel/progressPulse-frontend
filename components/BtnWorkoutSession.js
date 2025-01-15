@@ -26,8 +26,8 @@ export default function WorkoutSessionButton({
       }}
     >
       <LinearGradient
-        colors={["#3BC95F", "#445B9F"]}
-        start={{ x: 0, y: 0 }}
+        colors={["#445B9F", "#3BC95F"]}
+        start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={styles.gradiant}
       >
@@ -82,16 +82,20 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: 350,
     maxWidth: 500,
-    height: 130,
+    height: 110,
     flexDirection: "row",
     alignItems: "center",
   },
   imageContainer: {
     marginLeft: 10,
-  },
-  image: {
     width: 90,
     height: 90,
+    justifyContent: "center",
+    alignItems:"center"
+  },
+  image: {
+    width: 60,
+    height: 60,
     resizeMode: "cover",
     borderRadius: 15,
   },

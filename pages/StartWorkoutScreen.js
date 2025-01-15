@@ -295,6 +295,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             isEditable={isEditable}
             startExercise={startExercise}
             accessibilityLabel={`Commencer l'exercice ${exercise.exercise.name}`}
+            image={exercise.exercise.image}
           />
         );
       }
@@ -623,7 +624,7 @@ const styles = StyleSheet.create({
     fontWeight: 600,
   },
   mainContainer: {
-    flex: 7,
+    flex: 10,
     justifyContent: "center",
     alignItems: "center",
   },

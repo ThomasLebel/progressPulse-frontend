@@ -133,6 +133,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
     );
     const newExercisesToAdd = groupedWorkoutExercises[muscleGroup].map(
       (exercise, i) => {
+        console.log(exercise.imagePath)
         let minutes;
         let seconds;
         if (muscleGroup != "Cardio") {
@@ -156,6 +157,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             openModalCustomSets={openModalCustomSets}
             handleDelete={handleDelete}
             accessibilityLabel={`Donnée de l'exercice ${exercise.exerciseName}`}
+            exerciseAddedImg={exercise.imagePath}
           />
         );
       }

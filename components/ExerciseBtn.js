@@ -45,7 +45,7 @@ const ExerciseBtn = ({
 
   const handlePress = () => {
     if (!isAdded) {
-      openModal(textButton, exerciseID);
+      openModal(textButton, exerciseID, image);
     } else {
       dispatch(removeExercise(exerciseID));
     }
@@ -60,10 +60,10 @@ const ExerciseBtn = ({
       style={styles.container}
     >
       <LinearGradient
-        colors={["#3BC95F", "#1f532c"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.gradiant}
+            colors={["#445B9F", "#3BC95F"]}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.gradiant}
       >
         <Image source={image} style={styles.picture} />
         <Text

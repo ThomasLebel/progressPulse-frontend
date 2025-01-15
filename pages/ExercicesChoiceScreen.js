@@ -29,6 +29,7 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [exerciseID, setExerciseID] = useState("");
   const [exerciseName, setExerciseName] = useState("");
+  const [imagePath, setimagePath] = useState("")
   const [charge, setCharge] = useState("");
   const [nbSets, setNbSets] = useState("");
   const [nbReps, setNbReps] = useState("");
@@ -59,10 +60,11 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
     navigation.navigate("muscleGroup", { workoutID, isWorkoutAlreadyCreated });
   };
 
-  const openModal = (textButton, exerciseID) => {
+  const openModal = (textButton, exerciseID, image) => {
     setModalVisible(!modalVisible);
     setExerciseName(textButton);
     setExerciseID(exerciseID);
+    setimagePath(image)
   };
 
   const closeModal = () => {
@@ -94,6 +96,7 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
           muscleGroup: name,
           rest: restConverted,
           customSets: customSets,
+          imagePath: imagePath
         };
         dispatch(addExercise(exerciseToAdd));
         closeModal();

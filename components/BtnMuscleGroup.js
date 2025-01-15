@@ -12,10 +12,10 @@ const BtnMuscleGroup = ({ name, source, onPress, accessibilityLabel, accessibili
       onPress={() => onPress(name)}
     >
       <LinearGradient
-        colors={["#3BC95F", "#1f532c"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.gradiant}
+            colors={["#445B9F", "#3BC95F"]}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.gradiant}
       >
         <Text style={styles.btnText}>{name}</Text>
         <Image source={source} style={styles.image} />
