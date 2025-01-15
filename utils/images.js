@@ -78,6 +78,7 @@ const images = {
     butterfly: require("../assets/pectoraux/butterfly.gif"),
     developpecouchehalteres: require("../assets/pectoraux/developpecouchehalteres.gif"),
     developpeincline: require("../assets/pectoraux/developpeincline.gif"),
+    developpeInclineSmithMachine : require("../assets/pectoraux/developpeInclineSmithMachine.gif"),
     ecartepoulie: require("../assets/pectoraux/ecartepoulie.gif"),
     developpeCouche: require("../assets/pectoraux/developpecouche.gif"),
     ecarteCoucheHaltere: require("../assets/pectoraux/ecarteCoucheHaltere.gif"),
