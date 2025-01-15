@@ -10,8 +10,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Button from "../components/Button";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/user";
 import { addAllUserWorkouts } from "../reducers/workouts";
 import { addAllWorkoutsHistory } from "../reducers/workoutsHistory";
@@ -19,12 +19,21 @@ import { addAllWorkoutsHistory } from "../reducers/workoutsHistory";
 export default function SigninScreen({ navigation }) {
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state.user.value)
+  console.log(user)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [wrongEmail, setWrongEmail] = useState(false);
   const [emptyFields, setEmptyFields] = useState(false);
   const [signupError, setSignupError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user.token){
+      navigation.navigate("TabNavigator", { screen: "Home" })
+    }
+  }, [])
 
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
