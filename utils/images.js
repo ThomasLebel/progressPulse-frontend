@@ -41,7 +41,7 @@ const images = {
     rowingHaltere: require("../assets/dos/rowingHaltere.gif"),
     tirageVerticalMachine: require("../assets/dos/tirageVerticalMachine.gif"),
     rowingMachine: require("../assets/dos/rowingMachine.gif"),
-    tirageVerticalMachine: require("../assets/dos/tirageVerticalMachine.gif"),
+    tirageVerticalPriseSeree: require("../assets/dos/tirageVerticalPriseSeree.gif"),
     pullOverPoulie: require("../assets/dos/pullOverPoulie.gif"),
     tirageVerticalPriseInversee: require("../assets/dos/tirageVerticalPriseInversee.gif"),
   },
