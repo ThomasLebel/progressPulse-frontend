@@ -91,6 +91,7 @@ const images = {
     developpeMachineAssisPectoraux: require("../assets/pectoraux/developpeMachineAssisPectoraux.gif"),
     ecartesInclineAvecHalteres: require("../assets/pectoraux/ecartesInclineAvecHalteres.gif"),
     developpeInclineHalteres: require("../assets/pectoraux/developpeInclineHalteres.gif"),
+    visAVisPoulieBasse: require("../assets/pectoraux/visAVisPoulieBasse.gif"),
     ecartesPoulieVisAVis: require("../assets/pectoraux/ecartesPoulieVisAVis.gif"),
     ecarteUnilateralALlaPoulie: require("../assets/pectoraux/ecarteUnilateralALlaPoulie.gif"),
   },
