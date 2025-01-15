@@ -23,6 +23,8 @@ const images = {
     curlMachine: require("../assets/biceps/curlMachine.gif"),
     curlInclineRotation: require("../assets/biceps/curlInclineRotation.gif"),
     curlPoulieVisAVis: require("../assets/biceps/curlPoulieVisAVis.gif"),
+    dragCurl: require("../assets/biceps/dragCurl.gif"),
+    curlInversePoulie: require("../assets/biceps/curlInversePoulie.gif"),
   },
   cardio: {
     rameur: require("../assets/cardio/rameur.gif"),
@@ -44,6 +46,7 @@ const images = {
     tirageVerticalPriseSeree: require("../assets/dos/tirageVerticalPriseSeree.gif"),
     pullOverPoulie: require("../assets/dos/pullOverPoulie.gif"),
     tirageVerticalPriseInversee: require("../assets/dos/tirageVerticalPriseInversee.gif"),
+    reverseButterfly : require("../assets/dos/reverseButterfly.gif")
   },
   épaules: {
     developpemilitaire: require("../assets/epaules/developpemilitaire.gif"),
@@ -55,6 +58,7 @@ const images = {
     elevationLateralesHalteres: require("../assets/epaules/elevationLateralesHalteres.gif"),
     oiseauBanc: require("../assets/epaules/oiseauBanc.gif"),
     elevationLateralesPoulie: require("../assets/epaules/elevationLateralesPoulie.gif"),
+    developpeEpaulesMachine: require("../assets/epaules/developpeEpaulesMachine.gif"),
   },
   fessiers: {
     fentes: require("../assets/fessiers/fentes.gif"),
