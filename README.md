@@ -107,7 +107,7 @@
 * **react-native-wheel-time-picker :** Modale sélection durée du timer
 
 ## 👨‍💻 Auteurs
-Pierre Gleize\
+[Pierre Gleize](https://github.com/pierreGleize)\
 [Alexandre Lassaigne](https://github.com/AlexandreLass)\
 [Thomas Lebel](https://github.com/ThomasLebel)\
 
