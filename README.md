@@ -3,7 +3,7 @@
 
 **Progress Pulse** est une application mobile qui permet de créer ses séances de musculation et de suivre sa progression. C'est un projet de fin de formation **fait en équipe de 3 sur une durée de 2 semaine.**
 
- L'application inclut des fonctionnalités avancées comme : l'**authentification**, la **création de séance avec objectifs**, le **suivi de séance**, le **temps de repos intégré**, l'**historique des performances** et le **suivi de poids**'
+ L'application inclut des fonctionnalités avancées comme : l'**authentification**, la **création de séance avec objectifs**, le **suivi de séance**, le **temps de repos intégré**, l'**historique des performances** et le **suivi de poids.**
 
 ## 🚀 Démo en ligne
 🔗 Application déployée : [expo.dev/preview](https://expo.dev/preview/update?message=Stable%20Version&updateRuntimeVersion=1.0.0&createdAt=2025-03-20T15%3A18%3A36.741Z&slug=exp&projectId=073b9ab9-b0d3-452b-8356-4ca49a271182&group=30af1b4d-2424-4643-8852-07171c3f5399) (Téléchargez l'application Expo Go sur votre téléphone et scannez le code QR)\
@@ -26,8 +26,9 @@
 
 | Frontend  | Backend | Base de données | Autres services |
 | -------- |-------| ---------------| ---------------|
-|React Native|Node.js|MongoDB (Utilisateurs & annonces)| Nodemailer (Envoi d'email)|
-|Expo|Express.js|| Expo (Déploiement)|
+|React Native|Node.js|MongoDB / Mongoose | Nodemailer (Envoi d'email)|
+|Expo|Express.js|| Expo (Déploiement frontend)|
+||||Vercel (Déploiement Backend)|
 
 
 ## 🖥️ Fonctionnalités principales
@@ -105,10 +106,11 @@
 * **react-native-progress :** Animation progression objectif de poids
 * **react-native-wheel-time-picker :** Modale sélection durée du timer
 
-## 👨‍💻 Auteur
+## 👨‍💻 Auteurs
 Pierre Gleize\
 [Alexandre Lassaigne](https://github.com/AlexandreLass)\
 [Thomas Lebel](https://github.com/ThomasLebel)\
+
 🔗 [Linkedin](https://www.linkedin.com/in/thomas-lebel-6047ba129/)\
 📫Contact : thomas.lebel38@gmail.com
 
