@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, ScrollView,ActivityIndicator, } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../components/Underline";
 import { useEffect, useState } from "react";
@@ -9,6 +15,7 @@ import {
   resetWorkoutCreation,
 } from "../reducers/workoutCreation";
 import imagesWorkout from "../utils/imagesWorkout";
+import images from "../utils/images";
 
 export default function WorkoutChoiceScreen({ navigation, route }) {
   const { name } = route.params;
@@ -17,7 +24,6 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
 
   const handleNavigateToSummary = (data) => {
     dispatch(resetWorkoutCreation());
-
     let exercisesToAdd = [];
     for (let exercise of data) {
       let customSets = [];
@@ -28,12 +34,14 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
           reps: set.rep,
         });
       }
+      const imagePath = images[exercise.exercice.muscleGroupe.toLowerCase()][exercise.exercice.image];
       exercisesToAdd.push({
         exercise: exercise.exercice._id,
         exerciseName: exercise.exercice.name,
         muscleGroup: exercise.exercice.muscleGroupe,
         rest: exercise.rest,
         customSets: customSets,
+        imagePath: imagePath,
       });
     }
     dispatch(addAllExercise(exercisesToAdd));
@@ -46,12 +54,12 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
   const [addWorkout, setAddWorkout] = useState([]);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/workouts/byDifficulty/${name}`)
       .then((response) => response.json())
       .then((data) => {
         setAddWorkout(data.data);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }, []);
 
@@ -68,10 +76,9 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
         //Pour chaque exercice : (nombre de série * temps de repos + nombre de série * 45s) / 60 pour l'avoir en minutes
         //Pour le temps complet : ((nombre de série * temps de repos + nombre de série * 45s) / 60) * nombre d'exercices dans le workout
         times +=
-          ((data.exercices[i].sets.length * data.exercices[i].rest +
+          (data.exercices[i].sets.length * data.exercices[i].rest +
             data.exercices[i].sets.length * 30) /
-            60)
-        
+          60;
       }
       return Math.round(times);
     };
@@ -120,10 +127,10 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
         </ScrollView>
       </View>
       {isLoading && (
-              <View style={styles.backgroundLoading}>
-                <ActivityIndicator size="large" color="#A3FD01" animating={true} />
-              </View>
-            )}
+        <View style={styles.backgroundLoading}>
+          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+        </View>
+      )}
     </View>
   );
 }

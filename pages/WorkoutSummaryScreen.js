@@ -133,7 +133,6 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
     );
     const newExercisesToAdd = groupedWorkoutExercises[muscleGroup].map(
       (exercise, i) => {
-        console.log(exercise.imagePath)
         let minutes;
         let seconds;
         if (muscleGroup != "Cardio") {

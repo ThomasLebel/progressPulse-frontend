@@ -43,6 +43,7 @@ export const workoutCreationSlice = createSlice({
           muscleGroup: exercice.muscleGroup,
           rest: exercice.rest,
           customSets: exercice.customSets,
+          imagePath : exercice.imagePath
         };
         state.value.exercises.push(exerciseToAdd);
       }
