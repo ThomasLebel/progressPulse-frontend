@@ -16,6 +16,8 @@
 * [Android - Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=fr&gl=US)
 
 📸 Une fois Expo Go installé, scannez ce QR code avec votre appareil photo, vous serez redirigé vers Expo Go et l'application se lancera automatiquement :
+
+
 ![QR code progress pulse](https://github.com/user-attachments/assets/eb01de40-3c8e-43e9-82fa-b209862ac629)
 
 
