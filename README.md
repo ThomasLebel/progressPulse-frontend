@@ -6,7 +6,7 @@
  L'application inclut des fonctionnalités avancées comme : l'**authentification**, la **création de séance avec objectifs**, le **suivi de séance**, le **temps de repos intégré**, l'**historique des performances** et le **suivi de poids.**
 
 ## 🚀 Démo en ligne
-🔗 Application déployée : [expo.dev/preview](https://expo.dev/preview/update?message=Stable%20Version&updateRuntimeVersion=1.0.0&createdAt=2025-03-20T15%3A18%3A36.741Z&slug=exp&projectId=073b9ab9-b0d3-452b-8356-4ca49a271182&group=30af1b4d-2424-4643-8852-07171c3f5399) (Téléchargez l'application Expo Go sur votre téléphone et scannez le code QR)\
+🔗 Application déployée : [expo.dev/preview](https://expo.dev/preview/update?message=Maj%20expo%20sdk&updateRuntimeVersion=1.0.0&createdAt=2025-05-08T08%3A30%3A30.679Z&slug=exp&projectId=073b9ab9-b0d3-452b-8356-4ca49a271182&group=b0d9a43e-c018-4fd1-af32-b4745f25acb1) (Téléchargez l'application Expo Go sur votre téléphone et scannez le code QR)\
 📹 Vidéo démo : [voir la vidéo démo](https://www.youtube.com/watch?v=Osh-E0SRI3U)\
 🛠️ Repo Backend : [Accéder au repo backend](https://github.com/ThomasLebel/ProgressPulse-Backend)
 
@@ -18,8 +18,7 @@
 📸 Une fois Expo Go installé, scannez ce QR code avec votre appareil photo, vous serez redirigé vers Expo Go et l'application se lancera automatiquement :
 
 
-![QR code progress pulse](https://github.com/user-attachments/assets/eb01de40-3c8e-43e9-82fa-b209862ac629)
-
+![qr code progresspulse](https://github.com/user-attachments/assets/5ef4a3a1-e588-4fc4-8786-9327ed6010b6)
 
 
 ## 🧱 Stack technique
