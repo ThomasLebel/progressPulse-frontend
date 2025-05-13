@@ -7,7 +7,7 @@
 
 ## 🚀 Démo en ligne
 🔗 Application déployée : [expo.dev/preview](https://expo.dev/preview/update?message=Maj%20expo%20sdk&updateRuntimeVersion=1.0.0&createdAt=2025-05-08T08%3A30%3A30.679Z&slug=exp&projectId=073b9ab9-b0d3-452b-8356-4ca49a271182&group=b0d9a43e-c018-4fd1-af32-b4745f25acb1) (Téléchargez l'application Expo Go sur votre téléphone et scannez le code QR)\
-📹 Vidéo démo : [voir la vidéo démo](https://www.youtube.com/watch?v=Osh-E0SRI3U)\
+📹 Vidéo démo : [voir la vidéo démo](https://www.youtube.com/watch?v=sle92Jb4YHo)\
 🛠️ Repo Backend : [Accéder au repo backend](https://github.com/ThomasLebel/ProgressPulse-Backend)
 
 ## 📱 Installation & Test
