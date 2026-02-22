@@ -1,27 +1,28 @@
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Modal,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  Text,
-  ActivityIndicator,
-} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../components/Button";
-import ExerciseCard from "../components/ExerciseCard";
-import { useSelector, useDispatch } from "react-redux";
+import { BlurView } from "expo-blur";
 import { useState } from "react";
 import {
-  updateCustomSets,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "../components/Button";
+import ExerciseCard from "../components/ExerciseCard";
+import Underline from "../components/Underline";
+import {
   addWorkoutName,
-  resetWorkoutCreation,
   removeExercise,
+  resetWorkoutCreation,
+  updateCustomSets,
 } from "../reducers/workoutCreation";
 import { addWorkout } from "../reducers/workouts";
-import Underline from "../components/Underline";
 import imagesWorkout from "../utils/imagesWorkout";
 
 export default function WorkoutSummaryScreen({ navigation, route }) {
@@ -68,7 +69,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
     nbSets,
     restMinutes,
     restSeconds,
-    muscleGroup
+    muscleGroup,
   ) => {
     setExerciseName(exerciseName);
     setExerciseID(exerciseID);
@@ -119,7 +120,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       groups[muscleGroup].push(exercise);
       return groups;
     },
-    {}
+    {},
   );
 
   let exercisesToShow = [];
@@ -129,7 +130,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       <View style={styles.groupTitleSection} key={muscleGroup}>
         <Text style={styles.groupTitle}>{muscleGroup}</Text>
         <Underline width={40} />
-      </View>
+      </View>,
     );
     const newExercisesToAdd = groupedWorkoutExercises[muscleGroup].map(
       (exercise, i) => {
@@ -159,7 +160,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             exerciseAddedImg={exercise.imagePath}
           />
         );
-      }
+      },
     );
     exercisesToShow.push(newExercisesToAdd);
   }
@@ -184,8 +185,8 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         exercices: exercices,
         image: imagesWorkout[randomImage].name,
       };
-      setModalTitleVisible(false)
-      setIsLoading(true)
+      setModalTitleVisible(false);
+      setIsLoading(true);
       fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/usersWorkouts/addWorkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -205,11 +206,11 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             setModalTitleVisible(false);
             dispatch(resetWorkoutCreation());
             navigation.navigate("Home");
-            setIsLoading(false)
+            setIsLoading(false);
           } else {
-            setModalTitleVisible(true)
+            setModalTitleVisible(true);
             setPostError(true);
-            setIsLoading(false)
+            setIsLoading(false);
           }
         });
     }
@@ -282,7 +283,9 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
               borderColor="#A3FD01"
               onPress={handleSubmit}
               accessibilityLabel={"Valider le nom donné à la séance"}
-              accessibilityHint={"Vous serez redirigé vers la d'accueil après la validation. Votre séance crée s'affichera sur cette page"}
+              accessibilityHint={
+                "Vous serez redirigé vers la d'accueil après la validation. Votre séance crée s'affichera sur cette page"
+              }
             />
           </View>
         </KeyboardAvoidingView>
@@ -403,8 +406,12 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
               borderWidth={1}
               borderColor="#A3FD01"
               onPress={updateExercise}
-              accessibilityLabel={"Valider les changements apportés à l'exercice"}
-              accessibilityHint={"Permet également de fermer la modale, on reste toujours sur la même page après cette action"}
+              accessibilityLabel={
+                "Valider les changements apportés à l'exercice"
+              }
+              accessibilityHint={
+                "Permet également de fermer la modale, on reste toujours sur la même page après cette action"
+              }
             ></Button>
           </View>
         </KeyboardAvoidingView>
@@ -421,10 +428,15 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         />
       </View>
       <View style={styles.mainContainer}>
-        <ScrollView>{exercisesToShow}</ScrollView>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 75 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {exercisesToShow}
+        </ScrollView>
       </View>
 
-      <View style={styles.bottomContainer}>
+      <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
         <Button
           background="#A3FD01"
           borderColor="none"
@@ -434,21 +446,27 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
           height={50}
           onPress={() => setModalTitleVisible(true)}
           isLinearGradiant={false}
-          accessibilityLabel={"Valider la et accepter si des changements ont été apporté sur la séance"}
-          accessibilityHint={"Redirection sur la page d'accueil, votre séance si affichera"}
+          accessibilityLabel={
+            "Valider la et accepter si des changements ont été apporté sur la séance"
+          }
+          accessibilityHint={
+            "Redirection sur la page d'accueil, votre séance si affichera"
+          }
         />
         <FontAwesome
           name={"plus-circle"}
           accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
           size={45}
-          color={"white"}
+          color={"#A3FD01"}
           style={{ marginRight: 15 }}
           onPress={() => navigation.navigate("muscleGroup")}
         />
-      </View>
-      {isLoading&& <View style={styles.backgroundLoading}>
-              <ActivityIndicator size="large" color="#A3FD01" animating={true}/>
-      </View>}
+      </BlurView>
+      {isLoading && (
+        <View style={styles.backgroundLoading}>
+          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+        </View>
+      )}
     </View>
   );
 }
@@ -467,14 +485,17 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   bottomContainer: {
-    flex: 0.4,
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    left: 0,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    width: "100%",
+    height: 125,
   },
   mainContainer: {
-    flex: 4,
+    flex: 5,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
   container: {
     width: "90vw",
     height: 140,
-
     borderRadius: 10,
     overflow: "hidden",
     padding: 15,
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     backgroundColor: "#272D34",
-    width: 280,
+    width: "85%",
     borderRadius: 10,
     alignItems: "center",
     position: "absolute",
@@ -203,6 +202,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     justifyContent: "space-between",
+    marginLeft: 20,
   },
   iconStartWorkout: {
     position: "absolute",
