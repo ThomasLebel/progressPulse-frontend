@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -7,56 +6,24 @@ import {
   Dimensions,
 } from "react-native";
 import { LineChart, BarChart } from "react-native-chart-kit";
-import Underline from "../components/Underline";
-import { useSelector } from "react-redux";
-import moment from "moment";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Underline from "../../components/Underline";
+import { useStatsScreen } from "./useStatsScreen";
+import { styles } from "./StatsScreen.styles";
+
+const DEFAULT_LABELS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin"];
 
 export default function StatsScreen({ navigation }) {
-  const user = useSelector((state) => state.user.value);
-  const history = useSelector((state) => state.workoutsHistory.value);
-
-  // Récupération des 8 dernières entrées de poids à partir de user.weight
-  const lastHeightWeight =
-    user.weight.length > 0 &&
-    [...user.weight]
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 8)
-      .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-  // Liste des poids
-  const weightsLineChart =
-    lastHeightWeight && lastHeightWeight.map((element) => element.weight);
-
-  // Liste des dates
-  const labelsLineChart =
-    lastHeightWeight &&
-    lastHeightWeight.map((element) => {
-      return moment(element.date).format("DD-MM");
-    });
-
-  const lastWorkoutDate = history.length !== 0 && history.at(-1).date;
-
-  const getWorkoutsByMonth = (data) => {
-    const months = {};
-    data.forEach((element) => {
-      console.log(element.date);
-      const month = moment(element.date).format("MMM YY");
-
-      if (months[month]) {
-        months[month] += 1;
-      } else {
-        months[month] = 1;
-      }
-    });
-    return months;
-  };
-  const lastHeightMonth = [...history]
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .slice(0, 8);
-  const trainingData = getWorkoutsByMonth(lastHeightMonth);
-  const labelsBarChart = Object.keys(trainingData);
-  const dataBarChart = Object.values(trainingData);
+  const {
+    history,
+    weightsLineChart,
+    labelsLineChart,
+    lastWorkoutRelativeTime,
+    labelsBarChart,
+    dataBarChart,
+    handleNavigateToWeight,
+    handleNavigateToHistory,
+  } = useStatsScreen(navigation);
 
   return (
     <ScrollView style={styles.container}>
@@ -85,9 +52,7 @@ export default function StatsScreen({ navigation }) {
               ) : (
                 <Text style={styles.text}>
                   Dernière séance faite :{" "}
-                  <Text style={styles.span}>
-                    {moment(lastWorkoutDate).fromNow(true)}
-                  </Text>
+                  <Text style={styles.span}>{lastWorkoutRelativeTime}</Text>
                 </Text>
               )}
             </View>
@@ -112,14 +77,11 @@ export default function StatsScreen({ navigation }) {
       <TouchableOpacity
         style={styles.chartContainer}
         activeOpacity={0.7}
-        onPress={() => navigation.navigate("weight")}
+        onPress={handleNavigateToWeight}
       >
         <LineChart
           data={{
-            labels:
-              labelsLineChart.length > 0
-                ? labelsLineChart
-                : ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin"],
+            labels: labelsLineChart.length > 0 ? labelsLineChart : DEFAULT_LABELS,
             datasets: [
               {
                 data: weightsLineChart.length > 0 ? weightsLineChart : [0],
@@ -176,14 +138,11 @@ export default function StatsScreen({ navigation }) {
       <TouchableOpacity
         style={styles.chartContainer}
         activeOpacity={0.7}
-        onPress={() => navigation.navigate("history")}
+        onPress={handleNavigateToHistory}
       >
         <BarChart
           data={{
-            labels:
-              labelsBarChart.length === 0
-                ? ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin"]
-                : labelsBarChart,
+            labels: labelsBarChart.length === 0 ? DEFAULT_LABELS : labelsBarChart,
             datasets: [
               {
                 data: dataBarChart,
@@ -219,93 +178,3 @@ export default function StatsScreen({ navigation }) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0D0D36",
-    paddingVertical: 60,
-    paddingHorizontal: 20,
-  },
-  titleContainer: {
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 40,
-    color: "white",
-    fontWeight: 600,
-  },
-  secondTtitleContainer: {
-    marginBottom: 10,
-  },
-  secondTitle: {
-    fontSize: 24,
-    color: "white",
-    fontWeight: 600,
-  },
-  settingWrapper: {
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  settingContainer: {
-    width: "100%",
-    maxWidth: 500,
-    height: 90,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputWrapper: {
-    width: "95%",
-    height: "70%",
-    borderRadius: 20,
-    justifyContent: "center",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 10,
-    height: 30,
-  },
-  span: {
-    fontWeight: 600,
-    fontSize: 16,
-    color: "white",
-  },
-  text: {
-    color: "white",
-    fontSize: 14,
-  },
-  buttonContainer: {
-    width: 220,
-    backgroundColor: "#A3FD01",
-    height: 40,
-    borderRadius: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  buttonText: {
-    color: "black",
-    fontSize: 18,
-    fontWeight: 600,
-  },
-  chartContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  infoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    marginRight: 10,
-  },
-  infoIcon: {
-    marginRight: 10,
-  },
-
-  textInfo: {
-    color: "white",
-  },
-});
