@@ -1,0 +1,64 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0D0D36",
+  },
+
+  topContainer: {
+    marginTop: 50,
+    marginLeft: 30,
+    marginBottom: 20,
+  },
+
+  title: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: 600,
+  },
+
+  note: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  text: {
+    color: "#FFFFFF",
+    fontSize: 18,
+  },
+
+  star: {
+    flexDirection: "row",
+    marginTop: 30,
+    marginLeft: 10,
+  },
+
+  input: {
+    width: "70%",
+    height: 400,
+    backgroundColor: "#ffffff",
+    borderRadius: 20,
+    padding: 20,
+    margin: 10,
+    textAlignVertical: "top",
+  },
+
+  bottomContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  backgroundLoading: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
