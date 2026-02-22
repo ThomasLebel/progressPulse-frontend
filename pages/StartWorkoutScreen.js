@@ -665,7 +665,6 @@ const styles = StyleSheet.create({
   groupTitleSection: {
     justifyContent: "flex-start",
     marginBottom: 10,
-    justifyContent: "flex-start",
   },
   groupTitle: {
     color: "white",
