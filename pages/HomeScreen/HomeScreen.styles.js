@@ -45,6 +45,7 @@ export const styles = StyleSheet.create({
   btn: {
     alignItems: "center",
     justifyContent: "space-between",
+    paddingVertical: 10,
   },
 
   text: {

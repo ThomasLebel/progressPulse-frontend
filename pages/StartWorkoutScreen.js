@@ -655,11 +655,12 @@ const styles = StyleSheet.create({
   bottomContainer: {
     position: "absolute",
     bottom: 0,
+    left: 0,
+    right: 0,
     paddingBottom: 10,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    width: "100vw",
   },
   groupTitleSection: {
     justifyContent: "flex-start",
