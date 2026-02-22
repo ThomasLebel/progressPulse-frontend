@@ -1,7 +1,5 @@
 /**
- * Returns unique workout names from history, ordered most-recent first.
- * @param {Array} history
- * @returns {string[]}
+ * Retourne les noms de séances uniques de l'historique, du plus récent au plus ancien.
  */
 export function getUniqueWorkoutNames(history) {
   const names = [];
