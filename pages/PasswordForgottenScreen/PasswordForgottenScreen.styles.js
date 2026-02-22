@@ -1,0 +1,73 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0D0D36",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: 40,
+  },
+  mainTitle: {
+    fontSize: 25,
+    textAlign: "center",
+    color: "white",
+    fontWeight: "600",
+    marginTop: 20,
+  },
+  subTitle: {
+    fontSize: 35,
+    textAlign: "center",
+    color: "#3BC95F",
+    fontWeight: "800",
+  },
+  input: {
+    width: "60%",
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: "white",
+    marginTop: 25,
+    paddingLeft: 10,
+    fontSize: 18,
+  },
+  imageContainer: {
+    height: 350,
+    width: "100%",
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: "#0D0D36",
+    alignItems: "center",
+  },
+  image: {
+    width: 400,
+    height: 350,
+  },
+  arrowContainer: {
+    width: "100%",
+  },
+  backgroundLoading: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modifyPassword: {
+    backgroundColor: "#0D0D36",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: 40,
+    width: "100%",
+  },
+  error: {
+    color: "#FF4500",
+    marginTop: 10,
+  },
+  done: {
+    color: "white",
+    fontSize: 20,
+  },
+});
