@@ -1,0 +1,90 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0D0D36",
+    paddingVertical: 50,
+    paddingHorizontal: 10,
+  },
+
+  title: {
+    marginTop: 20,
+    fontSize: 28,
+    color: "white",
+    fontWeight: 600,
+  },
+
+  infoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  infoIcon: {
+    marginRight: 10,
+  },
+
+  textInfo: {
+    color: "white",
+  },
+
+  text: {
+    fontSize: 50,
+    padding: 50,
+    textAlign: "center",
+    color: "white",
+  },
+
+  image: {
+    width: "45%",
+    height: "80%",
+    resizeMode: "cover",
+    borderRadius: 5,
+    marginLeft: 10,
+    marginTop: 10,
+  },
+
+  gradiant: {
+    height: 120,
+    width: "100%",
+    maxWidth: 500,
+    borderRadius: 20,
+    justifyContent: "flex-start",
+  },
+
+  btn: {
+    fontSize: 40,
+    borderRadius: 10,
+    backgroundColor: "#3BC95F",
+    margin: 20,
+    borderRadius: 20,
+  },
+
+  btnText: {
+    fontSize: 30,
+    fontWeight: 600,
+    top: 40,
+    right: 10,
+    position: "absolute",
+    color: "white",
+    textAlign: "right",
+  },
+
+  btnContainer: {
+    flex: 1,
+    gap: 20,
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  backgroundLoading: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
