@@ -1,16 +1,16 @@
 import {
-  Text,
-  View,
+  ActivityIndicator,
   Image,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import Button from "../../components/Button";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { usePasswordForgottenScreen } from "./usePasswordForgottenScreen";
+import Button from "../../components/Button";
 import { styles } from "./PasswordForgottenScreen.styles";
+import { usePasswordForgottenScreen } from "./usePasswordForgottenScreen";
 
 export default function PasswordForgottenScreen({ navigation }) {
   const {
@@ -162,9 +162,7 @@ export default function PasswordForgottenScreen({ navigation }) {
 
       {isDoneVisible && (
         <View style={styles.modifyPassword}>
-          <Text style={styles.done}>
-            Le mot de passe a bien été modifié 🎉
-          </Text>
+          <Text style={styles.done}>Le mot de passe a bien été modifié 🎉</Text>
           <Button
             textButton="Retourner à la connexion"
             textColor="black"

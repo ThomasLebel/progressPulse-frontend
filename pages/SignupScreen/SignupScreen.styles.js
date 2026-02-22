@@ -6,13 +6,14 @@ export const styles = StyleSheet.create({
     backgroundColor: "#0D0D36",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 50,
+    paddingTop: 75,
   },
   mainTitle: {
     fontSize: 25,
     textAlign: "center",
     color: "white",
     fontWeight: "600",
+    paddingTop: 20,
   },
   subTitle: {
     fontSize: 35,

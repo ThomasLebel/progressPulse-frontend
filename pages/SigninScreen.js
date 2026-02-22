@@ -1,17 +1,19 @@
+import { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+  ActivityIndicator,
   Image,
-  TextInput,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import Button from "../components/Button";
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Button from "../components/Button";
 import { login } from "../reducers/user";
 import { addAllUserWorkouts } from "../reducers/workouts";
 import { addAllWorkoutsHistory } from "../reducers/workoutsHistory";
@@ -19,8 +21,8 @@ import { addAllWorkoutsHistory } from "../reducers/workoutsHistory";
 export default function SigninScreen({ navigation }) {
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user.value)
-  console.log(user)
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,10 +32,10 @@ export default function SigninScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (user.token){
-      navigation.navigate("TabNavigator", { screen: "Home" })
+    if (user.token) {
+      navigation.navigate("TabNavigator", { screen: "Home" });
     }
-  }, [])
+  }, []);
 
   const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -68,7 +70,7 @@ export default function SigninScreen({ navigation }) {
               const userToken = data.userInfos.token;
               dispatch(login(data.userInfos));
               fetch(
-                `${process.env.EXPO_PUBLIC_SERVER_IP}/usersWorkouts/${data.userInfos.token}`
+                `${process.env.EXPO_PUBLIC_SERVER_IP}/usersWorkouts/${data.userInfos.token}`,
               )
                 .then((response) => response.json())
                 .then((data) => {
@@ -76,7 +78,7 @@ export default function SigninScreen({ navigation }) {
                     dispatch(addAllUserWorkouts(data.userWorkouts));
                   }
                   fetch(
-                    `${process.env.EXPO_PUBLIC_SERVER_IP}/histories/${userToken}`
+                    `${process.env.EXPO_PUBLIC_SERVER_IP}/histories/${userToken}`,
                   )
                     .then((response) => response.json())
                     .then((data) => {
@@ -93,69 +95,81 @@ export default function SigninScreen({ navigation }) {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior="padding"
     >
-      <Image
-        source={require("../assets/illustrations/imageSigninSignup.webp")}
-        style={styles.image}
-      ></Image>
-      <Text style={styles.mainTitle}>Atteins tes objectifs avec</Text>
-      <Text style={styles.subTitle}>Progress Pulse</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(value) => setEmail(value)}
-        value={email}
-        autoCapitalize="none"
-        accessibilityLabel="Entrez votre email"
-      ></TextInput>
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        placeholder="Mot de passe"
-        onChangeText={(value) => setPassword(value)}
-        value={password}
-        accessibilityLabel="Entrez votre mot de passe"
-      ></TextInput>
-      {emptyFields && (
-        <Text style={styles.error}>Veuillez remplir tous les champs</Text>
-      )}
-      {wrongEmail && (
-        <Text style={styles.error}>Veuillez saisir un email au bon format</Text>
-      )}
-      {signupError && <Text style={styles.error}>{signupError}</Text>}
-      <Button
-        textButton="Se connecter"
-        textColor="black"
-        width="50 %"
-        height="40"
-        background="#A3FD01"
-        onPress={handleSignin}
-        accessibilityLabel={"Permet de se connecter"}
-        accessibilityHint={"Si vous avez rempli tous les champs, vous allez être redirigé sur la page d'acceuil"}
-      ></Button>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("passwordForgotten")}
-        accessibilityLabel="Mot de passe oublié"
-        accessibilityHint="Vous allez être redirigé vers la page pour réinitialiser votre mot de passe"
-      >
-        <Text style={styles.signup}>Mot de passe oublié ?</Text>
-      </TouchableOpacity>
-      <View style={styles.alreadyAccountSection}>
-        <Text style={styles.alreadyAccount}>Pas encore de compte ? </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Signup")}
-          accessibilityLabel="Inscris-toi"
-          accessibilityHint="Vousa allez être redirigé vers la page d'inscription"
-        >
-          <Text style={styles.signup}>Inscris-toi !</Text>
-        </TouchableOpacity>
-      </View>
-      {isLoading && (
-        <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
+          <Image
+            source={require("../assets/illustrations/imageSigninSignup.webp")}
+            style={styles.image}
+          ></Image>
+          <Text style={styles.mainTitle}>Atteins tes objectifs avec</Text>
+          <Text style={styles.subTitle}>Progress Pulse</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            onChangeText={(value) => setEmail(value)}
+            value={email}
+            autoCapitalize="none"
+            accessibilityLabel="Entrez votre email"
+          ></TextInput>
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            placeholder="Mot de passe"
+            onChangeText={(value) => setPassword(value)}
+            value={password}
+            accessibilityLabel="Entrez votre mot de passe"
+          ></TextInput>
+          {emptyFields && (
+            <Text style={styles.error}>Veuillez remplir tous les champs</Text>
+          )}
+          {wrongEmail && (
+            <Text style={styles.error}>
+              Veuillez saisir un email au bon format
+            </Text>
+          )}
+          {signupError && <Text style={styles.error}>{signupError}</Text>}
+          <Button
+            textButton="Se connecter"
+            textColor="black"
+            width="50%"
+            height="40"
+            background="#A3FD01"
+            onPress={handleSignin}
+            accessibilityLabel={"Permet de se connecter"}
+            accessibilityHint={
+              "Si vous avez rempli tous les champs, vous allez être redirigé sur la page d'acceuil"
+            }
+          ></Button>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("passwordForgotten")}
+            accessibilityLabel="Mot de passe oublié"
+            accessibilityHint="Vous allez être redirigé vers la page pour réinitialiser votre mot de passe"
+          >
+            <Text style={styles.signup}>Mot de passe oublié ?</Text>
+          </TouchableOpacity>
+          <View style={styles.alreadyAccountSection}>
+            <Text style={styles.alreadyAccount}>Pas encore de compte ? </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Signup")}
+              accessibilityLabel="Inscris-toi"
+              accessibilityHint="Vousa allez être redirigé vers la page d'inscription"
+            >
+              <Text style={styles.signup}>Inscris-toi !</Text>
+            </TouchableOpacity>
+          </View>
+          {isLoading && (
+            <View style={styles.backgroundLoading}>
+              <ActivityIndicator
+                size="large"
+                color="#A3FD01"
+                animating={true}
+              />
+            </View>
+          )}
         </View>
-      )}
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }
