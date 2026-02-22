@@ -67,7 +67,7 @@ export default function HomeScreen({ navigation }) {
           />
         </View>
         {workouts.length === 0 && (
-          <View style={styles.image}>
+          <View style={styles.imageWrapper}>
             <Image
               style={styles.image}
               source={require("../../assets/illustrations/homePage.png")}
@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation }) {
         )}
         <View style={styles.btn}>
           <ScrollView
-            contentContainerStyle={{ paddingBottom: 350 }}
+            contentContainerStyle={{ paddingBottom: 250 }}
             showsVerticalScrollIndicator={false}
           >
             {workoutsToShow}

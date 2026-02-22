@@ -3,14 +3,14 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     display: "flex",
+    height: "100%",
     backgroundColor: "#0D0D36",
-    paddingTop: 125,
+    paddingTop: 50,
     paddingHorizontal: 20,
-    justifyContent: "center",
   },
 
   topContainer: {
-    flex: 1,
+    display: "flex",
   },
 
   title: {
@@ -39,11 +39,10 @@ export const styles = StyleSheet.create({
   },
 
   btnContainer: {
-    flex: 1,
+    display: "flex",
   },
 
   btn: {
-    paddingTop: 15,
     alignItems: "center",
     justifyContent: "space-between",
   },
@@ -59,9 +58,12 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  image: {
-    margin: "auto",
+  imageWrapper: {
+    alignItems: "center",
     marginTop: 30,
+  },
+
+  image: {
     width: 350,
     height: 350,
   },
