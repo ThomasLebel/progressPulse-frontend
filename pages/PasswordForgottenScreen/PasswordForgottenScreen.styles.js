@@ -4,9 +4,17 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#0D0D36",
+  },
+  innerContainer: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 40,
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    marginLeft: 15,
+    marginBottom: 5,
   },
   mainTitle: {
     fontSize: 25,

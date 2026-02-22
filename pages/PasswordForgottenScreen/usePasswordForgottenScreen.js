@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Keyboard, Platform } from "react-native";
 import { isEmailValid } from "./passwordForgotten.service";
 
 export function usePasswordForgottenScreen(navigation) {
@@ -16,6 +17,18 @@ export function usePasswordForgottenScreen(navigation) {
   const [errorToken, setErrorToken] = useState(false);
   const [noMatchPassword, setNoMatchPassword] = useState(false);
   const [isDoneVisible, setIsDoneVisible] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showEvent = Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent = Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+    const showSub = Keyboard.addListener(showEvent, () => setIsKeyboardVisible(true));
+    const hideSub = Keyboard.addListener(hideEvent, () => setIsKeyboardVisible(false));
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   const handleEmail = () => {
     if (!email) {
@@ -122,5 +135,6 @@ export function usePasswordForgottenScreen(navigation) {
     handleCode,
     handlePassword,
     handleGoToSignin,
+    isKeyboardVisible,
   };
 }
