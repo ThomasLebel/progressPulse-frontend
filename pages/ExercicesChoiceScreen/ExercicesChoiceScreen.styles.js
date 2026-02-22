@@ -1,0 +1,45 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0D0D36",
+    paddingTop: 50,
+    paddingHorizontal: 10,
+  },
+  title: {
+    fontSize: 32,
+    color: "white",
+    fontWeight: 600,
+  },
+  topContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  btnContainer: {
+    flex: 5,
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backgroundLoading: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  backButtonContainer: {
+    width: 50,
+    paddingTop: 20,
+  },
+});
