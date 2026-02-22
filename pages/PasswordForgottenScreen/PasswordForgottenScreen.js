@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./PasswordForgottenScreen.styles";
 import { usePasswordForgottenScreen } from "./usePasswordForgottenScreen";
 
@@ -51,7 +52,7 @@ export default function PasswordForgottenScreen({ navigation }) {
           <FontAwesome
             name={"chevron-left"}
             size={24}
-            color={"#3BC95F"}
+            color={COLORS.primary}
             accessibilityLabel="Redirection vers la page pour se connecter"
             style={styles.backButton}
             onPress={handleGoToSignin}
@@ -93,7 +94,7 @@ export default function PasswordForgottenScreen({ navigation }) {
                 textColor="black"
                 width="50%"
                 height="40"
-                background="#A3FD01"
+                background={COLORS.primary}
                 onPress={handleEmail}
                 accessibilityLabel={"Envoyer le code sur votre boîte mail"}
                 accessibilityHint={
@@ -119,7 +120,7 @@ export default function PasswordForgottenScreen({ navigation }) {
                 textColor="black"
                 width="50%"
                 height="40"
-                background="#A3FD01"
+                background={COLORS.primary}
                 onPress={handleCode}
                 accessibilityLabel={"Valider le code reçu"}
                 accessibilityHint={
@@ -159,7 +160,7 @@ export default function PasswordForgottenScreen({ navigation }) {
                 textColor="black"
                 width="60%"
                 height="50"
-                background="#A3FD01"
+                background={COLORS.primary}
                 onPress={handlePassword}
                 accessibilityLabel={"Valider le mot de passe"}
                 accessibilityHint={"Vous avez changer de mot de passe"}
@@ -177,7 +178,7 @@ export default function PasswordForgottenScreen({ navigation }) {
                 textColor="black"
                 width="60%"
                 height="50"
-                background="#A3FD01"
+                background={COLORS.primary}
                 onPress={handleGoToSignin}
                 accessibilityLabel={"Retourner à la connexion"}
                 accessibilityHint={
@@ -191,7 +192,7 @@ export default function PasswordForgottenScreen({ navigation }) {
             <View style={styles.backgroundLoading}>
               <ActivityIndicator
                 size="large"
-                color="#A3FD01"
+                color={COLORS.primary}
                 animating={true}
               />
             </View>

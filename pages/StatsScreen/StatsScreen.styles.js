@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -59,7 +60,7 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: 220,
-    backgroundColor: "#A3FD01",
+    backgroundColor: COLORS.primary,
     height: 40,
     borderRadius: 10,
     flexDirection: "row",

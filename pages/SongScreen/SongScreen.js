@@ -1,12 +1,8 @@
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useSongScreen } from "./useSongScreen";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./SongScreen.styles";
+import { useSongScreen } from "./useSongScreen";
 
 export default function SongScreen({ navigation }) {
   const {
@@ -26,7 +22,7 @@ export default function SongScreen({ navigation }) {
           accessibilityLabel="Permet de retourner sur la page Réglages"
           accessibilityHint="Vous allez être redirigé vers la page Réglages"
         >
-          <FontAwesome name={"chevron-left"} size={24} color={"#3BC95F"} />
+          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
           <Text style={styles.backToText}>Réglages</Text>
         </TouchableOpacity>
 
@@ -50,7 +46,7 @@ export default function SongScreen({ navigation }) {
                   <FontAwesome
                     name={"check"}
                     size={20}
-                    color={"#A3FD01"}
+                    color={COLORS.primary}
                     style={styles.infoIcon}
                   />
                 )}
@@ -64,7 +60,7 @@ export default function SongScreen({ navigation }) {
         <FontAwesome
           name={"info-circle"}
           size={30}
-          color={"#A3FD01"}
+          color={COLORS.primary}
           style={styles.infoIcon}
           accessibilityLabel="Affiche une information pour choisir la sonnerie de minuteur"
         />
@@ -76,7 +72,11 @@ export default function SongScreen({ navigation }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            animating={true}
+          />
         </View>
       )}
     </View>

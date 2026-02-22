@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ export const styles = StyleSheet.create({
     bottom: 10,
   },
   backToText: {
-    color: "#3BC95F",
+    color: COLORS.primary,
     marginLeft: 8,
   },
   topTitle: {
@@ -60,7 +61,7 @@ export const styles = StyleSheet.create({
   },
   startTitle: {
     fontSize: 20,
-    color: "#A3FD01",
+    color: COLORS.primary,
   },
   colunm: {
     justifyContent: "space-between",
@@ -94,7 +95,7 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "48%",
-    backgroundColor: "#A3FD01",
+    backgroundColor: COLORS.primary,
     height: 40,
     borderRadius: 10,
     alignItems: "center",
@@ -118,7 +119,7 @@ export const styles = StyleSheet.create({
   },
   weightListTitle: {
     fontSize: 20,
-    color: "#A3FD01",
+    color: COLORS.primary,
     textAlign: "center",
     marginBottom: 15,
   },

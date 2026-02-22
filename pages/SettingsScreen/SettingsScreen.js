@@ -1,12 +1,13 @@
-import { Text, View, TouchableOpacity } from "react-native";
-import Underline from "../../components/Underline";
+import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import ChangeEmailModal from "./modals/ChangeEmailModal";
 import ChangePasswordModal from "./modals/ChangePasswordModal";
 import ChangeUsernameModal from "./modals/ChangeUsernameModal";
-import { useSettingsScreen } from "./useSettingsScreen";
 import { styles } from "./SettingsScreen.styles";
+import { useSettingsScreen } from "./useSettingsScreen";
 
 export default function SettingsScreen({ navigation }) {
   const {
@@ -93,7 +94,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"envelope"}
                 size={20}
-                color={"#A3FD01"}
+                color={COLORS.primary}
                 style={styles.infoIcon}
               />
               <Text style={styles.text}>{user.email}</Text>
@@ -115,7 +116,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"lock"}
                 size={25}
-                color={"#A3FD01"}
+                color={COLORS.primary}
                 style={styles.infoIcon}
               />
               <Text style={styles.text}>*********</Text>
@@ -137,7 +138,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"user"}
                 size={25}
-                color={"#A3FD01"}
+                color={COLORS.primary}
                 style={styles.infoIcon}
               />
               <Text style={styles.text}>{user.username}</Text>
@@ -159,7 +160,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"music"}
                 size={23}
-                color={"#A3FD01"}
+                color={COLORS.primary}
                 style={styles.infoIcon}
               />
               <Text style={styles.text}>{user.sound}</Text>
@@ -181,7 +182,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome6
                 name={"right-to-bracket"}
                 size={20}
-                color={"#A3FD01"}
+                color={COLORS.primary}
                 style={styles.infoIcon}
               />
               <Text style={styles.text}>Déconnexion</Text>

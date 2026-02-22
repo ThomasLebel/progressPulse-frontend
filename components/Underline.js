@@ -1,11 +1,11 @@
-import React from "react";
 import { View } from "react-native";
+import { COLORS } from "../constants/theme";
 
 export default function Underline({ width }) {
   return (
     <View
       style={{
-        borderBottomColor: "#A3FD01",
+        borderBottomColor: COLORS.primary,
         borderBottomWidth: 2,
         marginVertical: 5,
         width: width,

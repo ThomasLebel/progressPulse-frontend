@@ -1,5 +1,4 @@
-import ConfettiCannon from "react-native-confetti-cannon";
-import * as Progress from "react-native-progress";
+import moment from "moment";
 import {
   ActivityIndicator,
   ScrollView,
@@ -7,13 +6,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import ConfettiCannon from "react-native-confetti-cannon";
+import * as Progress from "react-native-progress";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import moment from "moment";
+import { COLORS } from "../../constants/theme";
 import AddWeightModal from "./modals/AddWeightModal";
 import TargetWeightModal from "./modals/TargetWeightModal";
-import { styles } from "./WeightScreen.styles";
 import { useWeightScreen } from "./useWeightScreen";
+import { styles } from "./WeightScreen.styles";
 
 export default function WeightScreen({ navigation, route }) {
   const {
@@ -90,8 +91,11 @@ export default function WeightScreen({ navigation, route }) {
       />
 
       <View style={styles.topContainer}>
-        <TouchableOpacity style={styles.backToContainer} onPress={handleGoToStats}>
-          <FontAwesome name={"chevron-left"} size={24} color={"#3BC95F"} />
+        <TouchableOpacity
+          style={styles.backToContainer}
+          onPress={handleGoToStats}
+        >
+          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
           <Text style={styles.backToText}>Statistiques</Text>
         </TouchableOpacity>
         <Text style={styles.topTitle}>Suivi de poids</Text>
@@ -112,7 +116,7 @@ export default function WeightScreen({ navigation, route }) {
               <Progress.Circle
                 progress={progressValue}
                 animated={true}
-                color="#A3FD01"
+                color={COLORS.primary}
                 unfilledColor="#0D0D36"
                 borderWidth={0.2}
                 size={100}
@@ -131,7 +135,7 @@ export default function WeightScreen({ navigation, route }) {
                   <FontAwesome6
                     name={"arrow-trend-up"}
                     size={15}
-                    color={"#3BC95F"}
+                    color={COLORS.primary}
                   />
                 ) : (
                   targetObjectif &&
@@ -139,7 +143,7 @@ export default function WeightScreen({ navigation, route }) {
                     <FontAwesome6
                       name={"arrow-trend-down"}
                       size={15}
-                      color={"#3BC95F"}
+                      color={COLORS.primary}
                     />
                   )
                 )}
@@ -156,7 +160,7 @@ export default function WeightScreen({ navigation, route }) {
             progress={progressValue}
             width={120}
             animated={true}
-            color="#A3FD01"
+            color={COLORS.primary}
             unfilledColor="#0D0D36"
           />
           <Text style={styles.text}>{progressValuePourcent} %</Text>
@@ -210,7 +214,11 @@ export default function WeightScreen({ navigation, route }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            animating={true}
+          />
         </View>
       )}
     </View>

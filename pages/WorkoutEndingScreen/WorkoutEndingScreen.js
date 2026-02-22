@@ -1,16 +1,17 @@
 import {
+  ActivityIndicator,
+  Keyboard,
   Text,
   TextInput,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-  ActivityIndicator,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Underline from "../../components/Underline";
-import Button from "../../components/Button";
 import ConfettiCannon from "react-native-confetti-cannon";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Button from "../../components/Button";
+import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import { useWorkoutEndingScreen } from "./useWorkoutEndingScreen";
 import { styles } from "./WorkoutEndingScreen.styles";
 
@@ -33,7 +34,7 @@ export default function WorkoutEndingScreen({ navigation, route }) {
           <FontAwesome
             name={"chevron-left"}
             size={24}
-            color={"#3BC95F"}
+            color={COLORS.primary}
             style={{ marginBottom: 15 }}
             onPress={handleBack}
             accessibilityLabel="Redirection vers la liste des exercices"
@@ -79,15 +80,21 @@ export default function WorkoutEndingScreen({ navigation, route }) {
             textColor="black"
             width="70%"
             height={50}
-            background="#A3FD01"
+            background={COLORS.primary}
             onPress={handlePress}
             accessibilityLabel={"Enregistrer ma séance"}
-            accessibilityHint={"Vous allez être redirigé vers la page d'acceuil, vous pouvez retrouver votre séance dans l'historique"}
+            accessibilityHint={
+              "Vous allez être redirigé vers la page d'acceuil, vous pouvez retrouver votre séance dans l'historique"
+            }
           />
         </View>
         {isLoading && (
           <View style={styles.backgroundLoading}>
-            <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+            <ActivityIndicator
+              size="large"
+              color={COLORS.primary}
+              animating={true}
+            />
           </View>
         )}
         <ConfettiCannon

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ export const styles = StyleSheet.create({
     bottom: 10,
   },
   backToText: {
-    color: "#3BC95F",
+    color: COLORS.primary,
     marginLeft: 8,
   },
   topTitle: {

@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import Button from "../../components/Button";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./SigninScreen.styles";
 import { useSigninScreen } from "./useSigninScreen";
 
@@ -68,7 +69,7 @@ export default function SigninScreen({ navigation }) {
             textColor="black"
             width="50%"
             height="40"
-            background="#A3FD01"
+            background={COLORS.primary}
             onPress={handleSignin}
             accessibilityLabel={"Permet de se connecter"}
             accessibilityHint={
@@ -96,7 +97,7 @@ export default function SigninScreen({ navigation }) {
             <View style={styles.backgroundLoading}>
               <ActivityIndicator
                 size="large"
-                color="#A3FD01"
+                color={COLORS.primary}
                 animating={true}
               />
             </View>

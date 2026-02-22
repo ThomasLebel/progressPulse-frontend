@@ -1,13 +1,16 @@
-import { Text, View, ScrollView, ActivityIndicator } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Underline from "../../components/Underline";
 import BtnWorkoutSession from "../../components/BtnWorkoutSession";
+import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import { useWorkoutChoiceScreen } from "./useWorkoutChoiceScreen";
 import { styles } from "./WorkoutChoiceScreen.styles";
 
 export default function WorkoutChoiceScreen({ navigation, route }) {
-  const { name, isLoading, workoutItems, handleBack } =
-    useWorkoutChoiceScreen(navigation, route);
+  const { name, isLoading, workoutItems, handleBack } = useWorkoutChoiceScreen(
+    navigation,
+    route,
+  );
 
   return (
     <View style={styles.container}>
@@ -15,7 +18,7 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
         <FontAwesome
           name={"chevron-left"}
           size={24}
-          color={"#3BC95F"}
+          color={COLORS.primary}
           accessibilityLabel="Redirection vers la page pour choisir la difficultée d'une séance"
           style={{ marginLeft: 15, marginTop: 5 }}
           onPress={handleBack}
@@ -27,7 +30,7 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
         <FontAwesome
           name={"info-circle"}
           size={30}
-          color={"#A3FD01"}
+          color={COLORS.primary}
           style={styles.infoIcon}
           accessibilityLabel="Choisis ta séance"
         />
@@ -43,7 +46,9 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
               nbExercise={item.nbExercise}
               onPress={item.onPress}
               accessibilityLabel={`Choisir la séance ${item.name}`}
-              accessibilityHint={"Vous serez redirigé vers le résumé de cette séance"}
+              accessibilityHint={
+                "Vous serez redirigé vers le résumé de cette séance"
+              }
               image={item.image}
               textBtn="Add Workout"
             />
@@ -52,7 +57,11 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
       </View>
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            animating={true}
+          />
         </View>
       )}
     </View>

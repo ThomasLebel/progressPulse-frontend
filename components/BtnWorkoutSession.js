@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { COLORS } from "../constants/theme";
 
 export default function WorkoutSessionButton({
   name,
@@ -12,7 +12,7 @@ export default function WorkoutSessionButton({
   accessibilityLabel,
   accessibilityHint,
   image,
-  textBtn
+  textBtn,
 }) {
   return (
     <TouchableOpacity
@@ -26,7 +26,7 @@ export default function WorkoutSessionButton({
       }}
     >
       <LinearGradient
-        colors={["#445B9F", "#3BC95F"]}
+        colors={["#445B9F", COLORS.primary]}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={styles.gradiant}
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     justifyContent: "center",
-    alignItems:"center"
+    alignItems: "center",
   },
   image: {
     width: 60,

@@ -1,15 +1,16 @@
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HystoryWorkouts from "../../components/HystoryWorkout";
 import Underline from "../../components/Underline";
-import { useHistoryWorkoutsScreen } from "./useHistoryWorkoutsScreen";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./HistoryWorkoutsScreen.styles";
 import {
-  formatDate,
   buildStarArray,
   formatCardioLabel,
+  formatDate,
 } from "./historyWorkoutsScreen.service";
+import { useHistoryWorkoutsScreen } from "./useHistoryWorkoutsScreen";
 
 export default function HistoryWorkoutsScreen({ navigation, route }) {
   const { workoutName, sortedWorkouts, navigateBack } =
@@ -23,7 +24,7 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
         key={index}
         name={"star"}
         size={15}
-        color={"#3BC95F"}
+        color={COLORS.primary}
         accessibilityLabel="Affiche des étoiles correspondant à la note de notre séance"
       />
     ));
@@ -83,7 +84,7 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
                     {formatCardioLabel(set)}
                   </Text>
                 </LinearGradient>
-              )
+              ),
             )}
           </View>
         </View>
@@ -112,7 +113,7 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
           accessibilityLabel="Retourn sur la page history"
           accessibilityHint="On va retourner sur la page suivie de séance"
         >
-          <FontAwesome name={"chevron-left"} size={24} color={"#3BC95F"} />
+          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
           <Text style={styles.backToText}>Suivi</Text>
         </TouchableOpacity>
         <Text style={styles.topTitle}>{workoutName}</Text>

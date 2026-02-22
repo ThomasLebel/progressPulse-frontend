@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -55,12 +56,12 @@ export const styles = StyleSheet.create({
     paddingTop: 6,
     backgroundColor: "transparent",
     borderRadius: 10,
-    borderColor: "#A3FD01",
+    borderColor: COLORS.primary,
     borderWidth: 1,
   },
 
   textButton: {
-    color: "#A3FD01",
+    color: COLORS.primary,
     justifyContent: "center",
     textAlign: "center",
     padding: "auto",

@@ -1,7 +1,8 @@
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useHistoryScreen } from "./useHistoryScreen";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./HistoryScreen.styles";
+import { useHistoryScreen } from "./useHistoryScreen";
 
 export default function HistoryScreen({ navigation }) {
   const { history, uniqueWorkoutNames, navigateToStats, navigateToWorkout } =
@@ -16,7 +17,7 @@ export default function HistoryScreen({ navigation }) {
           accessibilityLabel={`Permet de revenir a la page Statistiques`}
           accessibilityHint="On va se diriger vers la page Statistiques"
         >
-          <FontAwesome name={"chevron-left"} size={24} color={"#3BC95F"} />
+          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
           <Text style={styles.backToText}>Statisques</Text>
         </TouchableOpacity>
         <Text style={styles.topTitle}>Suivi de séance</Text>
@@ -27,7 +28,7 @@ export default function HistoryScreen({ navigation }) {
             <FontAwesome
               name={"info-circle"}
               size={30}
-              color={"#A3FD01"}
+              color={COLORS.primary}
               style={styles.infoIcon}
               accessibilityLabel={`Donne une information pour avoir l'historique des séances`}
             />
@@ -48,7 +49,7 @@ export default function HistoryScreen({ navigation }) {
               <FontAwesome
                 name={"arrow-right"}
                 size={15}
-                color={"#3BC95F"}
+                color={COLORS.primary}
                 style={{ position: "absolute", right: 15, top: 10 }}
                 accessibilityLabel={`Permet de voir l'historique de toute les séances`}
               />
@@ -65,7 +66,7 @@ export default function HistoryScreen({ navigation }) {
                 <FontAwesome
                   name={"arrow-right"}
                   size={15}
-                  color={"#3BC95F"}
+                  color={COLORS.primary}
                   style={{ position: "absolute", right: 15, top: 10 }}
                   accessibilityLabel={`Permet de voir l'historique de ${name}`}
                 />

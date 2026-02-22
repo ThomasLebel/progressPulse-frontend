@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
   subTitle: {
     fontSize: 35,
     textAlign: "center",
-    color: "#3BC95F",
+    color: COLORS.primary,
     fontWeight: "800",
   },
   input: {

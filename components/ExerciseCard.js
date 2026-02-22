@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch, useSelector } from "react-redux";
+import { COLORS } from "../constants/theme";
 import images from "../utils/images";
 
 const ExerciseCard = ({
@@ -128,7 +129,7 @@ const ExerciseCard = ({
                 <FontAwesome
                   name={"pencil"}
                   size={20}
-                  color={"#3BC95F"}
+                  color={COLORS.primary}
                   onPress={handleUpdate}
                   accessibilityLabel="Modifier les données de l'exercice"
                   accessibilityHint="Permet d'ouvrir une modale"
@@ -136,7 +137,7 @@ const ExerciseCard = ({
                 <FontAwesome
                   name={"trash"}
                   size={20}
-                  color={"#3BC95F"}
+                  color={COLORS.primary}
                   onPress={() => handleDelete(exerciseID)}
                   accessibilityLabel="Supprimer l'exercice de la séance"
                 />
@@ -145,7 +146,7 @@ const ExerciseCard = ({
               <FontAwesome
                 name={isCompleted ? "check-circle" : "play-circle-o"}
                 size={45}
-                color={isCompleted ? "#A3FD01" : "white"}
+                color={isCompleted ? COLORS.primary : "white"}
                 style={styles.iconStartWorkout}
               />
             )}

@@ -1,40 +1,41 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-import { Provider } from "react-redux";
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import { persistReducer, persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import currentWorkout from "./reducers/currentWorkout";
 import user from "./reducers/user";
 import workoutCreation from "./reducers/workoutCreation";
-import currentWorkout from "./reducers/currentWorkout";
 import workouts from "./reducers/workouts";
 import workoutsHistory from "./reducers/workoutsHistory";
 
+import { COLORS } from "./constants/theme";
+import ExercicesChoiceScreen from "./pages/ExercicesChoiceScreen";
+import ExerciceScreen from "./pages/ExerciceScreen";
+import HistoryScreen from "./pages/HistoryScreen";
+import HystoryWorkoutScreen from "./pages/HistoryWorkoutsScreen";
+import HomeScreen from "./pages/HomeScreen";
+import MuscleGroupScreen from "./pages/MuscleGroupScreen";
+import PasswordForgottenScreen from "./pages/PasswordForgottenScreen";
+import SettingsScreen from "./pages/SettingsScreen";
 import SigninScreen from "./pages/SigninScreen";
 import SignupScreen from "./pages/SignupScreen";
-import HomeScreen from "./pages/HomeScreen";
-import StatsScreen from "./pages/StatsScreen";
-import SettingsScreen from "./pages/SettingsScreen";
-import WorkoutTypeScreen from "./pages/WorkoutTypeScreen";
-import WorkoutDifficultyScreen from "./pages/WorkoutDifficultyScreen";
-import WorkoutChoiceScreen from "./pages/WorkoutChoiceScreen";
-import WorkoutSummaryScreen from "./pages/WorkoutSummaryScreen";
-import MuscleGroupScreen from "./pages/MuscleGroupScreen";
-import ExercicesChoiceScreen from "./pages/ExercicesChoiceScreen";
-import StartWorkoutScreen from "./pages/StartWorkoutScreen";
-import ExerciceScreen from "./pages/ExerciceScreen";
-import TimerScreen from "./pages/TimerScreen";
-import WorkoutEndingScreen from "./pages/WorkoutEndingScreen";
 import SongScreen from "./pages/SongScreen";
+import StartWorkoutScreen from "./pages/StartWorkoutScreen";
+import StatsScreen from "./pages/StatsScreen";
+import TimerScreen from "./pages/TimerScreen";
 import WeightScreen from "./pages/WeightScreen";
-import HystoryWorkoutScreen from "./pages/HistoryWorkoutsScreen";
-import HistoryScreen from "./pages/HistoryScreen";
-import PasswordForgottenScreen from "./pages/PasswordForgottenScreen";
+import WorkoutChoiceScreen from "./pages/WorkoutChoiceScreen";
+import WorkoutDifficultyScreen from "./pages/WorkoutDifficultyScreen";
+import WorkoutEndingScreen from "./pages/WorkoutEndingScreen";
+import WorkoutSummaryScreen from "./pages/WorkoutSummaryScreen";
+import WorkoutTypeScreen from "./pages/WorkoutTypeScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -90,7 +91,7 @@ const TabNavigator = () => {
 
             return <FontAwesome name={iconName} size={30} color={color} />;
           },
-          tabBarActiveTintColor: "#A3FD01",
+          tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: "#EBF2F4",
           headerShown: false,
           tabBarShowLabel: false,

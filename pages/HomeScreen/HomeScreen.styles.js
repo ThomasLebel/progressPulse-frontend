@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
   },
 
   span: {
-    color: "#A3FD01",
+    color: COLORS.primary,
   },
 
   infoIcon: {

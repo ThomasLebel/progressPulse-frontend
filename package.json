@@ -45,7 +45,9 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "eslint": "^9.39.3",
+    "eslint-config-expo": "^9.2.0"
   },
   "private": true
 }

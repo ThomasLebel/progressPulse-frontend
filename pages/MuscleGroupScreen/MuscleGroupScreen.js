@@ -1,11 +1,12 @@
-import { Text, View, FlatList } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import BtnMuscleGroup from "../../components/BtnMuscleGroup";
 import Button from "../../components/Button";
 import Underline from "../../components/Underline";
-import BtnMuscleGroup from "../../components/BtnMuscleGroup";
+import { COLORS } from "../../constants/theme";
 import muscleGroupIcons from "../../utils/muscleGroupIcons";
-import { useMuscleGroupScreen } from "./useMuscleGroupScreen";
 import { styles } from "./MuscleGroupScreen.styles";
+import { useMuscleGroupScreen } from "./useMuscleGroupScreen";
 
 export default function MuscleGroupScreen({ navigation, route }) {
   const {
@@ -25,7 +26,7 @@ export default function MuscleGroupScreen({ navigation, route }) {
           <FontAwesome
             name={"chevron-left"}
             size={24}
-            color={"#3BC95F"}
+            color={COLORS.primary}
             accessibilityLabel="Redirection pour choisir le type de séance"
             onPress={handleBack}
             style={{ marginLeft: 15, marginTop: 5 }}
@@ -71,7 +72,7 @@ export default function MuscleGroupScreen({ navigation, route }) {
         </Text>
         <View style={styles.bottomBtnContainer}>
           <Button
-            background="#A3FD01"
+            background={COLORS.primary}
             borderColor="none"
             textButton={finishButtonLabel}
             textColor="black"

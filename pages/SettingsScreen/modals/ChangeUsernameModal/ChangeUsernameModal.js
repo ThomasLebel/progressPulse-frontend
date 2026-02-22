@@ -1,13 +1,14 @@
 import {
-  Modal,
   KeyboardAvoidingView,
+  Modal,
   Platform,
-  View,
   Text,
   TextInput,
+  View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../../../components/Button";
+import { COLORS } from "../../../../constants/theme";
 import { styles } from "./ChangeUsernameModal.styles";
 
 export default function ChangeUsernameModal({
@@ -41,7 +42,7 @@ export default function ChangeUsernameModal({
                 <FontAwesome
                   name={"exclamation-triangle"}
                   size={25}
-                  color={"#A3FD01"}
+                  color={COLORS.primary}
                   style={styles.infoIcon}
                   accessibilityLabel="Message d'attention lorsque vous voulez changer vos coordonnées"
                 />
@@ -90,15 +91,19 @@ export default function ChangeUsernameModal({
             {error && <Text style={styles.errorText}>{errorMessage}</Text>}
             <Button
               textButton="Valider"
-              textColor="#A3FD01"
+              textColor={COLORS.primary}
               width={180}
               height={40}
               background="#272D34"
               borderWidth={1}
-              borderColor="#A3FD01"
+              borderColor={COLORS.primary}
               onPress={onSubmit}
-              accessibilityLabel={"Permet de fermer la modale avec les coordonnées modifié"}
-              accessibilityHint={"Vous allez être redirigé vers la page réglages avec vos nouvelles coordonnées"}
+              accessibilityLabel={
+                "Permet de fermer la modale avec les coordonnées modifié"
+              }
+              accessibilityHint={
+                "Vous allez être redirigé vers la page réglages avec vos nouvelles coordonnées"
+              }
             />
           </View>
         </View>

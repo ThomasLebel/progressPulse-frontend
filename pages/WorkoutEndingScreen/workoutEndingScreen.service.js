@@ -1,3 +1,5 @@
+import { COLORS } from "../../constants/theme";
+
 /**
  * Génère les données d'affichage pour les étoiles de notation.
  * Retourne un tableau de 5 objets avec la couleur et le nom de l'icône pour chaque étoile.
@@ -8,7 +10,7 @@ export function buildStarsData(personnalNote) {
   const stars = [];
   for (let star = 0; star < 5; star++) {
     stars.push({
-      color: star < personnalNote ? "#A3FD01" : "#ffffff",
+      color: star < personnalNote ? COLORS.primary : "#ffffff",
       name: star < personnalNote ? "star" : "star-o",
     });
   }

@@ -2,6 +2,7 @@ import { Image, ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import BtnWorkoutSession from "../../components/BtnWorkoutSession";
 import Button from "../../components/Button";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./HomeScreen.styles";
 import { useHomeScreen } from "./useHomeScreen";
 
@@ -38,7 +39,7 @@ export default function HomeScreen({ navigation }) {
             <FontAwesome
               name={"info-circle"}
               size={30}
-              color={"#A3FD01"}
+              color={COLORS.primary}
               style={styles.infoIcon}
               accessibilityLabel={`Donne une information si on a pas de séance enregistré`}
             />
@@ -52,7 +53,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.btnContainer}>
         <View style={styles.btn}>
           <Button
-            background="#A3FD01"
+            background={COLORS.primary}
             borderColor="none"
             textButton="Ajouter une séance"
             textColor="black"

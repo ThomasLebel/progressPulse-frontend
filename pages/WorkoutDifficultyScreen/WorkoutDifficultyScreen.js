@@ -2,6 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import { useWorkoutDifficultyScreen } from "./useWorkoutDifficultyScreen";
 import { styles } from "./WorkoutDifficultyScreen.styles";
 
@@ -15,7 +16,7 @@ export default function WorkoutDifficultyScreen({ navigation }) {
         <FontAwesome
           name={"chevron-left"}
           size={24}
-          color={"#3BC95F"}
+          color={COLORS.primary}
           style={{ marginLeft: 15, marginTop: 5 }}
           accessibilityLabel="Revenir sur la page pour sélectionné le type de séance"
           onPress={handleGoBack}
@@ -28,7 +29,7 @@ export default function WorkoutDifficultyScreen({ navigation }) {
           <FontAwesome
             name={"info-circle"}
             size={30}
-            color={"#A3FD01"}
+            color={COLORS.primary}
             style={styles.infoIcon}
           />
           <Text style={styles.textInfo}>
@@ -47,7 +48,7 @@ export default function WorkoutDifficultyScreen({ navigation }) {
             onPress={() => handleNavigateToWorkout(data.name)}
           >
             <LinearGradient
-              colors={["#445B9F", "#3BC95F"]}
+              colors={["#445B9F", COLORS.primary]}
               start={{ x: 1, y: 0 }}
               end={{ x: 0, y: 1 }}
               style={styles.gradiant}

@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import Button from "../../components/Button";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./SignupScreen.styles";
 import { useSignupScreen } from "./useSignupScreen";
 
@@ -80,7 +81,7 @@ export default function SignupScreen({ navigation }) {
             textColor="black"
             width="50%"
             height="40"
-            background="#A3FD01"
+            background={COLORS.primary}
             onPress={handleSignup}
             accessibilityLabel={"S'inscrire"}
             accessibilityHint={
@@ -101,7 +102,7 @@ export default function SignupScreen({ navigation }) {
             <View style={styles.backgroundLoading}>
               <ActivityIndicator
                 size="large"
-                color="#A3FD01"
+                color={COLORS.primary}
                 animating={true}
               />
             </View>

@@ -10,6 +10,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
 import ExerciseBtn from "../../components/ExerciseBtn";
 import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./ExercicesChoiceScreen.styles";
 import AddExerciseModal from "./modals/AddExerciseModal";
 import { useExercicesChoice } from "./useExercicesChoice";
@@ -77,7 +78,7 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
           <FontAwesome
             name={"chevron-left"}
             size={32}
-            color={"#3BC95F"}
+            color={COLORS.primary}
             accessibilityLabel="Revenir sur la page pour choisir le groupe musculaire"
             style={{ marginLeft: 15, marginTop: 5 }}
           />
@@ -112,7 +113,7 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
       </View>
       <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
         <Button
-          background="#A3FD01"
+          background={COLORS.primary}
           borderColor="none"
           textButton="Terminer"
           textColor="black"
@@ -127,7 +128,11 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
       </BlurView>
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            animating={true}
+          />
         </View>
       )}
     </View>

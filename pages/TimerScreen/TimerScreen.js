@@ -1,21 +1,22 @@
+import { LinearGradient } from "expo-linear-gradient";
 import {
-  View,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   Text,
   TextInput,
-  Platform,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  Keyboard,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { LinearGradient } from "expo-linear-gradient";
-import { TimerPickerModal } from "react-native-timer-picker";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import Underline from "../../components/Underline";
+import { TimerPickerModal } from "react-native-timer-picker";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
-import { useTimerScreen } from "./useTimerScreen";
+import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./TimerScreen.styles";
+import { useTimerScreen } from "./useTimerScreen";
 
 export default function TimerScreen({ navigation, route }) {
   const {
@@ -57,10 +58,7 @@ export default function TimerScreen({ navigation, route }) {
         </View>
         {!isTimerVisible && (
           <View style={styles.timerContainer}>
-            <TouchableOpacity
-              style={styles.timer}
-              onPress={handleOpenPicker}
-            >
+            <TouchableOpacity style={styles.timer} onPress={handleOpenPicker}>
               <Text style={styles.textTimer}>
                 {minutes}:{secondes}
               </Text>
@@ -71,7 +69,7 @@ export default function TimerScreen({ navigation, route }) {
                 textColor="black"
                 width="70%"
                 height={50}
-                background="#A3FD01"
+                background={COLORS.primary}
                 onPress={timerClick}
                 accessibilityLabel={"Démarer le minuteur"}
                 accessibilityHint={"Le minuteur va se mettre en route"}
@@ -102,7 +100,13 @@ export default function TimerScreen({ navigation, route }) {
               <CountdownCircleTimer
                 isPlaying={isPlaying}
                 duration={time}
-                colors={["#A3FD01", "#850606", "#850606", "#850606", "#850606"]}
+                colors={[
+                  COLORS.primary,
+                  "#850606",
+                  "#850606",
+                  "#850606",
+                  "#850606",
+                ]}
                 colorsTime={[5, 3, 2, 1, 0]}
                 onComplete={handleTimerComplete}
                 updateInterval={1}
@@ -148,7 +152,7 @@ export default function TimerScreen({ navigation, route }) {
                 textColor="black"
                 width="70%"
                 height={50}
-                background="#A3FD01"
+                background={COLORS.primary}
                 onPress={validateSet}
               />
             </View>
@@ -211,7 +215,7 @@ export default function TimerScreen({ navigation, route }) {
                   textColor="black"
                   width="60%"
                   height={50}
-                  background="#A3FD01"
+                  background={COLORS.primary}
                   onPress={addSet}
                 />
               </View>
@@ -229,7 +233,7 @@ export default function TimerScreen({ navigation, route }) {
                   <FontAwesome
                     name={"pencil"}
                     size={20}
-                    color={"#3BC95F"}
+                    color={COLORS.primary}
                     onPress={updateSet}
                   />
                 </View>

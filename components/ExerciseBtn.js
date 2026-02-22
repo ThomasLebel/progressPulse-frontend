@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { removeExercise } from "../reducers/workoutCreation";
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch, useSelector } from "react-redux";
+import { COLORS } from "../constants/theme";
+import { removeExercise } from "../reducers/workoutCreation";
 
 const ExerciseBtn = ({
   exerciseID,
@@ -21,18 +21,18 @@ const ExerciseBtn = ({
   const [isAdded, setIsAdded] = useState(false);
 
   const workoutCreationExercises = useSelector(
-    (state) => state.workoutCreation.value.exercises
+    (state) => state.workoutCreation.value.exercises,
   );
 
   const workoutSelected = useSelector((state) =>
-    state.workouts.value.find((e) => e._id === workoutID)
+    state.workouts.value.find((e) => e._id === workoutID),
   );
 
   useEffect(() => {
     let exerciseAlreadyAdded;
     if (!isWorkoutAlreadyCreated) {
       exerciseAlreadyAdded = workoutCreationExercises.some(
-        (exercise) => exercise.exercise === exerciseID
+        (exercise) => exercise.exercise === exerciseID,
       );
       setIsAdded(exerciseAlreadyAdded);
     } else {
@@ -60,10 +60,10 @@ const ExerciseBtn = ({
       style={styles.container}
     >
       <LinearGradient
-            colors={["#445B9F", "#3BC95F"]}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.gradiant}
+        colors={["#445B9F", COLORS.primary]}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.gradiant}
       >
         <Image source={image} style={styles.picture} />
         <Text
@@ -79,7 +79,7 @@ const ExerciseBtn = ({
         <FontAwesome
           name={isAdded ? "check-circle" : "plus-circle"}
           size={35}
-          color={isAdded ? "#A3FD01" : "white"}
+          color={isAdded ? COLORS.primary : "white"}
         />
       </LinearGradient>
     </TouchableOpacity>

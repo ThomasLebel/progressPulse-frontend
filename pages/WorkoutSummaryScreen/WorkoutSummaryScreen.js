@@ -4,11 +4,12 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
 import ExerciseCard from "../../components/ExerciseCard";
 import Underline from "../../components/Underline";
-import { convertRestForDisplay } from "./workoutSummaryScreen.service";
-import { useWorkoutSummaryScreen } from "./useWorkoutSummaryScreen";
-import { styles } from "./WorkoutSummaryScreen.styles";
-import ModalTitle from "./modals/ModalTitle";
+import { COLORS } from "../../constants/theme";
 import ModalCustomSets from "./modals/ModalCustomSets";
+import ModalTitle from "./modals/ModalTitle";
+import { useWorkoutSummaryScreen } from "./useWorkoutSummaryScreen";
+import { convertRestForDisplay } from "./workoutSummaryScreen.service";
+import { styles } from "./WorkoutSummaryScreen.styles";
 
 export default function WorkoutSummaryScreen({ navigation, route }) {
   const {
@@ -76,7 +77,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
           name={"chevron-left"}
           accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
           size={24}
-          color={"#3BC95F"}
+          color={COLORS.primary}
           style={{ marginLeft: 15, marginTop: 5 }}
           onPress={() => navigation.navigate(backTo, { name: name })}
         />
@@ -122,7 +123,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
 
       <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
         <Button
-          background="#A3FD01"
+          background={COLORS.primary}
           borderColor="none"
           textButton="Valider ma séance"
           textColor="black"
@@ -141,14 +142,18 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
           name={"plus-circle"}
           accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
           size={45}
-          color={"#A3FD01"}
+          color={COLORS.primary}
           style={{ marginRight: 15 }}
           onPress={() => navigation.navigate("muscleGroup")}
         />
       </BlurView>
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            animating={true}
+          />
         </View>
       )}
     </View>

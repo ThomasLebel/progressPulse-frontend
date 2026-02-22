@@ -1,6 +1,7 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { LinearGradient } from "expo-linear-gradient";
+import { COLORS } from "../../constants/theme";
 import { useWorkoutTypeScreen } from "./useWorkoutTypeScreen";
 import { styles } from "./WorkoutTypeScreen.styles";
 
@@ -15,7 +16,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           name={"chevron-left"}
           accessibilityLabel="Redirection vers la page d'accueil"
           size={24}
-          color={"#3BC95F"}
+          color={COLORS.primary}
           onPress={handleGoHome}
           style={{ marginLeft: 15, marginTop: 5 }}
         />
@@ -23,7 +24,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           <FontAwesome
             name={"info-circle"}
             size={30}
-            color={"#A3FD01"}
+            color={COLORS.primary}
             style={styles.infoIcon}
             accessibilityLabel="Donne une information pour choisir entre la séance personnalisé ou pré-définie"
           />
@@ -42,7 +43,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={handleGoToPersonalized}
         >
           <LinearGradient
-            colors={["#445B9F", "#3BC95F"]}
+            colors={["#445B9F", COLORS.primary]}
             start={{ x: 1, y: 0 }}
             end={{ x: 0, y: 1 }}
             style={styles.gradiant}
@@ -65,7 +66,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={handleGoToPredefined}
         >
           <LinearGradient
-            colors={["#445B9F", "#3BC95F"]}
+            colors={["#445B9F", COLORS.primary]}
             start={{ x: 1, y: 0 }}
             end={{ x: 0, y: 1 }}
             style={styles.gradiant}

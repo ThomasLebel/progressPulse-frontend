@@ -1,9 +1,16 @@
 import { BlurView } from "expo-blur";
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
 import ExerciseCard from "../../components/ExerciseCard";
 import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
 import CustomSetsModal from "./modals/CustomSetsModal";
 import TitleModal from "./modals/TitleModal";
 import { styles } from "./StartWorkoutScreen.styles";
@@ -82,7 +89,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
           <FontAwesome
             name={"chevron-left"}
             size={24}
-            color={"#3BC95F"}
+            color={COLORS.primary}
             accessibilityLabel="Redirection vers la page d'accueil"
           />
         </Pressable>
@@ -102,7 +109,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
           <FontAwesome
             name={isEditable ? "trash" : ""}
             size={24}
-            color={"#A3FD01"}
+            color={COLORS.primary}
             onPress={openAlertDeleteWorkout}
           />
         </Pressable>
@@ -148,7 +155,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
 
       <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
         <Button
-          background="#A3FD01"
+          background={COLORS.primary}
           borderColor="none"
           textButton={isEditable ? "Commencer la séance" : "Terminer la séance"}
           textColor="black"
@@ -170,7 +177,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
           name={"plus-circle"}
           accessibilityLabel={`Permet de rajouter un nouveau exercice`}
           size={45}
-          color={"#A3FD01"}
+          color={COLORS.primary}
           style={{ marginRight: 15 }}
           onPress={handleAddExercise}
         />
@@ -178,7 +185,11 @@ export default function StartWorkoutScreen({ navigation, route }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator size="large" color="#A3FD01" animating={true} />
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            animating={true}
+          />
         </View>
       )}
     </View>

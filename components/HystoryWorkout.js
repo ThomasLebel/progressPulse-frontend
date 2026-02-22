@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  Animated,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  Animated,
+  View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { COLORS } from "../constants/theme";
 
 export default function HystoryWorkout({
   name,
@@ -14,7 +15,7 @@ export default function HystoryWorkout({
   stars,
   ressenti,
   workouts,
-  accessibilityLabel
+  accessibilityLabel,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -61,7 +62,7 @@ export default function HystoryWorkout({
         <FontAwesome
           name={expanded ? "minus-circle" : "plus-circle"}
           size={25}
-          color={"#3BC95F"}
+          color={COLORS.primary}
           style={{ position: "absolute", right: 10, top: 10 }}
         />
         <View style={styles.starContainer}>{stars}</View>

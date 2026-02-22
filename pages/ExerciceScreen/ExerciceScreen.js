@@ -11,9 +11,10 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
 import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
+import { styles } from "./ExerciceScreen.styles";
 import InstructionsModal from "./modals/InstructionsModal";
 import { useExercice } from "./useExercice";
-import { styles } from "./ExerciceScreen.styles";
 
 export default function ExerciceScreen({ navigation, route }) {
   const {
@@ -51,7 +52,7 @@ export default function ExerciceScreen({ navigation, route }) {
               <FontAwesome
                 name={"chevron-left"}
                 size={32}
-                color={"#3BC95F"}
+                color={COLORS.primary}
                 accessibilityLabel="Redirection vers la page pour choisir un exercice"
               />
             </Pressable>
@@ -104,9 +105,13 @@ export default function ExerciceScreen({ navigation, route }) {
                     return (
                       <ScrollView key={`${i}-${j}`}>
                         <Text style={styles.performanceDate}>{fullDate}</Text>
-                        <View style={[styles.perfSection, { width: screenWidth }]}>
+                        <View
+                          style={[styles.perfSection, { width: screenWidth }]}
+                        >
                           {performance.sets.map((set, k) => {
-                            const { hours, minutes } = formatCardioDuration(set.rest);
+                            const { hours, minutes } = formatCardioDuration(
+                              set.rest,
+                            );
                             return (
                               <LinearGradient
                                 key={k}
@@ -125,8 +130,8 @@ export default function ExerciceScreen({ navigation, route }) {
                                   </Text>
                                 ) : (
                                   <Text style={styles.perf}>
-                                    Durée {set.rest / 60} min - Resistance/Inclinaison:{" "}
-                                    {set.weight}
+                                    Durée {set.rest / 60} min -
+                                    Resistance/Inclinaison: {set.weight}
                                   </Text>
                                 )}
                               </LinearGradient>
@@ -200,10 +205,12 @@ export default function ExerciceScreen({ navigation, route }) {
       >
         <Button
           textButton={
-            muscleGroup !== "Cardio" ? "Valider la série" : "Commencer l'exercice"
+            muscleGroup !== "Cardio"
+              ? "Valider la série"
+              : "Commencer l'exercice"
           }
           textColor="black"
-          background="#A3FD01"
+          background={COLORS.primary}
           width={300}
           height={60}
           borderColor="none"

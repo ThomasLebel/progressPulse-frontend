@@ -1,15 +1,16 @@
 import {
+  Dimensions,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
-  Dimensions,
 } from "react-native";
-import { LineChart, BarChart } from "react-native-chart-kit";
+import { BarChart, LineChart } from "react-native-chart-kit";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
-import { useStatsScreen } from "./useStatsScreen";
+import { COLORS } from "../../constants/theme";
 import { styles } from "./StatsScreen.styles";
+import { useStatsScreen } from "./useStatsScreen";
 
 const DEFAULT_LABELS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin"];
 
@@ -67,7 +68,7 @@ export default function StatsScreen({ navigation }) {
         <FontAwesome
           name={"info-circle"}
           size={20}
-          color={"#A3FD01"}
+          color={COLORS.primary}
           style={styles.infoIcon}
         />
         <Text style={styles.textInfo}>
@@ -81,7 +82,8 @@ export default function StatsScreen({ navigation }) {
       >
         <LineChart
           data={{
-            labels: labelsLineChart.length > 0 ? labelsLineChart : DEFAULT_LABELS,
+            labels:
+              labelsLineChart.length > 0 ? labelsLineChart : DEFAULT_LABELS,
             datasets: [
               {
                 data: weightsLineChart.length > 0 ? weightsLineChart : [0],
@@ -128,7 +130,7 @@ export default function StatsScreen({ navigation }) {
         <FontAwesome
           name={"info-circle"}
           size={20}
-          color={"#A3FD01"}
+          color={COLORS.primary}
           style={styles.infoIcon}
         />
         <Text style={styles.textInfo}>
@@ -142,7 +144,8 @@ export default function StatsScreen({ navigation }) {
       >
         <BarChart
           data={{
-            labels: labelsBarChart.length === 0 ? DEFAULT_LABELS : labelsBarChart,
+            labels:
+              labelsBarChart.length === 0 ? DEFAULT_LABELS : labelsBarChart,
             datasets: [
               {
                 data: dataBarChart,
