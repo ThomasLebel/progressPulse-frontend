@@ -1,11 +1,12 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
-import { useDispatch } from "react-redux";
-import { resetWorkoutCreation } from "../reducers/workoutCreation";
+import { useWorkoutTypeScreen } from "./useWorkoutTypeScreen";
+import { styles } from "./WorkoutTypeScreen.styles";
 
 export default function WorkoutTypeScreen({ navigation }) {
-  const dispatch = useDispatch();
+  const { handleGoHome, handleGoToPersonalized, handleGoToPredefined } =
+    useWorkoutTypeScreen(navigation);
 
   return (
     <View style={styles.container}>
@@ -15,7 +16,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           accessibilityLabel="Redirection vers la page d'accueil"
           size={24}
           color={"#3BC95F"}
-          onPress={() => navigation.navigate("Home")}
+          onPress={handleGoHome}
           style={{ marginLeft: 15, marginTop: 5 }}
         />
         <View style={styles.infoContainer}>
@@ -38,10 +39,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           accessibilityHint="Vous allez être redirigé vers la page des groupes musculaires"
           activeOpacity={0.7}
           style={styles.btn}
-          onPress={() => {
-            dispatch(resetWorkoutCreation());
-            navigation.navigate("muscleGroup");
-          }}
+          onPress={handleGoToPersonalized}
         >
           <LinearGradient
             colors={["#445B9F", "#3BC95F"]}
@@ -50,7 +48,7 @@ export default function WorkoutTypeScreen({ navigation }) {
             style={styles.gradiant}
           >
             <Image
-              source={require("../assets/illustrations/seance-perso.webp")}
+              source={require("../../assets/illustrations/seance-perso.webp")}
               style={styles.image}
             />
             <View style={styles.textBtnContainer}>
@@ -64,7 +62,7 @@ export default function WorkoutTypeScreen({ navigation }) {
           accessibilityHint="Vous allez être redirigé vers la page des différents niveau de séance"
           activeOpacity={0.7}
           style={styles.btn}
-          onPress={() => navigation.navigate("WorkoutDifficulty")}
+          onPress={handleGoToPredefined}
         >
           <LinearGradient
             colors={["#445B9F", "#3BC95F"]}
@@ -73,7 +71,7 @@ export default function WorkoutTypeScreen({ navigation }) {
             style={styles.gradiant}
           >
             <Image
-              source={require("../assets/illustrations/seance-predef.webp")}
+              source={require("../../assets/illustrations/seance-predef.webp")}
               style={styles.image}
             />
             <View style={styles.textBtnContainer}>
@@ -86,57 +84,3 @@ export default function WorkoutTypeScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0D0D36",
-    paddingVertical: 50,
-    paddingHorizontal: 10,
-  },
-  topContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  infoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  infoIcon: {
-    marginRight: 10,
-  },
-  textInfo: {
-    color: "white",
-  },
-  btnContainer: {
-    flex: 4,
-    gap: 20,
-    justifyContent: "center",
-  },
-  btn: {
-    borderRadius: 20,
-    overflow: "hidden",
-  },
-  gradiant: {
-    height: 230,
-    width: "100%",
-    maxWidth: 500,
-    justifyContent: "flex-start",
-  },
-  image: {
-    width: "60%",
-    height: "100%",
-    resizeMode: "cover",
-  },
-  textBtnContainer: {
-    position: "absolute",
-    bottom: 50,
-    right: 10,
-  },
-  btnText: {
-    color: "white",
-    fontSize: 40,
-    fontWeight: 600,
-    textAlign: "right",
-  },
-});
