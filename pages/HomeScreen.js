@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-import Button from "../components/Button";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
 import BtnWorkoutSession from "../components/BtnWorkoutSession";
+import Button from "../components/Button";
 import Underline from "../components/Underline";
 import imagesWorkout from "../utils/imagesWorkout";
 
@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }) {
     } else {
       nbExercises = element.exercises.length + " exercices";
     }
-    
+
     //durée du workout
     const time = () => {
       let times = 0;
@@ -41,10 +41,9 @@ export default function HomeScreen({ navigation }) {
         //Pour chaque exercice : (nombre de série * temps de repos + nombre de série * 45s) / 60 pour l'avoir en minutes
         //Pour le temps complet : ((nombre de série * temps de repos + nombre de série * 45s) / 60) * nombre d'exercices dans le workout
         times +=
-          ((element.exercises[i].customSets.length * element.exercises[i].rest +
+          (element.exercises[i].customSets.length * element.exercises[i].rest +
             element.exercises[i].customSets.length * 30) /
-            60)
-        
+          60;
       }
       return Math.round(times);
     };
@@ -97,7 +96,9 @@ export default function HomeScreen({ navigation }) {
             onPress={handleAddWorkout}
             isLinearGradiant={false}
             accessibilityLabel={"Ajouter une séance d'entrainement"}
-            accessibilityHint={"On va pouvoir rajouter une séance pré-défini ou personnalisé"}
+            accessibilityHint={
+              "On va pouvoir rajouter une séance pré-défini ou personnalisé"
+            }
           />
         </View>
         {workouts.length === 0 && (
@@ -122,7 +123,10 @@ export default function HomeScreen({ navigation }) {
           )
         )}
         <View style={styles.btn}>
-          <ScrollView contentContainerStyle={{ paddingBottom: 85 }}>
+          <ScrollView
+            contentContainerStyle={{ paddingBottom: 85 }}
+            showsVerticalScrollIndicator={false}
+          >
             {workoutsToShow}
           </ScrollView>
         </View>
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 600,
     color: "white",
-    paddingTop: 10
+    paddingTop: 10,
   },
 
   infoContainer: {

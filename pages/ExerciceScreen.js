@@ -1,21 +1,22 @@
+import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
+import { useEffect, useState } from "react";
 import {
+  Dimensions,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Modal,
-  ScrollView,
-  Dimensions,
-  Platform
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useSelector } from "react-redux";
 import Button from "../components/Button";
 import Underline from "../components/Underline";
-import { useState, useEffect } from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import { useSelector } from "react-redux";
 import images from "../utils/images";
-import { Image } from "expo-image";
 
 export default function Exercice({ navigation, route }) {
   const { workoutID, exerciseID } = route.params || {};
@@ -31,7 +32,7 @@ export default function Exercice({ navigation, route }) {
 
   // Recherche de l'exercice avec l'exerciseID reçu en props
   const exerciseSelected = workoutSelected.exercises.find(
-    (exercise) => exercise.exercise._id === exerciseID
+    (exercise) => exercise.exercise._id === exerciseID,
   );
 
   // Stockage du nom du groupe musculaire de l'exercice sélectionné
@@ -63,7 +64,7 @@ export default function Exercice({ navigation, route }) {
   // Vérification si l'exercice est présent dans le reducers et combien de sets ont été enregistrés
   useEffect(() => {
     const exerciseExist = currentWorkout.performances.find(
-      (e) => e.exercise === exerciseID
+      (e) => e.exercise === exerciseID,
     );
     if (exerciseExist) {
       setCurrentSet(exerciseExist.sets.length + 1);
@@ -73,11 +74,11 @@ export default function Exercice({ navigation, route }) {
   // Récupération de l'historique de performance pour cette séance et cet exercice
   const workoutsHistory = useSelector((state) => state.workoutsHistory.value);
   const currentWorkoutHistory = workoutsHistory.filter(
-    (workout) => workout.workoutID === workoutID
+    (workout) => workout.workoutID === workoutID,
   );
   // Tri de l'historique par date la plus récente à la plus ancienne
   const sortedCurrentWorkoutHistory = currentWorkoutHistory.sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.date) - new Date(a.date),
   );
   let mostRecentWorkout = null;
   let mostRecentExercise = null;
@@ -129,7 +130,7 @@ export default function Exercice({ navigation, route }) {
           return null;
         })
         .filter((item) => item !== null);
-    }
+    },
   );
 
   useEffect(() => {
@@ -183,89 +184,83 @@ export default function Exercice({ navigation, route }) {
       <View>
         <View style={styles.imageContainer}>
           <View style={styles.arrowContainer}>
-            <FontAwesome
-              name={"chevron-left"}
-              size={24}
-              color={"#3BC95F"}
-              accessibilityLabel="Redirection vers la page pour choisir un exercice"
+            <Pressable
+              style={styles.backRowContainer}
               onPress={() =>
                 navigation.navigate("startWorkout", { workoutID: workoutID })
               }
-              style={{ marginLeft: 15, marginTop: 40 }}
-            />
+            >
+              <FontAwesome
+                name={"chevron-left"}
+                size={32}
+                color={"#3BC95F"}
+                accessibilityLabel="Redirection vers la page pour choisir un exercice"
+              />
+            </Pressable>
           </View>
 
           <Image style={styles.image} source={imagePath}></Image>
         </View>
       </View>
-      <View style={styles.instruction}>
-        <Text style={styles.title}>{exerciseSelected.exercise.name}</Text>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.btn}
-          accessibilityLabel="Voir les informations sur l'exécution de l'exercice"
-          accessibilityHint="Ouvre une modale"
-          onPress={openModal}
-        >
-          <Text style={styles.textButton}>Voir les instructions</Text>
-        </TouchableOpacity>
-      </View>
-
-      {!noHistory && (
-        <View style={styles.perfContainer}>
-          <Text style={styles.text}>Performances de tes dernières séances</Text>
-          <Underline width={100} />
-          <ScrollView
-            horizontal={true}
-            snapToInterval={screenWidth}
-            snapToAlignment="start" // Alignement au début
-            pagingEnabled={false} // Désactive pagingEnabled (parfois redondant avec snapToInterval)
-            decelerationRate="fast"
-            contentContainerStyle={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            showsHorizontalScrollIndicator={false}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.bottomContainer}
+      >
+        <View style={styles.instruction}>
+          <Text style={styles.title}>{exerciseSelected.exercise.name}</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.btn}
+            accessibilityLabel="Voir les informations sur l'exécution de l'exercice"
+            accessibilityHint="Ouvre une modale"
+            onPress={openModal}
           >
-            {exerciseHistoryToShow}
-          </ScrollView>
+            <Text style={styles.textButton}>Voir les instructions</Text>
+          </TouchableOpacity>
         </View>
-      )}
-      <View>
-        <Text style={styles.text}>Objectifs de la série</Text>
-        <Underline width={100} />
-        <Text style={styles.serie}>
-          Série {currentSet} sur {exerciseSelected.customSets.length}
-        </Text>
-        <View style={styles.objContainer}>
-          {muscleGroup != "Cardio" && (
-            <LinearGradient
-              colors={["#1C1C45", "#4645AB"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.linearObj}
-            >
-              <Text style={styles.obj}>
-                Nombre de répétitons : {exerciseSelected.customSets[0].reps}
-              </Text>
-            </LinearGradient>
-          )}
-          <LinearGradient
-            colors={["#1C1C45", "#4645AB"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.linearObj}
-          >
-            <Text style={styles.obj}>
-              {muscleGroup != "Cardio"
-                ? "Charge :"
-                : "Résistance / Inclinaison : "}{" "}
-              {exerciseSelected.customSets[0].weight}{" "}
-              {muscleGroup != "Cardio" && "kg"}
+
+        {!noHistory && (
+          <View style={styles.perfContainer}>
+            <Text style={styles.text}>
+              Performances de tes dernières séances
             </Text>
-          </LinearGradient>
-          {muscleGroup === "Cardio" && (
+            <Underline width={100} />
+            <ScrollView
+              horizontal={true}
+              snapToInterval={screenWidth}
+              snapToAlignment="start" // Alignement au début
+              pagingEnabled={false} // Désactive pagingEnabled (parfois redondant avec snapToInterval)
+              decelerationRate="fast"
+              contentContainerStyle={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              showsHorizontalScrollIndicator={false}
+            >
+              {exerciseHistoryToShow}
+            </ScrollView>
+          </View>
+        )}
+        <View style={styles.goalsContainer}>
+          <Text style={styles.text}>Objectifs de la série</Text>
+          <Underline width={100} />
+          <Text style={styles.serie}>
+            Série {currentSet} sur {exerciseSelected.customSets.length}
+          </Text>
+          <View style={styles.objContainer}>
+            {muscleGroup != "Cardio" && (
+              <LinearGradient
+                colors={["#1C1C45", "#4645AB"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.linearObj}
+              >
+                <Text style={styles.obj}>
+                  Nombre de répétitons : {exerciseSelected.customSets[0].reps}
+                </Text>
+              </LinearGradient>
+            )}
             <LinearGradient
               colors={["#1C1C45", "#4645AB"]}
               start={{ x: 0, y: 0 }}
@@ -273,15 +268,36 @@ export default function Exercice({ navigation, route }) {
               style={styles.linearObj}
             >
               <Text style={styles.obj}>
-                Durée : {Math.floor(exerciseSelected.rest / 3600)} h{" "}
-                {Math.floor((exerciseSelected.rest % 3600) / 60)} min
+                {muscleGroup != "Cardio"
+                  ? "Charge :"
+                  : "Résistance / Inclinaison : "}{" "}
+                {exerciseSelected.customSets[0].weight}{" "}
+                {muscleGroup != "Cardio" && "kg"}
               </Text>
             </LinearGradient>
-          )}
+            {muscleGroup === "Cardio" && (
+              <LinearGradient
+                colors={["#1C1C45", "#4645AB"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.linearObj}
+              >
+                <Text style={styles.obj}>
+                  Durée : {Math.floor(exerciseSelected.rest / 3600)} h{" "}
+                  {Math.floor((exerciseSelected.rest % 3600) / 60)} min
+                </Text>
+              </LinearGradient>
+            )}
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
-      <View style={[styles.button, Platform.OS === "ios" ? { bottom: 10 } : { bottom: -5 }]}>
+      <View
+        style={[
+          styles.button,
+          Platform.OS === "ios" ? { bottom: 10 } : { bottom: -5 },
+        ]}
+      >
         <Button
           textButton={
             muscleGroup != "Cardio"
@@ -310,12 +326,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#0D0D36",
+    paddingHorizontal: 0,
+  },
+
+  bottomContainer: {
     paddingHorizontal: 10,
   },
 
   imageContainer: {
     height: 350,
-    width: "100%",
+    width: "100vw%",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     backgroundColor: "white",
@@ -326,7 +346,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
+  backRowContainer: {
+    position: "absolute",
+    left: 20,
+    top: 60,
+    width: 50,
+  },
+
   image: {
+    marginTop: 50,
     width: 280,
     height: 280,
   },
@@ -421,6 +449,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginHorizontal: 10,
+  },
+
+  goalsContainer: {
+    marginBottom: 150,
   },
 
   modalContainer: {

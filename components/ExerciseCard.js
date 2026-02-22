@@ -1,12 +1,10 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import images from "../utils/images";
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch, useSelector } from "react-redux";
+import images from "../utils/images";
 
 const ExerciseCard = ({
   exerciseName,
@@ -23,20 +21,17 @@ const ExerciseCard = ({
   startExercise,
   accessibilityLabel,
   image,
-  exerciseAddedImg
+  exerciseAddedImg,
 }) => {
   const dispatch = useDispatch();
 
   // Récupération de la séance en cours
   const currentWorkout = useSelector((state) => state.currentWorkout.value);
   const currentExercise = currentWorkout.performances.find(
-    (e) => e.exercise === exerciseID
+    (e) => e.exercise === exerciseID,
   );
 
-  const imagePath = images[muscleGroup.toLowerCase()][
-    image
-  ];
-
+  const imagePath = images[muscleGroup.toLowerCase()][image];
 
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -61,7 +56,7 @@ const ExerciseCard = ({
       numberOfSets,
       restMinutes,
       restSeconds,
-      muscleGroup
+      muscleGroup,
     );
   };
 
@@ -83,7 +78,10 @@ const ExerciseCard = ({
           <Text style={styles.title}>{exerciseName}</Text>
         </View>
         <View style={styles.imgContainer}>
-        <Image style={styles.img} source={image ? imagePath : exerciseAddedImg}></Image>
+          <Image
+            style={styles.img}
+            source={image ? imagePath : exerciseAddedImg}
+          ></Image>
         </View>
         <LinearGradient
           colors={["#1C1C45", "#4645AB"]}
@@ -162,7 +160,7 @@ export default ExerciseCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: 340,
+    width: "90vw",
     height: 140,
 
     borderRadius: 10,
@@ -191,7 +189,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-    paddingLeft: "42"
+    paddingLeft: "42",
   },
   textContainer: {
     justifyContent: "space-around",
@@ -211,20 +209,19 @@ const styles = StyleSheet.create({
     bottom: -10,
     right: -5,
   },
-  imgContainer:{
+  imgContainer: {
     width: 80,
     height: 80,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     position: "absolute",
     zIndex: 9999,
     top: 30,
     left: -40,
     borderRadius: "20%",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   img: {
-    width:"100%",
-    height: "100%"
-
-  }
+    width: "100%",
+    height: "100%",
+  },
 });

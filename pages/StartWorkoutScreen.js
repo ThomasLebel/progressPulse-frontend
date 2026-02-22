@@ -1,31 +1,33 @@
+import { BlurView } from "expo-blur";
+import { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  ScrollView,
-  Modal,
-  KeyboardAvoidingView,
-  Platform,
   TextInput,
-  Alert,
-  ActivityIndicator,
+  View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button";
 import ExerciseCard from "../components/ExerciseCard";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import Underline from "../components/Underline";
-import {
-  removeWorkout,
-  removeExercise,
-  updateWorkoutSets,
-  updateWorkoutName,
-} from "../reducers/workouts";
 import {
   addWorkoutInformation,
   resetCurrentWorkout,
 } from "../reducers/currentWorkout";
+import {
+  removeExercise,
+  removeWorkout,
+  updateWorkoutName,
+  updateWorkoutSets,
+} from "../reducers/workouts";
 import { updateNameWorkoutHistory } from "../reducers/workoutsHistory";
 
 export default function WorkoutSummaryScreen({ navigation, route }) {
@@ -65,11 +67,11 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       return groups;
     },
     //accumulateur initial est un objet vide
-    {}
+    {},
   );
 
   const [workoutNameInput, setWorkoutNameInput] = useState(
-    workoutSelected.name
+    workoutSelected.name,
   );
 
   // Récupération de l'historique de la séance en cours
@@ -108,7 +110,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
     nbSets,
     restMinutes,
     restSeconds,
-    muscleGroup
+    muscleGroup,
   ) => {
     // Mise à jour des états locaux avec les valeurs des arguments passés
     setExerciseName(exerciseName);
@@ -155,13 +157,13 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
               updateWorkoutName({
                 workoutID: workoutID,
                 newName: workoutNameInput,
-              })
+              }),
             );
             dispatch(
               updateNameWorkoutHistory({
                 workoutID: workoutID,
                 newName: workoutNameInput,
-              })
+              }),
             );
             setIsLoading(false);
           } else {
@@ -251,7 +253,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
               navigation.navigate("Home");
             },
           },
-        ]
+        ],
       );
     } else {
       navigation.navigate("Home");
@@ -265,7 +267,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       <View style={styles.groupTitleSection} key={muscleGroup}>
         <Text style={styles.groupTitle}>{muscleGroup}</Text>
         <Underline width={40} />
-      </View>
+      </View>,
     );
     const newExercisesToAdd = groupedWorkoutExercises[muscleGroup].map(
       (exercise, i) => {
@@ -298,7 +300,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             image={exercise.exercise.image}
           />
         );
-      }
+      },
     );
     exercisesToShow.push(newExercisesToAdd);
   }
@@ -310,7 +312,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-      }
+      },
     )
       .then((response) => response.json())
       .then((data) => {
@@ -337,7 +339,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             handleDeleteWorkout();
           },
         },
-      ]
+      ],
     );
   };
 
@@ -526,35 +528,48 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         </KeyboardAvoidingView>
       </Modal>
       <View style={styles.topContainer}>
-        <FontAwesome
-          name={"chevron-left"}
-          size={24}
-          color={"#3BC95F"}
-          onPress={handleGoToHome}
-          accessibilityLabel="Redirection vers la page d'accueil"
-        />
+        <Pressable style={styles.backRowContainer} onPress={handleGoToHome}>
+          <FontAwesome
+            name={"chevron-left"}
+            size={24}
+            color={"#3BC95F"}
+            accessibilityLabel="Redirection vers la page d'accueil"
+          />
+        </Pressable>
         <View style={styles.workoutNameSection}>
           <Text style={styles.topTitle}>{workoutSelected.name}</Text>
-          {isEditable && <FontAwesome
-            style={styles.pencilLogo}
-            name="pencil"
-            size={18}
-            color={"white"}
-            onPress={() => setModalTitleVisible(!modalTitleVisible)}
-          />}
+          {isEditable && (
+            <FontAwesome
+              style={styles.pencilLogo}
+              name="pencil"
+              size={18}
+              color={"white"}
+              onPress={() => setModalTitleVisible(!modalTitleVisible)}
+            />
+          )}
         </View>
-        <FontAwesome
-          name={isEditable ? "trash" : ""}
-          size={24}
-          color={"#A3FD01"}
-          onPress={openAlertDeleteWorkout}
-        />
+        <Pressable style={styles.binContainer} onPress={openAlertDeleteWorkout}>
+          <FontAwesome
+            name={isEditable ? "trash" : ""}
+            size={24}
+            color={"#A3FD01"}
+            onPress={openAlertDeleteWorkout}
+          />
+        </Pressable>
       </View>
 
       <View style={styles.mainContainer}>
-        <ScrollView>{exercisesToShow}</ScrollView>
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 150 }}
+          style={{ width: "100%" }}
+          alwaysBounceHorizontal={false}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          {exercisesToShow}
+        </ScrollView>
       </View>
-      <View style={styles.bottomContainer}>
+      <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
         <Button
           background="#A3FD01"
           borderColor="none"
@@ -578,7 +593,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
           name={"plus-circle"}
           accessibilityLabel={`Permet de rajouter un nouveau exercice`}
           size={45}
-          color={"white"}
+          color={"#A3FD01"}
           style={{ marginRight: 15 }}
           onPress={() =>
             navigation.navigate("muscleGroup", {
@@ -587,7 +602,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
             })
           }
         />
-      </View>
+      </BlurView>
       {isLoading && (
         <View style={styles.backgroundLoading}>
           <ActivityIndicator size="large" color="#A3FD01" animating={true} />
@@ -616,7 +631,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 2,
     borderBottomColor: "white",
+    marginTop: 15,
     marginBottom: 30,
+  },
+  backRowContainer: {
+    width: 50,
+  },
+  binContainer: {
+    width: 50,
+    display: "flex",
+    alignItems: "flex-end",
   },
   topTitle: {
     color: "white",
@@ -624,16 +648,18 @@ const styles = StyleSheet.create({
     fontWeight: 600,
   },
   mainContainer: {
-    flex: 10,
     justifyContent: "center",
     alignItems: "center",
+    height: "100vh",
   },
   bottomContainer: {
-    flex: 0.8,
+    position: "absolute",
+    bottom: 0,
+    paddingBottom: 10,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    width: "100%",
+    width: "100vw",
   },
   groupTitleSection: {
     justifyContent: "flex-start",
