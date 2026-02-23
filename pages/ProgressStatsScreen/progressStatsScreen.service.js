@@ -97,6 +97,20 @@ export function getAverageWorkoutsPerWeek(history) {
   return Math.round(avgPerWeek);
 }
 
+export function getMostFrequentWorkouts(history) {
+  const countMap = {};
+
+  history.forEach((workout) => {
+    const name = workout.workoutName;
+    if (!name) return;
+    countMap[name] = (countMap[name] || 0) + 1;
+  });
+
+  return Object.entries(countMap)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
 export function getMostFrequentExercises(history) {
   const countMap = {};
 

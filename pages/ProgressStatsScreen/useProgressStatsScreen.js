@@ -7,6 +7,7 @@ import {
   getBarChartData,
   getBarPercentage,
   getMostFrequentExercises,
+  getMostFrequentWorkouts,
   filterHistoryByPeriod,
   PERIODS,
   getChartTitle,
@@ -41,9 +42,14 @@ export function useProgressStatsScreen(navigation) {
   const chartTitle = getChartTitle(selectedPeriod);
   const barPercentage = getBarPercentage(selectedPeriod);
   const topExercises = getMostFrequentExercises(filteredHistory);
+  const topWorkouts = getMostFrequentWorkouts(filteredHistory);
 
   const handleNavigateToExercise = (exerciseName) => {
     navigation.navigate('exerciseStats', { exerciseName });
+  };
+
+  const handleNavigateToAllExercises = () => {
+    navigation.navigate('allExercises', { exercises: topExercises });
   };
 
   return {
@@ -54,7 +60,9 @@ export function useProgressStatsScreen(navigation) {
     chartTitle,
     barPercentage,
     topExercises,
+    topWorkouts,
     handleNavigateToExercise,
+    handleNavigateToAllExercises,
     selectedPeriod,
     setSelectedPeriod,
     dropdownOpen,

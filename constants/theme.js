@@ -17,4 +17,10 @@ export const COLORS = {
   // Tab bar gradient
   tabBarStart: "#77778E",
   tabBarEnd: "#3D3D5C",
+
+  // Rang podium
+  rankGold: "#FFD700",
+  rankSilver: "#9BA4B5",
+  rankBronze: "#CD7F32",
+  rankBarBg: "rgba(255, 255, 255, 0.08)",
 };
