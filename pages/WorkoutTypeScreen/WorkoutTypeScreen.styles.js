@@ -57,31 +57,37 @@ export const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: COLORS.primary,
   },
-  imageContainer: {
-    flex: 4,
-    height: "40%",
+  iconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 16,
+    marginLeft: 20,
+    marginRight: 4,
   },
-  image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+  iconCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: "rgba(139, 195, 74, 0.1)",
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
   },
   textBtnContainer: {
-    flex: 6,
-    paddingRight: 8,
-    paddingLeft: 16,
+    flex: 1,
+    paddingRight: 20,
+    paddingLeft: 20,
     justifyContent: "center",
   },
   btnText: {
     color: COLORS.textPrimary,
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "700",
-    lineHeight: 36,
+    lineHeight: 34,
   },
-  arrowIcon: {
-    marginTop: 12,
+  btnSubText: {
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    marginTop: 6,
   },
 });

@@ -1,22 +1,25 @@
 /**
- * Retourne la liste des niveaux de difficulté disponibles avec leur nom, image et identifiant.
- * @returns {{ name: string, source: any, id: number }[]}
+ * Retourne la liste des niveaux de difficulté disponibles avec leur nom, icône et identifiant.
+ * @returns {{ name: string, icon: string, subText: string, id: number }[]}
  */
 export function getDifficultyOptions() {
   return [
     {
       name: "Débutant",
-      source: require("../../assets/illustrations/debutant.webp"),
+      icon: "seedling",
+      subText: "Pour bien commencer",
       id: 1,
     },
     {
       name: "Intermédiaire",
-      source: require("../../assets/illustrations/intermediaire.webp"),
+      icon: "fire",
+      subText: "Tu as les bases",
       id: 2,
     },
     {
       name: "Confirmé",
-      source: require("../../assets/illustrations/confirme.webp"),
+      icon: "trophy",
+      subText: "Pousse tes limites",
       id: 3,
     },
   ];

@@ -1,4 +1,5 @@
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../../constants/theme";
 import { useWorkoutTypeScreen } from "./useWorkoutTypeScreen";
@@ -41,15 +42,18 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={handleGoToPersonalized}
         >
           <View style={styles.card}>
-            <View style={styles.accentBar} />
-            <View style={styles.imageContainer}>
-              <Image
-                source={require("../../assets/illustrations/seance-perso.webp")}
-                style={styles.image}
-              />
+            <View style={styles.iconContainer}>
+              <View style={styles.iconCircle}>
+                <FontAwesome6
+                  name="dumbbell"
+                  size={32}
+                  color={COLORS.primary}
+                />
+              </View>
             </View>
             <View style={styles.textBtnContainer}>
               <Text style={styles.btnText}>Séance{"\n"}personnalisée</Text>
+              <Text style={styles.btnSubText}>Construis ta séance</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -61,15 +65,18 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={handleGoToPredefined}
         >
           <View style={styles.card}>
-            <View style={styles.accentBar} />
-            <View style={styles.imageContainer}>
-              <Image
-                source={require("../../assets/illustrations/seance-predef.webp")}
-                style={styles.image}
-              />
+            <View style={styles.iconContainer}>
+              <View style={styles.iconCircle}>
+                <FontAwesome6
+                  name="book-open"
+                  size={32}
+                  color={COLORS.primary}
+                />
+              </View>
             </View>
             <View style={styles.textBtnContainer}>
               <Text style={styles.btnText}>Séance{"\n"}pré-définie</Text>
+              <Text style={styles.btnSubText}>Programme guidé par niveau</Text>
             </View>
           </View>
         </TouchableOpacity>

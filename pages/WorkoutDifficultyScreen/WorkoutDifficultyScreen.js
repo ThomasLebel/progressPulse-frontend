@@ -1,4 +1,5 @@
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
@@ -46,12 +47,18 @@ export default function WorkoutDifficultyScreen({ navigation }) {
             onPress={() => handleNavigateToWorkout(data.name)}
           >
             <View style={styles.card}>
-              <View style={styles.accentBar} />
-              <View style={styles.imageContainer}>
-                <Image source={data.source} style={styles.image} />
+              <View style={styles.iconContainer}>
+                <View style={styles.iconCircle}>
+                  <FontAwesome6
+                    name={data.icon}
+                    size={30}
+                    color={COLORS.primary}
+                  />
+                </View>
               </View>
               <View style={styles.textBtnContainer}>
                 <Text style={styles.btnText}>{data.name}</Text>
+                <Text style={styles.btnSubText}>{data.subText}</Text>
               </View>
             </View>
           </TouchableOpacity>
