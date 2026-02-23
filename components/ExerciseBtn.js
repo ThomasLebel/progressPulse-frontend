@@ -58,7 +58,7 @@ const ExerciseBtn = ({
       onPress={handlePress}
       style={styles.wrapper}
     >
-      <View style={styles.card}>
+      <View style={[styles.card, isAdded && styles.cardAdded]}>
         <View style={styles.imageContainer}>
           <Image source={image} style={styles.image} />
         </View>
@@ -73,7 +73,7 @@ const ExerciseBtn = ({
           <FontAwesome
             name={isAdded ? "check" : "plus"}
             size={14}
-            color={isAdded ? COLORS.accent : COLORS.accent}
+            color={isAdded ? COLORS.accent : COLORS.textPrimary}
           />
         </View>
       </View>
@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
     overflow: "hidden",
+  },
+  cardAdded: {
+    borderColor: COLORS.accent,
   },
   accentBar: {
     width: 4,
