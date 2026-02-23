@@ -1,5 +1,4 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../constants/theme";
 
 const BtnMuscleGroup = ({
@@ -17,47 +16,46 @@ const BtnMuscleGroup = ({
       style={styles.btn}
       onPress={() => onPress(name)}
     >
-      <LinearGradient
-        colors={["#445B9F", COLORS.primary]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.gradiant}
-      >
+      <View style={styles.card}>
         <Text style={styles.btnText}>{name}</Text>
         <Image source={source} style={styles.image} />
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   btn: {
-    margin: 10,
+    margin: 8,
+  },
+  card: {
+    height: 80,
+    width: 160,
+    borderRadius: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
+  },
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
   },
   btnText: {
-    fontSize: 20,
-    fontWeight: 600,
-    bottom: 5,
-    left: 5,
-    position: "absolute",
-    color: "white",
-    zIndex: 2,
+    flex: 1,
+    fontSize: 14,
+    fontWeight: "600",
+    color: COLORS.textPrimary,
+    paddingLeft: 12,
   },
-
   image: {
-    width: "50%",
-    height: "100%",
-    resizeMode: "cover",
-    marginRight: 5,
-  },
-
-  gradiant: {
-    height: 70,
-    width: 170,
-    borderRadius: 10,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    flexDirection: "row",
+    width: 48,
+    height: 48,
+    resizeMode: "contain",
+    marginRight: 8,
   },
 });
 

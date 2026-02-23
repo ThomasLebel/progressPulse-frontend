@@ -42,7 +42,6 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={handleGoToPersonalized}
         >
           <View style={styles.card}>
-            <View style={styles.accentBar} />
             <View style={styles.imageContainer}>
               <Image
                 source={require("../../assets/illustrations/seance-perso.webp")}
@@ -62,7 +61,6 @@ export default function WorkoutTypeScreen({ navigation }) {
           onPress={handleGoToPredefined}
         >
           <View style={styles.card}>
-            <View style={styles.accentBar} />
             <View style={styles.imageContainer}>
               <Image
                 source={require("../../assets/illustrations/seance-predef.webp")}

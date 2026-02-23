@@ -4,74 +4,78 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
     paddingVertical: 50,
     paddingHorizontal: 10,
+  },
+  topContainer: {
+    flex: 1,
+    justifyContent: "space-between",
   },
   title: {
     marginTop: 20,
     fontSize: 28,
-    color: "white",
-    fontWeight: 600,
+    color: COLORS.textPrimary,
+    fontWeight: "700",
   },
-
   infoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
   },
-
   infoIcon: {
     marginRight: 10,
   },
-
   textInfo: {
-    color: "white",
+    color: COLORS.textPrimary,
+    fontSize: 14,
+    lineHeight: 20,
   },
-
   btnContainer: {
-    flex: 1,
+    flex: 4,
     gap: 20,
     justifyContent: "center",
   },
-
-  text: {
-    fontSize: 50,
-    padding: 50,
-    textAlign: "center",
-    color: "white",
-  },
-
   btn: {
-    fontSize: 40,
-    borderRadius: 10,
-    backgroundColor: COLORS.primary,
-    margin: 20,
-    borderRadius: 20,
+    borderRadius: 16,
+    overflow: "hidden",
   },
-
-  btnText: {
-    fontSize: 30,
-    fontWeight: 600,
-    top: 40,
-    right: 10,
-    position: "absolute",
-    color: "white",
-    textAlign: "right",
-  },
-
-  image: {
-    width: "35%",
-    height: "100%",
-    resizeMode: "cover",
-    marginLeft: 10,
-  },
-
-  gradiant: {
-    height: 120,
+  card: {
+    height: 160,
     width: "100%",
     maxWidth: 500,
-    borderRadius: 20,
-    justifyContent: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+  },
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
+  },
+  imageContainer: {
+    flex: 4,
+    height: "70%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 16,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
+  textBtnContainer: {
+    flex: 6,
+    paddingRight: 8,
+    paddingLeft: 16,
+    justifyContent: "center",
+  },
+  btnText: {
+    color: COLORS.textPrimary,
+    fontSize: 24,
+    fontWeight: "700",
+    lineHeight: 32,
   },
 });
