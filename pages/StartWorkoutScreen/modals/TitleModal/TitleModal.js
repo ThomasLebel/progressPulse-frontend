@@ -1,14 +1,13 @@
 import {
-  Alert,
   KeyboardAvoidingView,
   Modal,
   Platform,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./TitleModal.styles";
 
@@ -25,10 +24,7 @@ export default function TitleModal({
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-        onClose();
-      }}
+      onRequestClose={onClose}
     >
       <KeyboardAvoidingView
         style={styles.modalBackground}
@@ -38,16 +34,15 @@ export default function TitleModal({
           <View style={styles.crossContainer}>
             <FontAwesome
               name={"times"}
-              size={30}
-              color={"white"}
+              size={24}
+              color={COLORS.textSecondary}
               onPress={onClose}
-              style={styles.infoIcon}
             />
           </View>
           <View style={styles.infoContainer}>
             <FontAwesome
               name={"info-circle"}
-              size={30}
+              size={18}
               color={COLORS.primary}
               style={styles.infoIcon}
             />
@@ -58,6 +53,7 @@ export default function TitleModal({
             <TextInput
               style={styles.input}
               placeholder="Saisis un nom"
+              placeholderTextColor={COLORS.textSecondary}
               onChangeText={onChangeWorkoutName}
               value={workoutNameInput}
             />
@@ -67,16 +63,13 @@ export default function TitleModal({
               Veuillez saisir un nom de séance
             </Text>
           )}
-          <Button
-            textButton="Renommer ma séance"
-            textColor={COLORS.primary}
-            width="260"
-            height="40"
-            background="#272D34"
-            borderWidth={1}
-            borderColor={COLORS.primary}
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.button}
             onPress={onChangeName}
-          />
+          >
+            <Text style={styles.buttonText}>Renommer ma séance</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </Modal>

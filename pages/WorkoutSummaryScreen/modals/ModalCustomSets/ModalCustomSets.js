@@ -4,10 +4,10 @@ import {
   Platform,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import Underline from "../../../../components/Underline";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./ModalCustomSets.styles";
@@ -40,11 +40,10 @@ export default function ModalCustomSets({
           <View style={styles.crossContainer}>
             <FontAwesome
               name={"times"}
-              size={30}
-              color={"white"}
+              size={24}
+              color={COLORS.textSecondary}
               onPress={onClose}
               accessibilityLabel="Fermer la modale"
-              style={styles.infoIcon}
             />
           </View>
           <View style={styles.modalTitleContainer}>
@@ -54,7 +53,7 @@ export default function ModalCustomSets({
           <View style={styles.infoContainer}>
             <FontAwesome
               name={"info-circle"}
-              size={30}
+              size={18}
               color={COLORS.primary}
               style={styles.infoIcon}
             />
@@ -74,6 +73,7 @@ export default function ModalCustomSets({
               placeholder={
                 muscleGroup === "Cardio" ? "Résistance/Inclinaison" : "Charge"
               }
+              placeholderTextColor={COLORS.textSecondary}
               keyboardType="numeric"
               onChangeText={onChangeCharge}
               value={charge}
@@ -84,6 +84,7 @@ export default function ModalCustomSets({
                 <TextInput
                   style={styles.input}
                   placeholder="Nombre de séries"
+                  placeholderTextColor={COLORS.textSecondary}
                   accessibilityLabel="Modifier si besoin le nombre de série de l'exercice"
                   keyboardType="numeric"
                   onChangeText={onChangeNbSets}
@@ -93,6 +94,7 @@ export default function ModalCustomSets({
                 <TextInput
                   style={styles.input}
                   placeholder="Nombre de répétitions"
+                  placeholderTextColor={COLORS.textSecondary}
                   accessibilityLabel="Modifier si besoin le nombre de répétitions de l'exercice"
                   keyboardType="numeric"
                   onChangeText={onChangeNbReps}
@@ -107,6 +109,7 @@ export default function ModalCustomSets({
               <TextInput
                 style={styles.restInput}
                 placeholder="Minutes"
+                placeholderTextColor={COLORS.textSecondary}
                 keyboardType="numeric"
                 accessibilityLabel="Modifier si besoin le temps de repos en minute de l'exercice"
                 onChangeText={onChangeRestMinutes}
@@ -118,6 +121,7 @@ export default function ModalCustomSets({
               <TextInput
                 style={styles.restInput}
                 placeholder="Secondes"
+                placeholderTextColor={COLORS.textSecondary}
                 keyboardType="numeric"
                 accessibilityLabel="Modifier si besoin le temps de repos en seconde de l'exercice"
                 onChangeText={onChangeRestSeconds}
@@ -133,20 +137,15 @@ export default function ModalCustomSets({
               Veuillez remplir tous les champs
             </Text>
           )}
-          <Button
-            textButton="Modifier les objectifs"
-            textColor={COLORS.primary}
-            width="260"
-            height="40"
-            background="#272D34"
-            borderWidth={1}
-            borderColor={COLORS.primary}
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.button}
             onPress={onSubmit}
-            accessibilityLabel={"Valider les changements apportés à l'exercice"}
-            accessibilityHint={
-              "Permet également de fermer la modale, on reste toujours sur la même page après cette action"
-            }
-          />
+            accessibilityLabel="Valider les changements apportés à l'exercice"
+            accessibilityHint="Permet également de fermer la modale"
+          >
+            <Text style={styles.buttonText}>Modifier les objectifs</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </Modal>

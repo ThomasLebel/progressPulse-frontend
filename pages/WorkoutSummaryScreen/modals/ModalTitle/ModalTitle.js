@@ -4,10 +4,10 @@ import {
   Platform,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./ModalTitle.styles";
 
@@ -35,17 +35,16 @@ export default function ModalTitle({
           <View style={styles.crossContainer}>
             <FontAwesome
               name={"times"}
-              size={30}
-              color={"white"}
+              size={24}
+              color={COLORS.textSecondary}
               onPress={onClose}
-              style={styles.infoIcon}
               accessibilityLabel="Fermer la modale"
             />
           </View>
           <View style={styles.infoContainer}>
             <FontAwesome
               name={"info-circle"}
-              size={30}
+              size={18}
               color={COLORS.primary}
               style={styles.infoIcon}
             />
@@ -56,6 +55,7 @@ export default function ModalTitle({
             <TextInput
               style={styles.input}
               placeholder="Saisis un nom"
+              placeholderTextColor={COLORS.textSecondary}
               accessibilityLabel="Donner un nom à la séance"
               onChangeText={onChangeWorkoutName}
               value={workoutName}
@@ -68,24 +68,19 @@ export default function ModalTitle({
           )}
           {postError && (
             <Text style={styles.errorMessage}>
-              Ce nom est déjà attribué à l'une de vos séances. Choissisez un
+              Ce nom est déjà attribué à l'une de vos séances. Choisissez un
               autre nom
             </Text>
           )}
-          <Button
-            textButton="Valider ma séance"
-            textColor={COLORS.primary}
-            width="260"
-            height="40"
-            background="#272D34"
-            borderWidth={1}
-            borderColor={COLORS.primary}
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.button}
             onPress={onSubmit}
-            accessibilityLabel={"Valider le nom donné à la séance"}
-            accessibilityHint={
-              "Vous serez redirigé vers la d'accueil après la validation. Votre séance crée s'affichera sur cette page"
-            }
-          />
+            accessibilityLabel="Valider le nom donné à la séance"
+            accessibilityHint="Vous serez redirigé vers la page d'accueil après la validation."
+          >
+            <Text style={styles.buttonText}>Valider ma séance</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </Modal>

@@ -4,10 +4,10 @@ import {
   Platform,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import Underline from "../../../../components/Underline";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./AddExerciseModal.styles";
@@ -47,10 +47,9 @@ export default function AddExerciseModal({
           <View style={styles.crossContainer}>
             <FontAwesome
               name={"times"}
-              size={30}
-              color={"white"}
+              size={24}
+              color={COLORS.textSecondary}
               onPress={onClose}
-              style={styles.infoIcon}
               accessibilityLabel="Fermer la modale"
             />
           </View>
@@ -61,7 +60,7 @@ export default function AddExerciseModal({
           <View style={styles.infoContainer}>
             <FontAwesome
               name={"info-circle"}
-              size={20}
+              size={18}
               color={COLORS.primary}
               style={styles.infoIcon}
             />
@@ -78,6 +77,7 @@ export default function AddExerciseModal({
             <TextInput
               style={styles.input}
               placeholder={isCardio ? "Resistance/Inclinaison" : "Charge"}
+              placeholderTextColor={COLORS.textSecondary}
               keyboardType="numeric"
               onChangeText={(value) => setCharge(value)}
               value={charge}
@@ -89,6 +89,7 @@ export default function AddExerciseModal({
                 <TextInput
                   style={styles.input}
                   placeholder="Nombre de séries"
+                  placeholderTextColor={COLORS.textSecondary}
                   keyboardType="numeric"
                   onChangeText={(value) => setNbSets(value)}
                   accessibilityLabel="Entrez le nombres de série pour l'exercice"
@@ -98,6 +99,7 @@ export default function AddExerciseModal({
                 <TextInput
                   style={styles.input}
                   placeholder="Nombre de répétitions"
+                  placeholderTextColor={COLORS.textSecondary}
                   keyboardType="numeric"
                   onChangeText={(value) => setNbReps(value)}
                   accessibilityLabel="Entrez le nombres de répétitions pour l'exercice"
@@ -114,6 +116,7 @@ export default function AddExerciseModal({
               <TextInput
                 style={styles.restInput}
                 placeholder="Minutes"
+                placeholderTextColor={COLORS.textSecondary}
                 keyboardType="numeric"
                 onChangeText={(value) => setRestMinutes(value)}
                 accessibilityLabel="Entrez le nombres de minutes pour l'exercice"
@@ -123,6 +126,7 @@ export default function AddExerciseModal({
               <TextInput
                 style={styles.restInput}
                 placeholder="Secondes"
+                placeholderTextColor={COLORS.textSecondary}
                 keyboardType="numeric"
                 onChangeText={(value) => setRestSeconds(value)}
                 accessibilityLabel="Entrez le nombres de secondes pour l'exercice"
@@ -136,22 +140,17 @@ export default function AddExerciseModal({
               Veuillez remplir tous les champs
             </Text>
           )}
-          <Button
-            textButton="Ajouter à la séance"
-            textColor={COLORS.primary}
-            width="260"
-            height="40"
-            accessibilityLabel={
-              "Ajouter l'exercice avec les modifications faites à la séance"
-            }
-            accessibilityHint={"Ferme la modale"}
-            background="#272D34"
-            borderWidth={1}
-            borderColor={COLORS.primary}
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.button}
             onPress={
               !isWorkoutAlreadyCreated ? addToWorkout : addToExistingWorkout
             }
-          />
+            accessibilityLabel="Ajouter l'exercice avec les modifications faites à la séance"
+            accessibilityHint="Ferme la modale"
+          >
+            <Text style={styles.buttonText}>Ajouter à la séance</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </Modal>

@@ -4,10 +4,10 @@ import {
   Platform,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./ChangeEmailModal.styles";
 
@@ -39,7 +39,7 @@ export default function ChangeEmailModal({
               <View style={styles.infoContainer}>
                 <FontAwesome
                   name={"exclamation-triangle"}
-                  size={25}
+                  size={20}
                   color={COLORS.primary}
                   style={styles.infoIcon}
                   accessibilityLabel="Message d'attention lorsque vous voulez changer vos coordonnées"
@@ -48,10 +48,9 @@ export default function ChangeEmailModal({
               </View>
               <FontAwesome
                 name={"times"}
-                size={30}
-                color={"white"}
+                size={24}
+                color={COLORS.textSecondary}
                 onPress={onClose}
-                style={styles.infoIcon}
                 accessibilityLabel="Permet de fermer la modale"
               />
             </View>
@@ -65,7 +64,7 @@ export default function ChangeEmailModal({
             <TextInput
               style={styles.input}
               placeholder={"Entrer votre nouvelle adresse email"}
-              placeholderTextColor={"#272D34"}
+              placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setEmail(value)}
               value={email}
               accessibilityLabel="Entrez votre nouvelle adress mail"
@@ -74,28 +73,21 @@ export default function ChangeEmailModal({
               style={styles.input}
               secureTextEntry={true}
               placeholder={"Mot de passe"}
-              placeholderTextColor={"#272D34"}
+              placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setPassword(value)}
               value={password}
               accessibilityLabel="Entrez votre mot de passe"
             />
             {error && <Text style={styles.errorText}>{errorMessage}</Text>}
-            <Button
-              textButton="Valider"
-              textColor={COLORS.primary}
-              width={180}
-              height={40}
-              background="#272D34"
-              borderWidth={1}
-              borderColor={COLORS.primary}
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.button}
               onPress={onSubmit}
-              accessibilityLabel={
-                "Permet de fermer la modale avec les coordonnées modifié"
-              }
-              accessibilityHint={
-                "Vous allez être redirigé vers la page réglages avec vos nouvelles coordonnées"
-              }
-            />
+              accessibilityLabel="Permet de fermer la modale avec les coordonnées modifiées"
+              accessibilityHint="Vous allez être redirigé vers la page réglages avec vos nouvelles coordonnées"
+            >
+              <Text style={styles.buttonText}>Valider</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>

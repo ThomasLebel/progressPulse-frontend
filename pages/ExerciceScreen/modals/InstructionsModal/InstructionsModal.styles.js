@@ -2,64 +2,72 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "../../../../constants/theme";
 
 export const styles = StyleSheet.create({
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+  },
+
   modalContainer: {
-    width: "80%",
-    height: "70%",
-    backgroundColor: "#272D34",
+    width: "85%",
+    maxHeight: "80%",
+    backgroundColor: COLORS.modalBackground,
     borderRadius: 20,
-    padding: 15,
-    margin: "auto",
+    padding: 20,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    shadowColor: "#000",
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 8,
   },
 
-  iconModal: {
+  crossContainer: {
+    width: "100%",
     alignItems: "flex-end",
+    marginBottom: 12,
   },
 
-  titleModal: {
-    marginTop: 10,
-    marginLeft: 15,
+  modalTitleContainer: {
+    marginBottom: 16,
   },
 
-  text: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: COLORS.textPrimary,
+    marginBottom: 6,
   },
 
   descriptionContainer: {
-    backgroundColor: "#D9D9D9",
-    justifyContent: "flex-start",
-    width: "90%",
-    height: "70%",
-    margin: "auto",
-    paddingLeft: 5,
-    paddingTop: 20,
-    borderRadius: 10,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    padding: 16,
+    maxHeight: 320,
+    marginBottom: 20,
   },
 
   sentence: {
-    paddingHorizontal: 10,
-    marginBottom: 15,
-  },
-
-  btn: {
-    width: "40%",
-    height: 35,
-    marginLeft: "auto",
-    marginRight: "auto",
+    color: COLORS.textSecondary,
+    fontSize: 14,
+    lineHeight: 22,
     marginBottom: 10,
-    paddingTop: 6,
-    backgroundColor: "transparent",
-    borderRadius: 10,
-    borderColor: COLORS.primary,
-    borderWidth: 1,
   },
 
-  textButton: {
-    color: COLORS.primary,
+  button: {
+    backgroundColor: COLORS.primary,
+    height: 44,
+    borderRadius: 10,
+    alignItems: "center",
     justifyContent: "center",
-    textAlign: "center",
-    padding: "auto",
+  },
+
+  buttonText: {
+    color: COLORS.background,
+    fontSize: 15,
+    fontWeight: "700",
   },
 });
