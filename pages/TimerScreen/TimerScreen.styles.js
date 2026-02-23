@@ -1,9 +1,11 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
+    paddingTop: 30,
     flex: 1,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
   },
 
   topContainer: {
@@ -14,49 +16,88 @@ export const styles = StyleSheet.create({
 
   title: {
     fontSize: 32,
-    color: "white",
+    color: COLORS.textPrimary,
     fontWeight: "bold",
+  },
+
+  /* ── Timer inactif (sélecteur) ─────────────────────────── */
+  timerContainer: {
+    height: "30%",
   },
 
   timer: {
-    width: "60%",
-    height: 100,
-    backgroundColor: "#D9D9D9",
-    borderRadius: 20,
+    width: "65%",
+    height: 90,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 30,
-  },
-
-  count: {
-    marginTop: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 24,
   },
 
   textTimer: {
-    fontSize: 60,
+    fontSize: 52,
     fontWeight: "bold",
-  },
-
-  btnContainer: {
-    alignItems: "center",
+    color: COLORS.accent,
+    letterSpacing: 3,
   },
 
   btn: {
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 16,
     marginBottom: 10,
   },
 
-  linear: {
-    height: "350",
-    width: "80%",
+  /* ── Timer actif (countdown) ────────────────────────────── */
+  timerContainerStarted: {
+    height: "34%",
+  },
+
+  count: {
+    marginTop: 24,
     justifyContent: "center",
-    margin: "auto",
-    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  timerLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 10,
+    textAlign: "center",
+    marginBottom: 4,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  },
+
+  btnInput: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  /* ── Section saisie (commune) ───────────────────────────── */
+  inputSection: {
+    flex: 1,
+    marginTop: 10,
+  },
+
+  /* Carte dégradée — saisie active */
+  linear: {
+    width: "88%",
+    alignSelf: "center",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
+  },
+
+  cardTopBar: {
+    width: "100%",
+    height: 3,
+    backgroundColor: COLORS.primary,
   },
 
   data: {
@@ -65,84 +106,80 @@ export const styles = StyleSheet.create({
   },
 
   text: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "400",
+    color: COLORS.textPrimary,
+    fontSize: 15,
+    fontWeight: "500",
+    paddingTop: 10,
   },
 
   inputContainer: {
     alignItems: "center",
+    marginTop: 8,
   },
 
   input: {
-    width: "70%",
-    height: "50",
-    backgroundColor: "#D9D9D9",
+    width: "80%",
+    height: 46,
+    backgroundColor: COLORS.background,
     borderRadius: 10,
-    padding: 10,
-    margin: 10,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    color: COLORS.textPrimary,
+    fontSize: 15,
   },
 
   errorMessage: {
     color: "#FF4500",
     textAlign: "center",
+    marginTop: 8,
+    fontSize: 13,
   },
 
+  btnContainer: {
+    alignItems: "center",
+    marginTop: 16,
+    marginBottom: 16,
+  },
+
+  /* Carte dégradée — saisie validée (readonly) */
   linearInput: {
-    height: 230,
-    width: "80%",
-    justifyContent: "flex-start",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 80,
-    borderRadius: 10,
+    width: "88%",
+    alignSelf: "center",
+    marginTop: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
   },
 
   pencil: {
     alignItems: "flex-end",
-    marginTop: 10,
-    marginRight: 15,
+    marginTop: 12,
+    marginRight: 16,
   },
 
   dataInput: {
-    paddingTop: 15,
+    paddingTop: 14,
     marginLeft: 20,
-    marginBottom: 12,
+    marginBottom: 4,
   },
 
   textTitle: {
-    color: "#ffffff",
-    fontSize: 18,
-    fontWeight: "400",
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    fontWeight: "500",
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
   },
 
   textInput: {
-    color: "#ffffff",
+    color: COLORS.accent,
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: "15",
-  },
-
-  btnInput: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  timerContainer: {
-    height: "30%",
-  },
-
-  timerContainerStarted: {
-    height: "32%",
-  },
-
-  inputSection: {
-    height: "45%",
-    marginTop: 5,
-  },
-
-  test: {
-    height: 200,
+    marginBottom: 14,
+    marginTop: 4,
   },
 });

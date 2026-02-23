@@ -49,6 +49,7 @@ export default function TimerScreen({ navigation, route }) {
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={290}
       >
         <View style={styles.topContainer}>
           <Text style={styles.title}>
@@ -56,6 +57,8 @@ export default function TimerScreen({ navigation, route }) {
           </Text>
           <Underline width={80} />
         </View>
+
+        {/* ── Timer inactif : sélecteur ────────────────────── */}
         {!isTimerVisible && (
           <View style={styles.timerContainer}>
             <TouchableOpacity style={styles.timer} onPress={handleOpenPicker}>
@@ -66,7 +69,7 @@ export default function TimerScreen({ navigation, route }) {
             <View style={styles.btn}>
               <Button
                 textButton="Démarrer le minuteur"
-                textColor="black"
+                textColor={COLORS.background}
                 width="70%"
                 height={50}
                 background={COLORS.primary}
@@ -75,7 +78,6 @@ export default function TimerScreen({ navigation, route }) {
                 accessibilityHint={"Le minuteur va se mettre en route"}
               />
             </View>
-            {/* Modal permettant de changer son temps de repos */}
             <TimerPickerModal
               visible={showPicker}
               setIsVisible={setShowPicker}
@@ -93,50 +95,33 @@ export default function TimerScreen({ navigation, route }) {
             />
           </View>
         )}
+
+        {/* ── Timer actif : countdown ──────────────────────── */}
         {isTimerVisible && (
           <View style={styles.timerContainerStarted}>
             <View style={styles.count}>
-              {/* Minuteur */}
               <CountdownCircleTimer
                 isPlaying={isPlaying}
                 duration={time}
-                colors={[
-                  COLORS.primary,
-                  "#850606",
-                  "#850606",
-                  "#850606",
-                  "#850606",
-                ]}
-                colorsTime={[5, 3, 2, 1, 0]}
+                colors={[COLORS.primary, "#E57373", "#EF5350", "#C62828"]}
+                colorsTime={[5, 3, 2, 1]}
+                trailColor={COLORS.cardBackground}
                 onComplete={handleTimerComplete}
                 updateInterval={1}
+                strokeWidth={5}
+                size={150}
               >
                 {({ remainingTime, color }) => {
                   const mins = Math.floor(remainingTime / 60);
                   const secs = remainingTime % 60;
                   return (
                     <View>
+                      <Text style={styles.timerLabel}>Restant</Text>
                       <Text
-                        style={{
-                          color: "#ffffff",
-                          fontSize: 18,
-                          textAlign: "center",
-                        }}
-                      >
-                        Restant :
-                      </Text>
-                      <Text
-                        style={{ color, fontSize: 40, textAlign: "center" }}
+                        style={{ color, fontSize: 35, textAlign: "center" }}
                       >
                         {mins}:{secs < 10 ? `0${secs}` : secs}
                       </Text>
-                      <Text
-                        style={{
-                          color: "#ffffff",
-                          fontSize: 18,
-                          textAlign: "center",
-                        }}
-                      ></Text>
                     </View>
                   );
                 }}
@@ -149,7 +134,7 @@ export default function TimerScreen({ navigation, route }) {
                     ? "Passer à la série suivante"
                     : "Terminer l'exercice"
                 }
-                textColor="black"
+                textColor={COLORS.background}
                 width="70%"
                 height={50}
                 background={COLORS.primary}
@@ -158,19 +143,21 @@ export default function TimerScreen({ navigation, route }) {
             </View>
           </View>
         )}
+
+        {/* ── Section saisie ───────────────────────────────── */}
         <View style={styles.inputSection}>
           {!input && (
             <LinearGradient
               style={styles.linear}
-              colors={["#4645AB", "#1C1C45"]}
-              start={{ x: 0, y: 1 }}
-              end={{ x: 1, y: 0 }}
+              colors={[COLORS.cardBackground, "#13132A"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
             >
               {muscleGroup != "Cardio" && (
                 <>
                   <View style={styles.data}>
-                    <Text style={styles.text}>
-                      Nombre de répétitions effectuées :{" "}
+                    <Text style={styles.textTitle}>
+                      Nombre de répétitions effectuées :
                     </Text>
                     <Underline width={60} />
                   </View>
@@ -178,6 +165,7 @@ export default function TimerScreen({ navigation, route }) {
                     <TextInput
                       style={styles.input}
                       placeholder="Nombre de répétitions"
+                      placeholderTextColor={COLORS.textSecondary}
                       keyboardType="numeric"
                       onChangeText={setReps}
                       value={reps}
@@ -186,10 +174,10 @@ export default function TimerScreen({ navigation, route }) {
                 </>
               )}
               <View style={styles.data}>
-                <Text style={styles.text}>
+                <Text style={styles.textTitle}>
                   {muscleGroup != "Cardio"
                     ? "Charge de l'exercice :"
-                    : "Résitance/Inclinaison"}
+                    : "Résistance/Inclinaison"}
                 </Text>
                 <Underline width={60} />
               </View>
@@ -197,8 +185,11 @@ export default function TimerScreen({ navigation, route }) {
                 <TextInput
                   style={styles.input}
                   placeholder={
-                    muscleGroup != "Cardio" ? "Charge" : "Résitance/Inclinaison"
+                    muscleGroup != "Cardio"
+                      ? "Charge"
+                      : "Résistance/Inclinaison"
                   }
+                  placeholderTextColor={COLORS.textSecondary}
                   keyboardType="numeric"
                   onChangeText={setWeight}
                   value={weight}
@@ -212,7 +203,7 @@ export default function TimerScreen({ navigation, route }) {
               <View style={styles.btnContainer}>
                 <Button
                   textButton="Valider la saisie"
-                  textColor="black"
+                  textColor={COLORS.background}
                   width="60%"
                   height={50}
                   background={COLORS.primary}
@@ -221,46 +212,43 @@ export default function TimerScreen({ navigation, route }) {
               </View>
             </LinearGradient>
           )}
+
           {input && (
-            <View style={styles}>
-              <LinearGradient
-                style={styles.linearInput}
-                colors={["#4645AB", "#1C1C45"]}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 1, y: 0 }}
-              >
-                <View style={styles.pencil}>
-                  <FontAwesome
-                    name={"pencil"}
-                    size={20}
-                    color={COLORS.primary}
-                    onPress={updateSet}
-                  />
-                </View>
-                {muscleGroup != "Cardio" && (
-                  <>
-                    <View style={styles.dataInput}>
-                      <Text style={styles.textTitle}>
-                        Nombre de répétitions effectuées :{" "}
-                      </Text>
-                      <Underline width={60} />
-                    </View>
-                    <Text style={styles.textInput}>{reps} répétitions</Text>
-                  </>
-                )}
-                <View style={styles.dataInput}>
-                  <Text style={styles.textTitle}>
-                    {muscleGroup != "Cardio"
-                      ? "Charge de l'exercice : "
-                      : "Résistance/Inclinaison : "}
-                  </Text>
-                  <Underline width={60} />
-                </View>
-                <Text style={styles.textInput}>
-                  {weight} {muscleGroup != "Cardio" && "kg"}
+            <LinearGradient
+              style={styles.linearInput}
+              colors={[COLORS.cardBackground, "#13132A"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+            >
+              <View style={styles.pencil}>
+                <FontAwesome
+                  name={"pencil"}
+                  size={20}
+                  color={COLORS.primary}
+                  onPress={updateSet}
+                />
+              </View>
+              {muscleGroup != "Cardio" && (
+                <>
+                  <View style={styles.dataInput}>
+                    <Text style={styles.textTitle}>Répétitions effectuées</Text>
+                    <Underline width={60} />
+                  </View>
+                  <Text style={styles.textInput}>{reps} répétitions</Text>
+                </>
+              )}
+              <View style={styles.dataInput}>
+                <Text style={styles.textTitle}>
+                  {muscleGroup != "Cardio"
+                    ? "Charge de l'exercice"
+                    : "Résistance / Inclinaison"}
                 </Text>
-              </LinearGradient>
-            </View>
+                <Underline width={60} />
+              </View>
+              <Text style={styles.textInput}>
+                {weight} {muscleGroup != "Cardio" && "kg"}
+              </Text>
+            </LinearGradient>
           )}
         </View>
       </KeyboardAvoidingView>

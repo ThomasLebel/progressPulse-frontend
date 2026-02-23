@@ -159,7 +159,6 @@ export default function ExerciceScreen({ navigation, route }) {
           {/* Goal cards */}
           {muscleGroup !== "Cardio" && (
             <View style={styles.goalCard}>
-              <View style={styles.goalAccentBar} />
               <Text style={styles.goalText}>
                 Répétitions : {exerciseSelected.customSets[0].reps}
               </Text>
@@ -167,7 +166,6 @@ export default function ExerciceScreen({ navigation, route }) {
           )}
 
           <View style={styles.goalCard}>
-            <View style={styles.goalAccentBar} />
             <Text style={styles.goalText}>
               {muscleGroup !== "Cardio" ? "Charge" : "Résistance / Inclinaison"}{" "}
               : {exerciseSelected.customSets[0].weight}
@@ -177,7 +175,6 @@ export default function ExerciceScreen({ navigation, route }) {
 
           {muscleGroup === "Cardio" && (
             <View style={styles.goalCard}>
-              <View style={styles.goalAccentBar} />
               <Text style={styles.goalText}>
                 Durée : {formatCardioDuration(exerciseSelected.rest).hours} h{" "}
                 {formatCardioDuration(exerciseSelected.rest).minutes} min
