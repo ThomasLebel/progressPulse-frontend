@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
-import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import { styles } from "./ExerciceScreen.styles";
 import InstructionsModal from "./modals/InstructionsModal";
@@ -45,56 +44,56 @@ export default function ExerciceScreen({ navigation, route }) {
         descriptionSentences={descriptionSentences}
       />
 
-      <View>
-        <View style={styles.imageContainer}>
-          <View style={styles.arrowContainer}>
-            <Pressable style={styles.backRowContainer} onPress={goBack}>
-              <FontAwesome
-                name={"chevron-left"}
-                size={32}
-                color={COLORS.primary}
-                accessibilityLabel="Redirection vers la page pour choisir un exercice"
-              />
-            </Pressable>
-          </View>
-          <Image style={styles.image} source={imagePath} />
-        </View>
+      {/* ── Full-width GIF with gradient overlay ── */}
+      <View style={styles.imageWrapper}>
+        <Image style={styles.image} source={imagePath} contentFit="cover" />
+        <LinearGradient
+          colors={["transparent", COLORS.background]}
+          style={styles.imageGradient}
+        />
+        <Pressable style={styles.backButton} onPress={goBack}>
+          <FontAwesome
+            name="chevron-left"
+            size={16}
+            color={COLORS.primary}
+            accessibilityLabel="Retour à la liste des exercices"
+          />
+        </Pressable>
       </View>
 
+      {/* ── Scrollable content ── */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.bottomContainer}
       >
-        <View style={styles.instruction}>
+        {/* Title + instructions button */}
+        <View style={styles.headerSection}>
           <Text style={styles.title}>{exerciseSelected.exercise.name}</Text>
           <TouchableOpacity
             activeOpacity={0.7}
-            style={styles.btn}
+            style={styles.instructionsBtn}
             accessibilityLabel="Voir les informations sur l'exécution de l'exercice"
             accessibilityHint="Ouvre une modale"
             onPress={openModal}
           >
-            <Text style={styles.textButton}>Voir les instructions</Text>
+            <Text style={styles.instructionsBtnText}>Instructions</Text>
           </TouchableOpacity>
         </View>
 
+        {/* ── Performance history ── */}
         {hasHistory && (
           <View style={styles.perfContainer}>
-            <Text style={styles.text}>
-              Performances de tes dernières séances
-            </Text>
-            <Underline width={100} />
+            <View style={styles.sectionHeader}>
+              <View style={styles.sectionAccent} />
+              <Text style={styles.sectionTitle}>Dernières performances</Text>
+            </View>
+
             <ScrollView
-              horizontal={true}
-              snapToInterval={screenWidth}
+              horizontal
+              snapToInterval={screenWidth - 32}
               snapToAlignment="start"
               pagingEnabled={false}
               decelerationRate="fast"
-              contentContainerStyle={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
               showsHorizontalScrollIndicator={false}
             >
               {sortedCurrentWorkoutHistory.map((history, i) => {
@@ -103,42 +102,37 @@ export default function ExerciceScreen({ navigation, route }) {
                   .map((performance, j) => {
                     if (performance.exercise._id !== exerciseID) return null;
                     return (
-                      <ScrollView key={`${i}-${j}`}>
+                      <View
+                        key={`${i}-${j}`}
+                        style={{ width: screenWidth - 32, paddingRight: 16 }}
+                      >
                         <Text style={styles.performanceDate}>{fullDate}</Text>
-                        <View
-                          style={[styles.perfSection, { width: screenWidth }]}
-                        >
+                        <View style={styles.perfSection}>
                           {performance.sets.map((set, k) => {
                             const { hours, minutes } = formatCardioDuration(
                               set.rest,
                             );
                             return (
-                              <LinearGradient
-                                key={k}
-                                colors={["#1C1C45", "#4645AB"]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={
-                                  muscleGroup !== "Cardio"
-                                    ? [styles.linearPerf]
-                                    : [styles.linearPerf, { width: "60%" }]
-                                }
-                              >
+                              <View key={k} style={styles.perfCard}>
+                                <View style={styles.perfAccentBar} />
+                                <Text style={styles.perfSerieLabel}>
+                                  S{k + 1}
+                                </Text>
                                 {muscleGroup !== "Cardio" ? (
-                                  <Text style={styles.perf}>
-                                    Série {k + 1} : {set.reps} x {set.weight}kg
+                                  <Text style={styles.perfText}>
+                                    {set.reps} reps · {set.weight} kg
                                   </Text>
                                 ) : (
-                                  <Text style={styles.perf}>
-                                    Durée {set.rest / 60} min -
-                                    Resistance/Inclinaison: {set.weight}
+                                  <Text style={styles.perfText}>
+                                    {set.rest / 60} min · Résistance{" "}
+                                    {set.weight}
                                   </Text>
                                 )}
-                              </LinearGradient>
+                              </View>
                             );
                           })}
                         </View>
-                      </ScrollView>
+                      </View>
                     );
                   })
                   .filter((item) => item !== null);
@@ -147,60 +141,57 @@ export default function ExerciceScreen({ navigation, route }) {
           </View>
         )}
 
+        {/* ── Goals section ── */}
         <View style={styles.goalsContainer}>
-          <Text style={styles.text}>Objectifs de la série</Text>
-          <Underline width={100} />
-          <Text style={styles.serie}>
-            Série {currentSet} sur {exerciseSelected.customSets.length}
-          </Text>
-          <View style={styles.objContainer}>
-            {muscleGroup !== "Cardio" && (
-              <LinearGradient
-                colors={["#1C1C45", "#4645AB"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.linearObj}
-              >
-                <Text style={styles.obj}>
-                  Nombre de répétitons : {exerciseSelected.customSets[0].reps}
-                </Text>
-              </LinearGradient>
-            )}
-            <LinearGradient
-              colors={["#1C1C45", "#4645AB"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.linearObj}
-            >
-              <Text style={styles.obj}>
-                {muscleGroup !== "Cardio"
-                  ? "Charge :"
-                  : "Résistance / Inclinaison : "}{" "}
-                {exerciseSelected.customSets[0].weight}{" "}
-                {muscleGroup !== "Cardio" && "kg"}
-              </Text>
-            </LinearGradient>
-            {muscleGroup === "Cardio" && (
-              <LinearGradient
-                colors={["#1C1C45", "#4645AB"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.linearObj}
-              >
-                <Text style={styles.obj}>
-                  Durée : {formatCardioDuration(exerciseSelected.rest).hours} h{" "}
-                  {formatCardioDuration(exerciseSelected.rest).minutes} min
-                </Text>
-              </LinearGradient>
-            )}
+          <View style={styles.sectionHeader}>
+            <View style={styles.sectionAccent} />
+            <Text style={styles.sectionTitle}>Objectifs de la série</Text>
           </View>
+
+          {/* Serie indicator badge */}
+          <View style={styles.serieBadge}>
+            <Text style={styles.serieBadgeLabel}>Série</Text>
+            <Text style={styles.serieBadgeValue}>
+              {currentSet} / {exerciseSelected.customSets.length}
+            </Text>
+          </View>
+
+          {/* Goal cards */}
+          {muscleGroup !== "Cardio" && (
+            <View style={styles.goalCard}>
+              <View style={styles.goalAccentBar} />
+              <Text style={styles.goalText}>
+                Répétitions : {exerciseSelected.customSets[0].reps}
+              </Text>
+            </View>
+          )}
+
+          <View style={styles.goalCard}>
+            <View style={styles.goalAccentBar} />
+            <Text style={styles.goalText}>
+              {muscleGroup !== "Cardio" ? "Charge" : "Résistance / Inclinaison"}{" "}
+              : {exerciseSelected.customSets[0].weight}
+              {muscleGroup !== "Cardio" && " kg"}
+            </Text>
+          </View>
+
+          {muscleGroup === "Cardio" && (
+            <View style={styles.goalCard}>
+              <View style={styles.goalAccentBar} />
+              <Text style={styles.goalText}>
+                Durée : {formatCardioDuration(exerciseSelected.rest).hours} h{" "}
+                {formatCardioDuration(exerciseSelected.rest).minutes} min
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
 
+      {/* ── CTA button ── */}
       <View
         style={[
           styles.button,
-          Platform.OS === "ios" ? { bottom: 10 } : { bottom: -5 },
+          Platform.OS === "ios" ? { bottom: 10 } : { bottom: 0 },
         ]}
       >
         <Button
