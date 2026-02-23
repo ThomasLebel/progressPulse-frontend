@@ -1,5 +1,4 @@
 import { FontAwesome5 } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../constants/theme";
@@ -16,21 +15,15 @@ export default function WorkoutSessionButton({
 }) {
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
+      activeOpacity={0.8}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       onPress={() => onPress(name)}
-      style={{
-        marginBottom: 20,
-        elevation: 5,
-      }}
+      style={styles.wrapper}
     >
-      <LinearGradient
-        colors={["#445B9F", COLORS.primary]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.gradiant}
-      >
+      <View style={styles.card}>
+        <View style={styles.accentBar} />
+
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -43,24 +36,16 @@ export default function WorkoutSessionButton({
         </View>
 
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            {name}
+          </Text>
           <View style={styles.iconWrapper}>
             <View style={styles.iconTimeContainer}>
-              <FontAwesome
-                name={"clock-o"}
-                size={17}
-                color={"white"}
-                style={{ opacity: 0.6 }}
-              />
+              <FontAwesome name={"clock-o"} size={13} color={COLORS.accent} />
               <Text style={styles.text}>{time}</Text>
             </View>
             <View style={styles.iconExerciseContainer}>
-              <FontAwesome5
-                name={"dumbbell"}
-                size={15}
-                color={"white"}
-                style={{ opacity: 0.6 }}
-              />
+              <FontAwesome5 name={"dumbbell"} size={12} color={COLORS.accent} />
               <Text style={styles.text}>{nbExercise}</Text>
             </View>
           </View>
@@ -68,79 +53,94 @@ export default function WorkoutSessionButton({
             <Text style={styles.btnText}>{textBtn}</Text>
             <FontAwesome
               name={"long-arrow-right"}
-              size={20}
-              color={"#1D632F"}
+              size={14}
+              color={COLORS.background}
             />
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 }
+
 const styles = StyleSheet.create({
-  gradiant: {
-    borderRadius: 15,
+  wrapper: {
+    marginBottom: 16,
+  },
+  card: {
+    borderRadius: 16,
     width: 350,
     maxWidth: 500,
     height: 110,
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
+  },
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
   },
   imageContainer: {
-    marginLeft: 10,
-    width: 90,
-    height: 90,
+    marginLeft: 14,
+    width: 76,
+    height: 76,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 12,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 56,
+    height: 56,
     resizeMode: "cover",
-    borderRadius: 15,
+    borderRadius: 10,
   },
   textContainer: {
-    marginLeft: 20,
+    flex: 1,
+    marginLeft: 14,
+    paddingRight: 14,
     justifyContent: "space-around",
   },
   title: {
-    fontSize: 18,
-    color: "white",
-    fontWeight: 600,
+    fontSize: 16,
+    color: COLORS.textPrimary,
+    fontWeight: "700",
   },
   text: {
-    color: "white",
-    opacity: 0.6,
+    color: COLORS.textSecondary,
+    fontSize: 12,
   },
   iconWrapper: {
     flexDirection: "row",
-    marginVertical: 10,
+    gap: 16,
+    marginVertical: 6,
+  },
+  iconTimeContainer: {
+    flexDirection: "row",
+    gap: 5,
+    alignItems: "center",
   },
   iconExerciseContainer: {
     flexDirection: "row",
     gap: 5,
-    marginRight: 5,
-    alignItems: "center",
-    marginLeft: 10,
-  },
-
-  iconTimeContainer: {
-    flexDirection: "row",
-    gap: 5,
-    marginRight: 5,
     alignItems: "center",
   },
   btnContainer: {
-    padding: 6,
-    width: 130,
-    backgroundColor: "white",
-    borderRadius: 10,
     flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
+    alignSelf: "flex-start",
+    gap: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    backgroundColor: COLORS.primary,
+    borderRadius: 8,
   },
   btnText: {
-    color: "#1D632F",
-    fontWeight: 600,
+    color: COLORS.background,
+    fontWeight: "700",
+    fontSize: 12,
   },
 });
