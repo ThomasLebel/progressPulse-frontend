@@ -1,7 +1,7 @@
+import { FontAwesome6 } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
 import { COLORS } from "../constants/theme";
 import images from "../utils/images";
@@ -68,8 +68,6 @@ const ExerciseCard = ({
       style={styles.wrapper}
     >
       <View style={[styles.card, isCompleted && styles.cardCompleted]}>
-        <View style={styles.accentBar} />
-
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -87,13 +85,17 @@ const ExerciseCard = ({
             {!isCardio && (
               <>
                 <View style={styles.statItem}>
-                  <FontAwesome name="list" size={11} color={COLORS.accent} />
+                  <FontAwesome6 name="list" size={11} color={COLORS.accent} />
                   <Text style={styles.statText}>
                     <Text style={styles.statValue}>{numberOfSets}</Text> séries
                   </Text>
                 </View>
                 <View style={styles.statItem}>
-                  <FontAwesome name="refresh" size={11} color={COLORS.accent} />
+                  <FontAwesome6
+                    name="arrows-rotate"
+                    size={11}
+                    color={COLORS.accent}
+                  />
                   <Text style={styles.statText}>
                     <Text style={styles.statValue}>{numberOfReps}</Text> reps
                   </Text>
@@ -101,7 +103,7 @@ const ExerciseCard = ({
               </>
             )}
             <View style={styles.statItem}>
-              <FontAwesome
+              <FontAwesome6
                 name="weight-hanging"
                 size={11}
                 color={COLORS.accent}
@@ -112,7 +114,7 @@ const ExerciseCard = ({
               </Text>
             </View>
             <View style={styles.statItem}>
-              <FontAwesome name="clock-o" size={11} color={COLORS.accent} />
+              <FontAwesome6 name="clock" size={11} color={COLORS.accent} />
               <Text style={styles.statText}>
                 <Text style={styles.statValue}>{restMinutes}</Text>
                 {isCardio ? "h " : "min "}
@@ -131,20 +133,28 @@ const ExerciseCard = ({
               accessibilityHint="Permet d'ouvrir une modale"
               style={styles.actionBtn}
             >
-              <FontAwesome name="pencil" size={16} color={COLORS.accent} />
+              <FontAwesome6
+                name="pencil"
+                size={18}
+                color={COLORS.textSecondary}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => handleDelete(exerciseID)}
               accessibilityLabel="Supprimer l'exercice de la séance"
               style={styles.actionBtn}
             >
-              <FontAwesome name="trash" size={16} color={COLORS.accent} />
+              <FontAwesome6
+                name="trash"
+                size={18}
+                color={COLORS.textSecondary}
+              />
             </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.actionContainer}>
-            <FontAwesome
-              name={isCompleted ? "check-circle" : "play-circle-o"}
+            <FontAwesome6
+              name={isCompleted ? "check-circle" : "circle-play"}
               size={32}
               color={isCompleted ? COLORS.primary : COLORS.textSecondary}
             />
@@ -230,6 +240,6 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   actionBtn: {
-    padding: 4,
+    padding: 10,
   },
 });
