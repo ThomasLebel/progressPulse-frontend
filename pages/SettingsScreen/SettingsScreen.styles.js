@@ -1,16 +1,17 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
     paddingVertical: 60,
     paddingHorizontal: 20,
   },
   title: {
     fontSize: 40,
-    color: "white",
-    fontWeight: 600,
+    color: COLORS.textPrimary,
+    fontWeight: "600",
   },
   settingWrapper: {
     alignItems: "center",
@@ -20,31 +21,38 @@ export const styles = StyleSheet.create({
   settingContainer: {
     width: "100%",
     maxWidth: 500,
-    height: 220,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "stretch",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  accentBar: {
+    width: 4,
+    backgroundColor: COLORS.primary,
   },
   inputWrapper: {
-    width: "93%",
-    height: "85%",
-    justifyContent: "center",
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: 10,
-    borderBottomColor: "rgba(255, 255, 255, 0.2)",
+    borderBottomColor: COLORS.accentBorder,
     borderBottomWidth: 1,
-    height: 40,
+    height: 46,
   },
   text: {
-    marginLeft: 20,
-    color: "white",
+    marginLeft: 14,
+    color: COLORS.textPrimary,
+    fontSize: 14,
   },
   infoIcon: {
-    marginRight: 10,
+    marginRight: 4,
+    width: 28,
+    alignItems: "center",
   },
 });

@@ -83,6 +83,7 @@ export default function SettingsScreen({ navigation }) {
 
       <View style={styles.settingWrapper}>
         <View style={styles.settingContainer}>
+          <View style={styles.accentBar} />
           <View style={styles.inputWrapper}>
             <TouchableOpacity
               style={styles.inputContainer}
@@ -101,7 +102,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"pencil"}
                 size={15}
-                color={"white"}
+                color={COLORS.textPrimary}
                 style={{ position: "absolute", right: 10 }}
               />
             </TouchableOpacity>
@@ -123,7 +124,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"pencil"}
                 size={15}
-                color={"white"}
+                color={COLORS.textPrimary}
                 style={{ position: "absolute", right: 10 }}
               />
             </TouchableOpacity>
@@ -145,7 +146,7 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"pencil"}
                 size={15}
-                color={"white"}
+                color={COLORS.textPrimary}
                 style={{ position: "absolute", right: 10 }}
               />
             </TouchableOpacity>
@@ -167,13 +168,13 @@ export default function SettingsScreen({ navigation }) {
               <FontAwesome
                 name={"arrow-right"}
                 size={15}
-                color={"white"}
+                color={COLORS.textPrimary}
                 style={{ position: "absolute", right: 10 }}
               />
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.inputContainer}
+              style={[styles.inputContainer, { borderBottomWidth: 0 }]}
               activeOpacity={0.7}
               onPress={handleLogout}
               accessibilityLabel="Permet de se déconnecter"
