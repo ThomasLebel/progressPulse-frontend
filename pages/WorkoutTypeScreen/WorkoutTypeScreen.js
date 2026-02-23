@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../../constants/theme";
@@ -42,21 +41,18 @@ export default function WorkoutTypeScreen({ navigation }) {
           style={styles.btn}
           onPress={handleGoToPersonalized}
         >
-          <LinearGradient
-            colors={["#445B9F", COLORS.primary]}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.gradiant}
-          >
-            <Image
-              source={require("../../assets/illustrations/seance-perso.webp")}
-              style={styles.image}
-            />
-            <View style={styles.textBtnContainer}>
-              <Text style={styles.btnText}>Séance</Text>
-              <Text style={styles.btnText}>personalisée</Text>
+          <View style={styles.card}>
+            <View style={styles.accentBar} />
+            <View style={styles.imageContainer}>
+              <Image
+                source={require("../../assets/illustrations/seance-perso.webp")}
+                style={styles.image}
+              />
             </View>
-          </LinearGradient>
+            <View style={styles.textBtnContainer}>
+              <Text style={styles.btnText}>Séance{"\n"}personnalisée</Text>
+            </View>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           accessibilityLabel="Créer une séance pré-définie"
@@ -65,21 +61,18 @@ export default function WorkoutTypeScreen({ navigation }) {
           style={styles.btn}
           onPress={handleGoToPredefined}
         >
-          <LinearGradient
-            colors={["#445B9F", COLORS.primary]}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.gradiant}
-          >
-            <Image
-              source={require("../../assets/illustrations/seance-predef.webp")}
-              style={styles.image}
-            />
-            <View style={styles.textBtnContainer}>
-              <Text style={styles.btnText}>Séance</Text>
-              <Text style={styles.btnText}>pré-définie</Text>
+          <View style={styles.card}>
+            <View style={styles.accentBar} />
+            <View style={styles.imageContainer}>
+              <Image
+                source={require("../../assets/illustrations/seance-predef.webp")}
+                style={styles.image}
+              />
             </View>
-          </LinearGradient>
+            <View style={styles.textBtnContainer}>
+              <Text style={styles.btnText}>Séance{"\n"}pré-définie</Text>
+            </View>
+          </View>
         </TouchableOpacity>
       </View>
     </View>

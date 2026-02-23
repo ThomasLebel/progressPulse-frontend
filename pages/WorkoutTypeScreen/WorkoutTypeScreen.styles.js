@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
     paddingVertical: 50,
     paddingHorizontal: 10,
   },
@@ -19,7 +20,9 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
   textInfo: {
-    color: "white",
+    color: COLORS.textPrimary,
+    fontSize: 14,
+    lineHeight: 20,
   },
   btnContainer: {
     flex: 4,
@@ -27,29 +30,49 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   btn: {
-    borderRadius: 20,
+    borderRadius: 16,
     overflow: "hidden",
   },
-  gradiant: {
-    height: 230,
+  card: {
+    height: 240,
     width: "100%",
     maxWidth: 500,
-    justifyContent: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+  },
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
+  },
+  imageContainer: {
+    flex: 4,
+    height: "40%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 16,
   },
   image: {
-    width: "60%",
+    width: "100%",
     height: "100%",
     resizeMode: "cover",
   },
   textBtnContainer: {
-    position: "absolute",
-    bottom: 50,
-    right: 10,
+    flex: 6,
+    paddingRight: 8,
+    paddingLeft: 16,
+    justifyContent: "center",
   },
   btnText: {
-    color: "white",
-    fontSize: 40,
-    fontWeight: 600,
-    textAlign: "right",
+    color: COLORS.textPrimary,
+    fontSize: 28,
+    fontWeight: "700",
+    lineHeight: 36,
+  },
+  arrowIcon: {
+    marginTop: 12,
   },
 });
