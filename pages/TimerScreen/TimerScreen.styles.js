@@ -11,7 +11,18 @@ export const styles = StyleSheet.create({
   topContainer: {
     marginTop: 50,
     marginLeft: 30,
-    justifyContent: "space-between",
+    marginRight: 20,
+    flexDirection: "collumn",
+    gap: 10,
+  },
+
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.07)",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   title: {

@@ -69,10 +69,13 @@ export default function MuscleGroupScreen({ navigation, route }) {
       </View>
 
       <View style={styles.bottomContainer}>
-        <Text style={styles.bottomText}>
-          Exercices sélectionnés :{" "}
-          <Text style={styles.bottomSpan}>{exercisesLength}</Text>
-        </Text>
+        <View style={styles.badge}>
+          <FontAwesome name="check-circle" size={14} color={COLORS.accent} />
+          <Text style={styles.badgeLabel}>Exercices sélectionnés</Text>
+          <View style={styles.badgeCount}>
+            <Text style={styles.badgeCountText}>{exercisesLength}</Text>
+          </View>
+        </View>
         <View style={styles.bottomBtnContainer}>
           <Button
             background={COLORS.primary}

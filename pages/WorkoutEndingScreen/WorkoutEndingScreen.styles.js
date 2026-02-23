@@ -9,8 +9,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.07)",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 15,
-    marginBottom: 10,
+    marginBottom: 15,
+    marginTop: 20,
   },
   container: {
     flex: 1,

@@ -33,13 +33,37 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     flex: 1,
   },
-  bottomText: {
-    color: "white",
-    fontSize: 16,
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 50,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    gap: 8,
     marginBottom: 20,
   },
-  bottomSpan: {
-    fontWeight: "bold",
+  badgeLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    fontWeight: "500",
+  },
+  badgeCount: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
+    minWidth: 22,
+    height: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 6,
+  },
+  badgeCountText: {
+    color: COLORS.background,
+    fontSize: 12,
+    fontWeight: "700",
   },
   bottomBtnContainer: {
     alignItems: "center",

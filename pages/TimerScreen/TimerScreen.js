@@ -3,6 +3,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -49,13 +50,26 @@ export default function TimerScreen({ navigation, route }) {
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={290}
+        keyboardVerticalOffset={200}
       >
         <View style={styles.topContainer}>
-          <Text style={styles.title}>
-            {muscleGroup != "Cardio" ? "Temps de repos" : "Cardio"}
-          </Text>
-          <Underline width={80} />
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+            accessibilityLabel="Retour à l'exercice"
+          >
+            <FontAwesome
+              name={"chevron-left"}
+              size={16}
+              color={COLORS.primary}
+            />
+          </Pressable>
+          <View>
+            <Text style={styles.title}>
+              {muscleGroup != "Cardio" ? "Temps de repos" : "Cardio"}
+            </Text>
+            <Underline width={80} />
+          </View>
         </View>
 
         {/* ── Timer inactif : sélecteur ────────────────────── */}
