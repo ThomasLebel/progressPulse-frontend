@@ -4,7 +4,7 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
   },
   innerContainer: {
     flex: 1,
@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
     alignItems: "center",
   },
   image: {
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   modifyPassword: {
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 40,
