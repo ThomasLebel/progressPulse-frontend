@@ -30,6 +30,8 @@ import SigninScreen from "./pages/SigninScreen";
 import SignupScreen from "./pages/SignupScreen";
 import SongScreen from "./pages/SongScreen";
 import StartWorkoutScreen from "./pages/StartWorkoutScreen";
+import ExerciseStatsScreen from "./pages/ExerciseStatsScreen";
+import ProgressStatsScreen from "./pages/ProgressStatsScreen";
 import StatsScreen from "./pages/StatsScreen";
 import TimerScreen from "./pages/TimerScreen";
 import WeightScreen from "./pages/WeightScreen";
@@ -78,6 +80,7 @@ const TabNavigator = () => {
           let iconName = "";
           if (route.name === "Stats") iconName = "bar-chart-o";
           else if (route.name === "Home") iconName = "home";
+          else if (route.name === "ProgressStats") iconName = "line-chart";
           else if (route.name === "Settings") iconName = "gears";
 
           return (
@@ -140,6 +143,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Stats" component={StatsScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="ProgressStats" component={ProgressStatsScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
@@ -215,6 +219,10 @@ export default function App() {
                 component={HystoryWorkoutScreen}
               />
               <Stack.Screen name="history" component={HistoryScreen} />
+              <Stack.Screen
+                name="exerciseStats"
+                component={ExerciseStatsScreen}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </View>
