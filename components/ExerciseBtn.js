@@ -1,7 +1,6 @@
 import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from "../constants/theme";
@@ -57,31 +56,27 @@ const ExerciseBtn = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       onPress={handlePress}
-      style={styles.container}
+      style={styles.wrapper}
     >
-      <LinearGradient
-        colors={["#445B9F", COLORS.primary]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.gradiant}
-      >
-        <Image source={image} style={styles.picture} />
-        <Text
-          style={{
-            color: "white",
-            fontSize: 16,
-            fontWeight: 600,
-            width: "65%",
-          }}
-        >
-          {textButton}
-        </Text>
-        <FontAwesome
-          name={isAdded ? "check-circle" : "plus-circle"}
-          size={35}
-          color={isAdded ? COLORS.primary : "white"}
-        />
-      </LinearGradient>
+      <View style={styles.card}>
+        <View style={styles.imageContainer}>
+          <Image source={image} style={styles.image} />
+        </View>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.title} numberOfLines={2}>
+            {textButton}
+          </Text>
+        </View>
+
+        <View style={[styles.actionBtn, isAdded && styles.actionBtnAdded]}>
+          <FontAwesome
+            name={isAdded ? "check" : "plus"}
+            size={14}
+            color={isAdded ? COLORS.background : COLORS.background}
+          />
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -89,21 +84,59 @@ const ExerciseBtn = ({
 export default ExerciseBtn;
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf: "stretch",
-    marginBottom: 25,
+  wrapper: {
+    marginBottom: 16,
   },
-  gradiant: {
-    height: 70,
-    borderRadius: 10,
-    justifyContent: "space-between",
-    alignItems: "center",
+  card: {
+    borderRadius: 16,
+    width: 350,
+    height: 90,
     flexDirection: "row",
-    padding: 10,
+    alignItems: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
   },
-  picture: {
-    width: 50,
-    height: 50,
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
+  },
+  imageContainer: {
+    marginLeft: 14,
+    width: 62,
+    height: 62,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 56,
+    height: 56,
     borderRadius: 10,
+  },
+  textContainer: {
+    flex: 1,
+    marginLeft: 14,
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 15,
+    color: COLORS.textPrimary,
+    fontWeight: "700",
+    lineHeight: 24,
+    paddingRight: 16,
+  },
+  actionBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: COLORS.textSecondary,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 16,
+  },
+  actionBtnAdded: {
+    backgroundColor: COLORS.secondary,
   },
 });

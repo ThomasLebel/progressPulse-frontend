@@ -47,6 +47,7 @@ export default function WorkoutDifficultyScreen({ navigation }) {
             onPress={() => handleNavigateToWorkout(data.name)}
           >
             <View style={styles.card}>
+              <View style={styles.accentBar} />
               <View style={styles.imageContainer}>
                 <Image source={data.source} style={styles.image} />
               </View>
