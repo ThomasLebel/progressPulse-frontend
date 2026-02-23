@@ -1,9 +1,8 @@
 import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { COLORS } from "../constants/theme";
 import images from "../utils/images";
 
@@ -24,9 +23,6 @@ const ExerciseCard = ({
   image,
   exerciseAddedImg,
 }) => {
-  const dispatch = useDispatch();
-
-  // Récupération de la séance en cours
   const currentWorkout = useSelector((state) => state.currentWorkout.value);
   const currentExercise = currentWorkout.performances.find(
     (e) => e.exercise === exerciseID,
@@ -38,11 +34,7 @@ const ExerciseCard = ({
 
   useEffect(() => {
     if (currentExercise) {
-      if (currentExercise.sets.length >= numberOfSets) {
-        setIsCompleted(true);
-      } else {
-        setIsCompleted(false);
-      }
+      setIsCompleted(currentExercise.sets.length >= numberOfSets);
     } else {
       setIsCompleted(false);
     }
@@ -62,96 +54,102 @@ const ExerciseCard = ({
   };
 
   const handlePress = () => {
-    if (isEditable === false) {
-      if (!isCompleted) startExercise(exerciseID);
-    }
+    if (!isEditable && !isCompleted) startExercise(exerciseID);
   };
+
+  const isCardio = muscleGroup === "Cardio";
 
   return (
     <TouchableOpacity
-      activeOpacity={1}
+      activeOpacity={isEditable ? 1 : 0.8}
       onPress={handlePress}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint="Vous serez redirigé vers une nouvelle page pour avoir plus détails sur l'exercice"
+      style={styles.wrapper}
     >
-      <View style={{ marginTop: 20, marginBottom: 10, marginLeft: 40 }}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{exerciseName}</Text>
-        </View>
-        <View style={styles.imgContainer}>
+      <View style={[styles.card, isCompleted && styles.cardCompleted]}>
+        <View style={styles.accentBar} />
+
+        <View style={styles.imageContainer}>
           <Image
-            style={styles.img}
+            style={styles.image}
             source={image ? imagePath : exerciseAddedImg}
-          ></Image>
+            contentFit="cover"
+          />
         </View>
-        <LinearGradient
-          colors={["#1C1C45", "#4645AB"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.container}
-        >
-          <View style={styles.cardContainer}>
-            <View style={styles.textContainer}>
-              {muscleGroup != "Cardio" && (
-                <>
-                  <Text style={styles.text}>
-                    {numberOfSets <= 1
-                      ? "Nombre de série : "
-                      : "Nombre de séries : "}
-                    <Text style={styles.span}>{numberOfSets}</Text>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.title} numberOfLines={2}>
+            {exerciseName}
+          </Text>
+
+          <View style={styles.statsRow}>
+            {!isCardio && (
+              <>
+                <View style={styles.statItem}>
+                  <FontAwesome name="list" size={11} color={COLORS.accent} />
+                  <Text style={styles.statText}>
+                    <Text style={styles.statValue}>{numberOfSets}</Text> séries
                   </Text>
-                  <Text style={styles.text}>
-                    {numberOfReps <= 1
-                      ? "Nombre de répétition : "
-                      : "Nombre de répétitions : "}
-                    <Text style={styles.span}>{numberOfReps} </Text>
+                </View>
+                <View style={styles.statItem}>
+                  <FontAwesome name="refresh" size={11} color={COLORS.accent} />
+                  <Text style={styles.statText}>
+                    <Text style={styles.statValue}>{numberOfReps}</Text> reps
                   </Text>
-                </>
-              )}
-              <Text style={styles.text}>
-                {muscleGroup === "Cardio"
-                  ? "Resistance/Inclinaison:"
-                  : "Charge : "}{" "}
-                <Text style={styles.span}>
-                  {weight} {muscleGroup != "Cardio" && "kg"}
-                </Text>
-              </Text>
-              <Text style={styles.text}>
-                {muscleGroup === "Cardio" ? "Durée :" : "Temps de repos : "}{" "}
-                <Text style={styles.span}>
-                  {restMinutes} {muscleGroup != "Cardio" ? "min" : "h"}{" "}
-                  {restSeconds} {muscleGroup != "Cardio" ? "sec" : "min"}
-                </Text>
+                </View>
+              </>
+            )}
+            <View style={styles.statItem}>
+              <FontAwesome
+                name="weight-hanging"
+                size={11}
+                color={COLORS.accent}
+              />
+              <Text style={styles.statText}>
+                <Text style={styles.statValue}>{weight}</Text>
+                {!isCardio && " kg"}
               </Text>
             </View>
-            {isEditable ? (
-              <View style={styles.iconContainer}>
-                <FontAwesome
-                  name={"pencil"}
-                  size={20}
-                  color={COLORS.primary}
-                  onPress={handleUpdate}
-                  accessibilityLabel="Modifier les données de l'exercice"
-                  accessibilityHint="Permet d'ouvrir une modale"
-                />
-                <FontAwesome
-                  name={"trash"}
-                  size={20}
-                  color={COLORS.primary}
-                  onPress={() => handleDelete(exerciseID)}
-                  accessibilityLabel="Supprimer l'exercice de la séance"
-                />
-              </View>
-            ) : (
-              <FontAwesome
-                name={isCompleted ? "check-circle" : "play-circle-o"}
-                size={45}
-                color={isCompleted ? COLORS.primary : "white"}
-                style={styles.iconStartWorkout}
-              />
-            )}
+            <View style={styles.statItem}>
+              <FontAwesome name="clock-o" size={11} color={COLORS.accent} />
+              <Text style={styles.statText}>
+                <Text style={styles.statValue}>{restMinutes}</Text>
+                {isCardio ? "h " : "min "}
+                <Text style={styles.statValue}>{restSeconds}</Text>
+                {isCardio ? "min" : "sec"}
+              </Text>
+            </View>
           </View>
-        </LinearGradient>
+        </View>
+
+        {isEditable ? (
+          <View style={styles.actionContainer}>
+            <TouchableOpacity
+              onPress={handleUpdate}
+              accessibilityLabel="Modifier les données de l'exercice"
+              accessibilityHint="Permet d'ouvrir une modale"
+              style={styles.actionBtn}
+            >
+              <FontAwesome name="pencil" size={16} color={COLORS.accent} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handleDelete(exerciseID)}
+              accessibilityLabel="Supprimer l'exercice de la séance"
+              style={styles.actionBtn}
+            >
+              <FontAwesome name="trash" size={16} color={COLORS.accent} />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.actionContainer}>
+            <FontAwesome
+              name={isCompleted ? "check-circle" : "play-circle-o"}
+              size={32}
+              color={isCompleted ? COLORS.primary : COLORS.textSecondary}
+            />
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -160,69 +158,78 @@ const ExerciseCard = ({
 export default ExerciseCard;
 
 const styles = StyleSheet.create({
-  container: {
-    width: "90vw",
-    height: 140,
-    borderRadius: 10,
-    overflow: "hidden",
-    padding: 15,
-    justifyContent: "space-around",
+  wrapper: {
+    marginBottom: 12,
   },
-  titleContainer: {
-    backgroundColor: "#272D34",
-    width: "85%",
-    borderRadius: 10,
-    alignItems: "center",
-    position: "absolute",
-    top: -15,
-    height: 25,
-    justifyContent: "center",
-    zIndex: 2,
-    left: "8%",
-  },
-  title: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "400",
-  },
-  cardContainer: {
+  card: {
+    borderRadius: 16,
+    height: 110,
     flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 1,
-    paddingLeft: "42",
+    alignItems: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
+  },
+  cardCompleted: {
+    borderColor: COLORS.primary,
+  },
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
+  },
+  imageContainer: {
+    marginLeft: 14,
+    width: 66,
+    height: 66,
+    borderRadius: 12,
+    backgroundColor: COLORS.background,
+    overflow: "hidden",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 66,
+    height: 66,
   },
   textContainer: {
-    justifyContent: "space-around",
+    flex: 1,
+    marginLeft: 14,
+    paddingRight: 10,
+    justifyContent: "center",
+    gap: 8,
   },
-  text: {
-    color: "white",
-    fontSize: 14,
+  title: {
+    fontSize: 15,
+    color: COLORS.textPrimary,
+    fontWeight: "700",
   },
-  span: {
-    fontWeight: "bold",
+  statsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
-  iconContainer: {
-    justifyContent: "space-between",
-    marginLeft: 20,
+  statItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
   },
-  iconStartWorkout: {
-    position: "absolute",
-    bottom: -10,
-    right: -5,
+  statText: {
+    color: COLORS.textSecondary,
+    fontSize: 11,
   },
-  imgContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: "white",
-    position: "absolute",
-    zIndex: 9999,
-    top: 30,
-    left: -40,
-    borderRadius: "20%",
-    overflow: "hidden",
+  statValue: {
+    color: COLORS.textPrimary,
+    fontWeight: "600",
   },
-  img: {
-    width: "100%",
-    height: "100%",
+  actionContainer: {
+    paddingHorizontal: 14,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 14,
+  },
+  actionBtn: {
+    padding: 4,
   },
 });
