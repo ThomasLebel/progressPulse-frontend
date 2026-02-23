@@ -8,7 +8,7 @@ export function useHistoryWorkoutsScreen(navigation, route) {
   const sortedWorkouts = sortWorkoutsByDate(filterWorkouts(history, workoutName));
 
   function navigateBack() {
-    navigation.navigate("history");
+    navigation.goBack();
   }
 
   return {

@@ -48,6 +48,7 @@ export default function ProgressStatsScreen({ navigation }) {
     topWorkouts,
     handleNavigateToExercise,
     handleNavigateToAllExercises,
+    handleNavigateToAllWorkouts,
     selectedPeriod,
     setSelectedPeriod,
     dropdownOpen,
@@ -242,11 +243,12 @@ export default function ProgressStatsScreen({ navigation }) {
             })
           )}
           <TouchableOpacity
-            style={styles.seeAllLink}
-            activeOpacity={0.7}
+            style={styles.seeAllBtn}
+            activeOpacity={0.75}
             onPress={handleNavigateToAllExercises}
           >
-            <Text style={styles.seeAllText}>voir tous les exercices</Text>
+            <Text style={styles.seeAllBtnText}>Voir tous les exercices</Text>
+            <FontAwesome name="chevron-right" size={10} color={COLORS.background} />
           </TouchableOpacity>
         </View>
 
@@ -305,6 +307,14 @@ export default function ProgressStatsScreen({ navigation }) {
               );
             })
           )}
+          <TouchableOpacity
+            style={styles.seeAllBtn}
+            activeOpacity={0.75}
+            onPress={handleNavigateToAllWorkouts}
+          >
+            <Text style={styles.seeAllBtnText}>Voir toutes les séances</Text>
+            <FontAwesome name="chevron-right" size={10} color={COLORS.background} />
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

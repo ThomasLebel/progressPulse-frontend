@@ -251,14 +251,21 @@ export const styles = StyleSheet.create({
     marginTop: 8,
     lineHeight: 18,
   },
-  seeAllLink: {
-    marginTop: 6,
-    alignSelf: "center",
+  seeAllBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    marginTop: 10,
+    backgroundColor: COLORS.primary,
+    borderRadius: 20,
+    paddingVertical: 9,
+    paddingHorizontal: 16,
+    alignSelf: "stretch",
   },
-  seeAllText: {
+  seeAllBtnText: {
     fontSize: 12,
-    color: COLORS.accent,
-    fontWeight: "600",
-    textDecorationLine: "underline",
+    fontWeight: "700",
+    color: COLORS.background,
   },
 });

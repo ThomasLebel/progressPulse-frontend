@@ -32,6 +32,7 @@ import SongScreen from "./pages/SongScreen";
 import StartWorkoutScreen from "./pages/StartWorkoutScreen";
 import ExerciseStatsScreen from "./pages/ExerciseStatsScreen";
 import AllExercisesScreen from "./pages/AllExercisesScreen";
+import AllWorkoutsScreen from "./pages/AllWorkoutsScreen";
 import ProgressStatsScreen from "./pages/ProgressStatsScreen";
 import StatsScreen from "./pages/StatsScreen";
 import TimerScreen from "./pages/TimerScreen";
@@ -227,6 +228,10 @@ export default function App() {
               <Stack.Screen
                 name="allExercises"
                 component={AllExercisesScreen}
+              />
+              <Stack.Screen
+                name="allWorkouts"
+                component={AllWorkoutsScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>
