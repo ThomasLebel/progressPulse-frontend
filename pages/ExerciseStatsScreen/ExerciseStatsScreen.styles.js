@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 6,
     gap: 14,
   },
   backButton: {
@@ -21,12 +21,77 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleBlock: {
+    flex: 1,
+  },
   title: {
     fontSize: 24,
     fontWeight: '700',
     color: COLORS.textPrimary,
-    flex: 1,
     flexWrap: 'wrap',
+    marginBottom: 6,
+  },
+  muscleBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: COLORS.accentBorder,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+  },
+  muscleBadgeText: {
+    fontSize: 11,
+    color: COLORS.accent,
+    fontWeight: '600',
+    textTransform: 'capitalize',
+  },
+  filterRow: {
+    alignItems: 'flex-end',
+    marginTop: 12,
+    marginBottom: 4,
+    zIndex: 10,
+  },
+  filterButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  filterButtonText: {
+    fontSize: 12,
+    color: COLORS.textSecondary,
+    maxWidth: 120,
+  },
+  dropdown: {
+    position: 'absolute',
+    top: 44,
+    right: 0,
+    backgroundColor: COLORS.modalBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 12,
+    zIndex: 100,
+    elevation: 10,
+    minWidth: 150,
+  },
+  dropdownItem: {
+    paddingVertical: 11,
+    paddingHorizontal: 14,
+  },
+  dropdownItemActive: {
+    backgroundColor: COLORS.accentBorder,
+  },
+  dropdownItemText: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+  },
+  dropdownItemTextActive: {
+    color: COLORS.accent,
+    fontWeight: '600',
   },
   sectionTitle: {
     fontSize: 18,
@@ -77,6 +142,12 @@ export const styles = StyleSheet.create({
     marginTop: 2,
     textAlign: 'center',
   },
+  statSub: {
+    fontSize: 11,
+    color: COLORS.textSecondary,
+    marginTop: 4,
+    textAlign: 'center',
+  },
   recordRow: {
     flexDirection: 'row',
     alignItems: 'baseline',
@@ -104,10 +175,30 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 8,
   },
+  onermNote: {
+    fontSize: 11,
+    color: COLORS.textSecondary,
+    fontStyle: 'italic',
+    marginTop: 8,
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  effortRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 4,
+  },
   emptyText: {
     color: COLORS.textSecondary,
     fontSize: 14,
     textAlign: 'center',
     marginTop: 40,
+  },
+  emptyPeriodText: {
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    textAlign: 'center',
+    marginTop: 12,
+    marginBottom: 8,
   },
 });

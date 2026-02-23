@@ -30,14 +30,22 @@ const SCREEN_WIDTH = Dimensions.get('window').width - 40;
 export default function ExerciseStatsScreen({ navigation, route }) {
   const {
     exerciseName,
-    totalVolume,
-    personalRecord,
-    chartData,
+    muscleGroup,
+    selectedPeriod,
+    setSelectedPeriod,
+    dropdownOpen,
+    setDropdownOpen,
+    PERIODS,
     sessionCount,
+    totalVolume,
+    averageVolume,
+    personalRecord,
+    best1RM,
+    chartData,
+    hasChartData,
+    hasData,
     handleBack,
   } = useExerciseStatsScreen(navigation, route);
-
-  const hasData = sessionCount > 0;
 
   return (
     <ScrollView
@@ -45,6 +53,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
       contentContainerStyle={{ paddingBottom: 60 }}
       showsVerticalScrollIndicator={false}
     >
+      {/* Header */}
       <View style={styles.topContainer}>
         <TouchableOpacity
           style={styles.backButton}
@@ -53,7 +62,14 @@ export default function ExerciseStatsScreen({ navigation, route }) {
         >
           <FontAwesome name="chevron-left" size={16} color={COLORS.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.title}>{exerciseName}</Text>
+        <View style={styles.titleBlock}>
+          <Text style={styles.title}>{exerciseName}</Text>
+          {muscleGroup ? (
+            <View style={styles.muscleBadge}>
+              <Text style={styles.muscleBadgeText}>{muscleGroup}</Text>
+            </View>
+          ) : null}
+        </View>
       </View>
       <Underline width={80} />
 
@@ -63,6 +79,55 @@ export default function ExerciseStatsScreen({ navigation, route }) {
         </Text>
       ) : (
         <>
+          {/* Filtre de période */}
+          <View style={styles.filterRow}>
+            <View>
+              <TouchableOpacity
+                style={styles.filterButton}
+                activeOpacity={0.7}
+                onPress={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <Text style={styles.filterButtonText} numberOfLines={1}>
+                  {PERIODS.find((p) => p.key === selectedPeriod)?.label}
+                </Text>
+                <FontAwesome
+                  name={dropdownOpen ? 'chevron-up' : 'chevron-down'}
+                  size={10}
+                  color={COLORS.accent}
+                />
+              </TouchableOpacity>
+              {dropdownOpen && (
+                <View style={styles.dropdown}>
+                  {PERIODS.map((period) => (
+                    <TouchableOpacity
+                      key={period.key}
+                      style={[
+                        styles.dropdownItem,
+                        selectedPeriod === period.key && styles.dropdownItemActive,
+                      ]}
+                      activeOpacity={0.7}
+                      onPress={() => {
+                        setSelectedPeriod(period.key);
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.dropdownItemText,
+                          selectedPeriod === period.key &&
+                            styles.dropdownItemTextActive,
+                        ]}
+                      >
+                        {period.label}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
+            </View>
+          </View>
+
+          {/* Stats overview */}
           <Text style={styles.sectionTitle}>Vue d'ensemble</Text>
           <View style={styles.statsRow}>
             <View style={styles.statCard}>
@@ -70,14 +135,22 @@ export default function ExerciseStatsScreen({ navigation, route }) {
               <Text style={styles.statValue}>{sessionCount}</Text>
             </View>
             <View style={styles.statCard}>
-              <Text style={styles.statLabel}>Volume total</Text>
-              <Text style={styles.statValue}>
-                {totalVolume.toLocaleString('fr-FR')}
-              </Text>
-              <Text style={styles.statUnit}>kg</Text>
+              <Text style={styles.statLabel}>Meilleur 1RM</Text>
+              {best1RM ? (
+                <>
+                  <Text style={styles.statValue}>{best1RM.estimated}</Text>
+                  <Text style={styles.statUnit}>kg</Text>
+                  <Text style={styles.statSub}>
+                    {best1RM.weight} kg × {best1RM.reps} reps
+                  </Text>
+                </>
+              ) : (
+                <Text style={styles.statValue}>—</Text>
+              )}
             </View>
           </View>
 
+          {/* Record personnel (all-time) */}
           {personalRecord && (
             <>
               <Text style={styles.sectionTitle}>Record personnel</Text>
@@ -96,28 +169,62 @@ export default function ExerciseStatsScreen({ navigation, route }) {
             </>
           )}
 
-          <Text style={styles.sectionTitle}>Progression du volume</Text>
-          <View style={styles.chartContainer}>
-            <LineChart
-              data={{
-                labels: chartData.labels,
-                datasets: [
-                  {
-                    data:
-                      chartData.data.length > 0 ? chartData.data : [0],
-                  },
-                ],
-              }}
-              width={SCREEN_WIDTH}
-              height={220}
-              withInnerLines
-              fromZero={false}
-              yAxisSuffix=" kg"
-              chartConfig={CHART_CONFIG}
-              bezier
-              style={{ borderRadius: 0 }}
-            />
-          </View>
+          {/* Progression de la force */}
+          <Text style={styles.sectionTitle}>Progression de la force</Text>
+          {sessionCount === 0 ? (
+            <Text style={styles.emptyPeriodText}>
+              Aucune séance sur cette période.
+            </Text>
+          ) : !hasChartData ? (
+            <Text style={styles.emptyPeriodText}>
+              Pas de données de charge pour cet exercice.
+            </Text>
+          ) : (
+            <>
+              <View style={styles.chartContainer}>
+                <LineChart
+                  data={{
+                    labels: chartData.labels,
+                    datasets: [{ data: chartData.data }],
+                  }}
+                  width={SCREEN_WIDTH}
+                  height={220}
+                  withInnerLines
+                  fromZero={false}
+                  yAxisSuffix=" kg"
+                  chartConfig={CHART_CONFIG}
+                  bezier
+                  style={{ borderRadius: 0 }}
+                />
+              </View>
+              <Text style={styles.onermNote}>
+                1RM estimé = charge × (1 + reps / 30)
+              </Text>
+            </>
+          )}
+
+          {/* Effort sur la période */}
+          {sessionCount > 0 && (
+            <>
+              <Text style={styles.sectionTitle}>Effort sur la période</Text>
+              <View style={styles.effortRow}>
+                <View style={styles.statCard}>
+                  <Text style={styles.statLabel}>Volume total soulevé</Text>
+                  <Text style={styles.statValue}>
+                    {totalVolume.toLocaleString('fr-FR')}
+                  </Text>
+                  <Text style={styles.statUnit}>kg</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <Text style={styles.statLabel}>Moyenne / séance</Text>
+                  <Text style={styles.statValue}>
+                    {averageVolume.toLocaleString('fr-FR')}
+                  </Text>
+                  <Text style={styles.statUnit}>kg</Text>
+                </View>
+              </View>
+            </>
+          )}
         </>
       )}
     </ScrollView>
