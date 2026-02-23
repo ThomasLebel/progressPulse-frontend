@@ -84,6 +84,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       </View>
       <View style={styles.mainContainer}>
         <ScrollView
+          style={{ width: "100%" }}
           contentContainerStyle={{ paddingBottom: 75 }}
           showsVerticalScrollIndicator={false}
         >
@@ -127,7 +128,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
           borderColor="none"
           textButton="Valider ma séance"
           textColor="black"
-          width={300}
+          width={250}
           height={50}
           onPress={() => setModalTitleVisible(true)}
           isLinearGradiant={false}

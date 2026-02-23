@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    paddingVertical: 20,
     justifyContent: "center",
     alignItems: "center",
   },

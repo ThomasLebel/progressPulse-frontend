@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    height: 125,
+    paddingVertical: 20,
+    gap: 20,
   },
   mainContainer: {
     flex: 5,

@@ -28,7 +28,7 @@ const ExerciseCard = ({
     (e) => e.exercise === exerciseID,
   );
 
-  const imagePath = images[muscleGroup.toLowerCase()][image];
+  const imagePath = image ? images[muscleGroup.toLowerCase()][image] : null;
 
   const [isCompleted, setIsCompleted] = useState(false);
 

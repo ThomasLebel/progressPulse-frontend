@@ -210,7 +210,11 @@ export const styles = StyleSheet.create({
   // ── CTA button ─────────────────────────────────────────────
   button: {
     position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     alignItems: "center",
     width: "100%",
+    paddingVertical: 20,
   },
 });

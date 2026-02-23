@@ -1,7 +1,7 @@
+import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import {
-  Platform,
   Pressable,
   ScrollView,
   Text,
@@ -185,12 +185,7 @@ export default function ExerciceScreen({ navigation, route }) {
       </ScrollView>
 
       {/* ── CTA button ── */}
-      <View
-        style={[
-          styles.button,
-          Platform.OS === "ios" ? { bottom: 10 } : { bottom: 0 },
-        ]}
-      >
+      <BlurView style={[styles.button]} intensity={60} tint="dark">
         <Button
           textButton={
             muscleGroup !== "Cardio"
@@ -199,13 +194,13 @@ export default function ExerciceScreen({ navigation, route }) {
           }
           textColor="black"
           background={COLORS.primary}
-          width={300}
+          width={250}
           height={60}
           borderColor="none"
           accessibilityLabel="Aller à la page du minuteur"
           onPress={goToTimer}
         />
-      </View>
+      </BlurView>
     </View>
   );
 }
