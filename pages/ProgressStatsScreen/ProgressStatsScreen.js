@@ -185,15 +185,11 @@ export default function ProgressStatsScreen({ navigation }) {
         activeOpacity={0.75}
         onPress={handleNavigateToExercisesByMuscle}
       >
-        <View style={styles.muscleStatsBtnLeft}>
-          <View style={styles.muscleStatsBtnIcon}>
-            <FontAwesome name="filter" size={14} color={COLORS.background} />
-          </View>
-          <Text style={styles.muscleStatsBtnText}>
-            Statistiques par groupe musculaire
-          </Text>
-        </View>
-        <FontAwesome name="chevron-right" size={12} color={COLORS.accent} />
+        <FontAwesome name="th-large" size={15} color={COLORS.background} />
+        <Text style={styles.muscleStatsBtnText}>
+          Statistiques par groupe musculaire
+        </Text>
+        <FontAwesome name="chevron-right" size={12} color={COLORS.background} />
       </TouchableOpacity>
       <Text style={styles.sectionTitle}>Mes tops</Text>
       <View style={styles.topCardsRow}>

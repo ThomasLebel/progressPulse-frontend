@@ -21,26 +21,11 @@ export default function ExercisesByMuscleScreen({ navigation }) {
         >
           <FontAwesome name="chevron-left" size={18} color={COLORS.primary} />
         </Pressable>
-        <View>
+        <View style={styles.titleContainer}>
           <Text style={styles.title}>Par muscle</Text>
           <Underline width={60} />
         </View>
       </View>
-
-      <TouchableOpacity
-        style={styles.allBtn}
-        activeOpacity={0.75}
-        onPress={handleSelectAll}
-        accessibilityLabel="Voir tous les groupes musculaires"
-      >
-        <View style={styles.allBtnLeft}>
-          <View style={styles.allBtnIconContainer}>
-            <FontAwesome name="th" size={18} color={COLORS.background} />
-          </View>
-          <Text style={styles.allBtnText}>Tous les groupes musculaires</Text>
-        </View>
-        <FontAwesome name="chevron-right" size={12} color={COLORS.accent} />
-      </TouchableOpacity>
 
       <View style={styles.listContainer}>
         <FlatList
@@ -58,6 +43,17 @@ export default function ExercisesByMuscleScreen({ navigation }) {
               accessibilityHint="Redirige vers la liste des exercices de ce groupe musculaire"
             />
           )}
+          ListFooterComponent={
+            <TouchableOpacity
+              style={styles.allBtn}
+              activeOpacity={0.7}
+              onPress={handleSelectAll}
+              accessibilityLabel="Voir tous les groupes musculaires"
+            >
+              <Text style={styles.allBtnText}>Tous les groupes</Text>
+              <FontAwesome name="th" size={22} color={COLORS.accent} />
+            </TouchableOpacity>
+          }
         />
       </View>
     </View>
