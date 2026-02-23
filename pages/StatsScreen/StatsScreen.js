@@ -94,21 +94,21 @@ export default function StatsScreen({ navigation }) {
               },
             ],
           }}
-          width={Dimensions.get("window").width}
+          width={Dimensions.get("window").width - 40}
           withInnerLines={true}
           segments={6}
           fromZero={false}
-          height={220}
+          height={200}
           yAxisSuffix="kg"
           yAxisInterval={1}
           chartConfig={{
-            backgroundGradientFrom: "#4645AB",
-            backgroundGradientTo: "#1C1C45",
+            backgroundGradientFrom: "#1C1C3A",
+            backgroundGradientTo: "#0D0D36",
             decimalPlaces: 1,
             color: (opacity = 1) => `rgba(163, 253, 1, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {
-              borderRadius: 16,
+              borderRadius: 0,
             },
             propsForDots: {
               r: "4",
@@ -118,8 +118,7 @@ export default function StatsScreen({ navigation }) {
           }}
           bezier
           style={{
-            marginVertical: 8,
-            borderRadius: 16,
+            borderRadius: 0,
           }}
         />
       </TouchableOpacity>
@@ -156,18 +155,18 @@ export default function StatsScreen({ navigation }) {
               },
             ],
           }}
-          width={Dimensions.get("window").width}
+          width={Dimensions.get("window").width - 40}
           withInnerLines={true}
           fromZero={true}
-          height={220}
+          height={200}
           chartConfig={{
-            backgroundGradientFrom: "#4645AB",
-            backgroundGradientTo: "#1C1C45",
+            backgroundGradientFrom: "#1C1C3A",
+            backgroundGradientTo: "#0D0D36",
             decimalPlaces: 0,
             color: (opacity = 1) => `rgba(163, 253, 1, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {
-              borderRadius: 16,
+              borderRadius: 0,
             },
             propsForDots: {
               r: "4",
@@ -175,10 +174,8 @@ export default function StatsScreen({ navigation }) {
               stroke: "#1D632F",
             },
           }}
-          bezier
           style={{
-            marginVertical: 8,
-            borderRadius: 16,
+            borderRadius: 0,
           }}
         />
       </TouchableOpacity>

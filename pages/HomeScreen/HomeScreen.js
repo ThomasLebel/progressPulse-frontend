@@ -77,7 +77,7 @@ export default function HomeScreen({ navigation }) {
         )}
         <View style={styles.btn}>
           <ScrollView
-            contentContainerStyle={{ paddingBottom: 300 }}
+            contentContainerStyle={{ paddingBottom: 400 }}
             showsVerticalScrollIndicator={false}
           >
             {workoutsToShow}
