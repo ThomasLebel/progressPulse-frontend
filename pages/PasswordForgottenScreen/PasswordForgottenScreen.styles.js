@@ -13,9 +13,16 @@ export const styles = StyleSheet.create({
     paddingTop: 40,
   },
   backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.07)",
+    alignItems: "center",
+    justifyContent: "center",
     alignSelf: "flex-start",
     marginLeft: 15,
     marginBottom: 5,
+    marginTop: 25,
   },
   mainTitle: {
     fontSize: 25,

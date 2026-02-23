@@ -92,8 +92,7 @@ export default function WeightScreen({ navigation, route }) {
       />
 
       <TouchableOpacity style={styles.backButton} onPress={handleGoToStats}>
-        <FontAwesome name={"chevron-left"} size={16} color={COLORS.primary} />
-        <Text style={styles.backText}>Statistiques</Text>
+        <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
       </TouchableOpacity>
 
       <View style={styles.titleContainer}>

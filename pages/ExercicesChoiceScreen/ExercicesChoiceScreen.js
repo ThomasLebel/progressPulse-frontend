@@ -77,10 +77,9 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
         >
           <FontAwesome
             name={"chevron-left"}
-            size={32}
+            size={20}
             color={COLORS.primary}
             accessibilityLabel="Revenir sur la page pour choisir le groupe musculaire"
-            style={{ marginLeft: 15, marginTop: 5 }}
           />
         </Pressable>
         <View style={{ marginVertical: 20 }}>

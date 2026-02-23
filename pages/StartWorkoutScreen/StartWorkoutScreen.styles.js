@@ -1,33 +1,47 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D0D36",
+    backgroundColor: COLORS.background,
     paddingVertical: 50,
     paddingHorizontal: 10,
   },
   topContainer: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    padding: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "white",
+    paddingHorizontal: 10,
+    paddingVertical: 12,
     marginTop: 15,
-    marginBottom: 30,
+    marginBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.accentBorder,
   },
   backRowContainer: {
-    width: 50,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.07)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   binContainer: {
-    width: 50,
-    display: "flex",
-    alignItems: "flex-end",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.07)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   topTitle: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: 600,
+    color: COLORS.textPrimary,
+    fontSize: 19,
+    fontWeight: "700",
+    letterSpacing: 0.4,
+    flexShrink: 1,
+    textAlign: "center",
   },
   mainContainer: {
     justifyContent: "center",
@@ -50,16 +64,27 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   groupTitle: {
-    color: "white",
+    color: COLORS.textPrimary,
     fontSize: 20,
   },
   workoutNameSection: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    flex: 1,
+    paddingHorizontal: 8,
+    gap: 6,
   },
-  pencilLogo: {
-    marginLeft: 10,
+  pencilBtn: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: "rgba(163, 253, 1, 0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  binHidden: {
+    opacity: 0,
   },
   backgroundLoading: {
     position: "absolute",

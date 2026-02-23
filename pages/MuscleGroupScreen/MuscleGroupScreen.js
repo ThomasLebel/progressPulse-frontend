@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import BtnMuscleGroup from "../../components/BtnMuscleGroup";
 import Button from "../../components/Button";
@@ -23,14 +23,17 @@ export default function MuscleGroupScreen({ navigation, route }) {
     <View style={styles.container}>
       {!isWorkoutAlreadyCreated && (
         <View style={styles.topContainer}>
-          <FontAwesome
-            name={"chevron-left"}
-            size={24}
-            color={COLORS.primary}
-            accessibilityLabel="Redirection pour choisir le type de séance"
+          <Pressable
+            style={styles.backButton}
             onPress={handleBack}
-            style={{ marginLeft: 15, marginTop: 5 }}
-          />
+            accessibilityLabel="Redirection pour choisir le type de séance"
+          >
+            <FontAwesome
+              name={"chevron-left"}
+              size={20}
+              color={COLORS.primary}
+            />
+          </Pressable>
           <View>
             <Text style={styles.title}>Exercices </Text>
             <Underline width={60} />

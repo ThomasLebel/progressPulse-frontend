@@ -54,7 +54,7 @@ export default function ExerciceScreen({ navigation, route }) {
         <Pressable style={styles.backButton} onPress={goBack}>
           <FontAwesome
             name="chevron-left"
-            size={16}
+            size={20}
             color={COLORS.primary}
             accessibilityLabel="Retour à la liste des exercices"
           />

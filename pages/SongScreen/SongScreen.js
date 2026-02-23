@@ -22,8 +22,7 @@ export default function SongScreen({ navigation }) {
           accessibilityLabel="Permet de retourner sur la page Réglages"
           accessibilityHint="Vous allez être redirigé vers la page Réglages"
         >
-          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
-          <Text style={styles.backToText}>Réglages</Text>
+          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
         </TouchableOpacity>
 
         <Text style={styles.topTitle}>Son</Text>

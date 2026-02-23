@@ -1,4 +1,10 @@
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import BtnWorkoutSession from "../../components/BtnWorkoutSession";
 import Underline from "../../components/Underline";
@@ -15,14 +21,13 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <View>
-        <FontAwesome
-          name={"chevron-left"}
-          size={24}
-          color={COLORS.primary}
-          accessibilityLabel="Redirection vers la page pour choisir la difficultée d'une séance"
-          style={{ marginLeft: 15, marginTop: 5 }}
+        <Pressable
+          style={styles.backButton}
           onPress={handleBack}
-        />
+          accessibilityLabel="Redirection vers la page pour choisir la difficultée d'une séance"
+        >
+          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
+        </Pressable>
         <Text style={styles.title}>{name}</Text>
         <Underline width={80} />
       </View>

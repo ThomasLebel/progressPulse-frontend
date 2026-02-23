@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
@@ -12,14 +12,13 @@ export default function WorkoutDifficultyScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <FontAwesome
-          name={"chevron-left"}
-          size={24}
-          color={COLORS.primary}
-          style={{ marginLeft: 15, marginTop: 5 }}
-          accessibilityLabel="Revenir sur la page pour sélectionné le type de séance"
+        <Pressable
+          style={styles.backButton}
           onPress={handleGoBack}
-        />
+          accessibilityLabel="Revenir sur la page pour sélectionné le type de séance"
+        >
+          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
+        </Pressable>
         <View>
           <Text style={styles.title}>Niveau de la séance</Text>
           <Underline width={80} />

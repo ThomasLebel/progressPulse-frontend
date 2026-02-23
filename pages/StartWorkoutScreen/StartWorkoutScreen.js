@@ -87,31 +87,34 @@ export default function StartWorkoutScreen({ navigation, route }) {
       <View style={styles.topContainer}>
         <Pressable style={styles.backRowContainer} onPress={handleGoToHome}>
           <FontAwesome
-            name={"chevron-left"}
-            size={24}
+            name="chevron-left"
+            size={20}
             color={COLORS.primary}
             accessibilityLabel="Redirection vers la page d'accueil"
           />
         </Pressable>
+
         <View style={styles.workoutNameSection}>
-          <Text style={styles.topTitle}>{workoutSelected.name}</Text>
+          <Text style={styles.topTitle} numberOfLines={1}>
+            {workoutSelected.name}
+          </Text>
           {isEditable && (
-            <FontAwesome
-              style={styles.pencilLogo}
-              name="pencil"
-              size={18}
-              color={"white"}
+            <Pressable
+              style={styles.pencilBtn}
               onPress={() => setModalTitleVisible(!modalTitleVisible)}
-            />
+            >
+              <FontAwesome name="pencil" size={13} color={COLORS.accent} />
+            </Pressable>
           )}
         </View>
-        <Pressable style={styles.binContainer} onPress={openAlertDeleteWorkout}>
-          <FontAwesome
-            name={isEditable ? "trash" : ""}
-            size={24}
-            color={COLORS.primary}
-            onPress={openAlertDeleteWorkout}
-          />
+
+        <Pressable
+          style={[styles.binContainer, !isEditable && styles.binHidden]}
+          onPress={isEditable ? openAlertDeleteWorkout : undefined}
+        >
+          {isEditable && (
+            <FontAwesome name="trash" size={16} color={COLORS.primary} />
+          )}
         </Pressable>
       </View>
 

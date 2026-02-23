@@ -1,5 +1,11 @@
 import { BlurView } from "expo-blur";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
 import ExerciseCard from "../../components/ExerciseCard";
@@ -72,16 +78,13 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         emptyFields={emptyFields}
         onSubmit={updateExercise}
       />
-      <View style={{ marginBottom: 20 }}>
-        <FontAwesome
-          name={"chevron-left"}
-          accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
-          size={24}
-          color={COLORS.primary}
-          style={{ marginLeft: 15, marginTop: 5 }}
-          onPress={() => navigation.navigate(backTo, { name: name })}
-        />
-      </View>
+      <Pressable
+        style={styles.backButton}
+        onPress={() => navigation.navigate(backTo, { name: name })}
+        accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
+      >
+        <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
+      </Pressable>
       <View style={styles.mainContainer}>
         <ScrollView
           style={{ width: "100%" }}

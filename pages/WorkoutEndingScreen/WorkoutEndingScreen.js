@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Keyboard,
+  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -31,14 +32,17 @@ export default function WorkoutEndingScreen({ navigation, route }) {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <FontAwesome
-            name={"chevron-left"}
-            size={24}
-            color={COLORS.primary}
-            style={{ marginBottom: 15 }}
+          <Pressable
+            style={styles.backButton}
             onPress={handleBack}
             accessibilityLabel="Redirection vers la liste des exercices"
-          />
+          >
+            <FontAwesome
+              name={"chevron-left"}
+              size={20}
+              color={COLORS.primary}
+            />
+          </Pressable>
           <Text style={styles.title}>Séance terminée !</Text>
           <Underline width={80} />
         </View>

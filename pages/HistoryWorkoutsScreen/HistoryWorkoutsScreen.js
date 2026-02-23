@@ -88,8 +88,7 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
           accessibilityLabel="Retourner sur la page historique"
           accessibilityHint="On va retourner sur la page suivi de séance"
         >
-          <FontAwesome name={"chevron-left"} size={16} color={COLORS.primary} />
-          <Text style={styles.backToText}>Suivi de séance</Text>
+          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.topTitle}>{workoutName}</Text>
         <Underline width={80} />

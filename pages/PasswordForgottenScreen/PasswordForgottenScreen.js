@@ -4,6 +4,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   Text,
   TextInput,
   TouchableWithoutFeedback,
@@ -49,14 +50,17 @@ export default function PasswordForgottenScreen({ navigation }) {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
-          <FontAwesome
-            name={"chevron-left"}
-            size={24}
-            color={COLORS.primary}
-            accessibilityLabel="Redirection vers la page pour se connecter"
+          <Pressable
             style={styles.backButton}
             onPress={handleGoToSignin}
-          />
+            accessibilityLabel="Redirection vers la page pour se connecter"
+          >
+            <FontAwesome
+              name={"chevron-left"}
+              size={20}
+              color={COLORS.primary}
+            />
+          </Pressable>
           {!isKeyboardVisible && (
             <View style={styles.imageContainer}>
               <Image

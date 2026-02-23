@@ -18,8 +18,7 @@ export default function HistoryScreen({ navigation }) {
           accessibilityLabel="Permet de revenir a la page Statistiques"
           accessibilityHint="On va se diriger vers la page Statistiques"
         >
-          <FontAwesome name={"chevron-left"} size={16} color={COLORS.primary} />
-          <Text style={styles.backToText}>Statistiques</Text>
+          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={styles.topTitle}>Suivi de séance</Text>
         <Underline width={120} />

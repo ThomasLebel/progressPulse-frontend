@@ -12,14 +12,13 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
   },
   backToContainer: {
-    flexDirection: "row",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.07)",
     alignItems: "center",
+    justifyContent: "center",
     marginBottom: 16,
-  },
-  backToText: {
-    color: COLORS.primary,
-    marginLeft: 8,
-    fontSize: 15,
   },
   topTitle: {
     fontSize: 32,

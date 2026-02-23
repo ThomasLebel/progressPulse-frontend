@@ -9,14 +9,13 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   backButton: {
-    flexDirection: "row",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.07)",
     alignItems: "center",
+    justifyContent: "center",
     marginBottom: 12,
-  },
-  backText: {
-    color: COLORS.primary,
-    fontSize: 14,
-    marginLeft: 6,
   },
   titleContainer: {
     marginBottom: 6,

@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../../constants/theme";
 import { useWorkoutTypeScreen } from "./useWorkoutTypeScreen";
@@ -11,14 +11,13 @@ export default function WorkoutTypeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <FontAwesome
-          name={"chevron-left"}
-          accessibilityLabel="Redirection vers la page d'accueil"
-          size={24}
-          color={COLORS.primary}
+        <Pressable
+          style={styles.backButton}
           onPress={handleGoHome}
-          style={{ marginLeft: 15, marginTop: 5 }}
-        />
+          accessibilityLabel="Redirection vers la page d'accueil"
+        >
+          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
+        </Pressable>
         <View style={styles.infoContainer}>
           <FontAwesome
             name={"info-circle"}
