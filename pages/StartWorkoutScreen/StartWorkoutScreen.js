@@ -159,7 +159,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
           borderColor="none"
           textButton={isEditable ? "Commencer la séance" : "Terminer la séance"}
           textColor="black"
-          width={300}
+          width={250}
           height={50}
           onPress={handlePressButton}
           isLinearGradiant={false}

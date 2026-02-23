@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { COLORS } from "../constants/theme";
 
 const Button = ({
   textButton,
@@ -16,34 +17,43 @@ const Button = ({
   accessibilityLabel,
   accessibilityHint,
 }) => {
+  const h = Number(height) || 50;
+  const radius = h / 2;
+  const hint = accessibilityHint || undefined;
+
   if (isLinearGradiant) {
     return (
       <TouchableOpacity
         onPress={onPress}
-        activeOpacity={0.8}
+        activeOpacity={0.7}
         accessibilityLabel={accessibilityLabel}
-        accessibilityHint={accessibilityHint}
+        accessibilityHint={hint}
         style={{
-          width: width,
+          width,
+          shadowColor: COLORS.accent,
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.35,
+          shadowRadius: 10,
+          elevation: 6,
         }}
       >
         <LinearGradient
-          colors={[colorsGradiant[0], colorsGradiant[1]]}
+          colors={colorsGradiant ?? [COLORS.primary, COLORS.accent]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{
-            height: height,
-            borderRadius: 10,
+            height: h,
+            borderRadius: radius,
             justifyContent: "center",
             alignItems: "center",
-            marginBottom: 20,
           }}
         >
           <Text
             style={{
               color: textColor,
-              fontSize: 22,
-              fontWeight: 400,
+              fontSize: 16,
+              fontWeight: "700",
+              letterSpacing: 0.6,
             }}
           >
             {textButton}
@@ -51,37 +61,42 @@ const Button = ({
         </LinearGradient>
       </TouchableOpacity>
     );
-  } else {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={onPress}
-        accessibilityLabel={accessibilityLabel}
+  }
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={hint}
+      style={{
+        backgroundColor: background,
+        width,
+        height: h,
+        borderWidth: borderWidth,
+        borderColor: borderColor,
+        borderRadius: radius,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: background,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
+        elevation: 6,
+      }}
+    >
+      <Text
         style={{
-          backgroundColor: background,
-          width: width,
-          height: height,
-          borderWidth: borderWidth,
-          borderColor: borderColor,
-          borderRadius: 10,
-          justifyContent: "center",
-          alignItems: "center",
-          margin: 20,
+          color: textColor,
+          fontSize: 16,
+          fontWeight: "700",
+          letterSpacing: 0.6,
         }}
       >
-        <Text
-          style={{
-            color: textColor,
-            fontSize: 20,
-            fontWeight: 400,
-          }}
-        >
-          {textButton}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-  r;
+        {textButton}
+      </Text>
+    </TouchableOpacity>
+  );
 };
 
 export default Button;

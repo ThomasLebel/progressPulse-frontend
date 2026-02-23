@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
 
   topContainer: {
     display: "flex",
+    marginTop: 10,
   },
 
   title: {
@@ -47,6 +48,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 10,
+    marginTop: 20,
   },
 
   text: {
