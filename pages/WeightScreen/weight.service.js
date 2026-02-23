@@ -11,10 +11,15 @@ export function getStartWeight(weights) {
 
 /**
  * Retourne la date de départ formatée ou un placeholder si absente.
+ * Priorise target.startDate (ajouté côté client lors de la création de l'objectif).
  * @param {Array} weights - tableau des entrées de poids
+ * @param {Object} [target] - objet objectif du reducer user
  * @returns {string}
  */
-export function getStartDate(weights) {
+export function getStartDate(weights, target) {
+  if (target?.startDate) {
+    return moment(target.startDate).format("Do MMM YYYY");
+  }
   return weights?.length === 0
     ? "DD/MM/YYYY"
     : moment(weights[0].date).format("Do MMM YYYY");

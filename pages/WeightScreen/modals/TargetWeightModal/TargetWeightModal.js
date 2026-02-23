@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./TargetWeightModal.styles";
 
@@ -49,36 +48,38 @@ export default function TargetWeightModal({
             <View style={styles.crossContainer}>
               <FontAwesome
                 name={"times"}
-                size={30}
-                color={"white"}
+                size={24}
+                color={COLORS.textSecondary}
                 onPress={onClose}
-                style={styles.infoIcon}
               />
             </View>
             <View style={styles.infoContainer}>
               <FontAwesome
                 name={"info-circle"}
-                size={25}
+                size={18}
                 color={COLORS.primary}
                 style={styles.infoIcon}
               />
               <Text style={styles.textInfo}>
                 Définissez un objectif de poids et une date pour mieux suivre
-                votre progression
+                votre progression.
               </Text>
             </View>
           </View>
+
           <View style={styles.bottomModal}>
             <TextInput
               style={styles.input}
-              placeholder={`Ton poids de départ`}
+              placeholder="Ton poids de départ (ex: 80)"
+              placeholderTextColor={COLORS.textSecondary}
               keyboardType="numeric"
               onChangeText={onChangeInitialWeight}
               value={initialWeightInput}
             />
             <TextInput
               style={styles.input}
-              placeholder="Ton objectif de poids"
+              placeholder="Ton objectif de poids (ex: 72)"
+              placeholderTextColor={COLORS.textSecondary}
               keyboardType="numeric"
               onChangeText={onChangeWeightTarget}
               value={weightTarget}
@@ -110,7 +111,7 @@ export default function TargetWeightModal({
                     {
                       backgroundColor: isCheckedLoss
                         ? COLORS.primary
-                        : "#D3D3D3",
+                        : "transparent",
                     },
                   ]}
                   onPress={() => onCheckbox("Loss")}
@@ -126,7 +127,7 @@ export default function TargetWeightModal({
                     {
                       backgroundColor: isCheckedGain
                         ? COLORS.primary
-                        : "#D3D3D3",
+                        : "transparent",
                     },
                   ]}
                   onPress={() => onCheckbox("Gain")}
@@ -138,16 +139,13 @@ export default function TargetWeightModal({
             </View>
 
             {error && <Text style={styles.errorText}>{errorMessage}</Text>}
-            <Button
-              textButton="Valider"
-              textColor={COLORS.primary}
-              width={180}
-              height={40}
-              background="#272D34"
-              borderWidth={1}
-              borderColor={COLORS.primary}
+            <TouchableOpacity
+              style={styles.button}
+              activeOpacity={0.8}
               onPress={onAddTarget}
-            />
+            >
+              <Text style={styles.buttonText}>Valider</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>

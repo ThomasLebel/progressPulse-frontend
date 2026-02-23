@@ -4,124 +4,155 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D0D36",
-    paddingVertical: 50,
-    paddingHorizontal: 10,
+    backgroundColor: COLORS.background,
+    paddingTop: 60,
+    paddingHorizontal: 20,
   },
-  topContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    padding: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "white",
-    marginBottom: 25,
-  },
-  backToContainer: {
+  backButton: {
     flexDirection: "row",
     alignItems: "center",
-    position: "absolute",
-    left: 0,
-    bottom: 10,
+    marginBottom: 12,
   },
-  backToText: {
+  backText: {
     color: COLORS.primary,
-    marginLeft: 8,
+    fontSize: 14,
+    marginLeft: 6,
   },
-  topTitle: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: 600,
+  titleContainer: {
+    marginBottom: 6,
   },
-  nameTitle: {
-    color: "white",
-    fontSize: 24,
-    fontWeight: 600,
-    textAlign: "center",
+  title: {
+    fontSize: 40,
+    color: COLORS.textPrimary,
+    fontWeight: "700",
+  },
+  nameSubtitle: {
+    color: COLORS.textSecondary,
+    fontSize: 16,
+    marginBottom: 24,
+    marginTop: 6,
+  },
+  sectionTitleContainer: {
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    color: COLORS.textPrimary,
+    fontWeight: "600",
+  },
+  card: {
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 16,
+    padding: 16,
     marginBottom: 20,
   },
-  weightContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: 16,
-    padding: 15,
-    marginVertical: 16,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.2)",
-  },
-  objectif: {
-    borderBottomWidth: 1,
-    marginBottom: 16,
-    borderBottomColor: "rgba(255, 255, 255, 0.2)",
-    height: 200,
-  },
-  colunmContainer: {
+  columnRow: {
     flexDirection: "row",
     justifyContent: "space-around",
-    height: "100%",
-    paddingVertical: 10,
+    alignItems: "center",
+    paddingVertical: 8,
   },
-  startTitle: {
-    fontSize: 20,
+  column: {
+    alignItems: "center",
+    gap: 8,
+  },
+  columnTitle: {
+    fontSize: 13,
     color: COLORS.primary,
+    fontWeight: "600",
   },
-  colunm: {
+  columnWeight: {
+    color: COLORS.textPrimary,
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  columnDate: {
+    color: COLORS.textSecondary,
+    fontSize: 12,
+  },
+  circleWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  circleText: {
+    position: "absolute",
+    color: COLORS.textPrimary,
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  progressRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  progressLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 14,
+  },
+  progressPercent: {
+    color: COLORS.primary,
+    fontSize: 16,
+    fontWeight: "700",
+    minWidth: 44,
+    textAlign: "right",
+  },
+  buttonRow: {
+    gap: 10,
+    marginBottom: 20,
+  },
+  buttonPrimary: {
+    backgroundColor: COLORS.primary,
+    height: 48,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonSecondary: {
+    backgroundColor: "transparent",
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonPrimaryText: {
+    color: COLORS.background,
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  buttonSecondaryText: {
+    color: COLORS.textPrimary,
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  historyRow: {
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.accentBorder,
   },
-  textWeight: {
-    color: "white",
+  historyRowLast: {
+    borderBottomWidth: 0,
+  },
+  historyWeight: {
+    color: COLORS.textPrimary,
     fontSize: 16,
+    fontWeight: "600",
   },
-  text: {
-    color: "white",
-  },
-  textAbsolute: {
-    position: "absolute",
-    justifyContent: "center",
-    top: "48%",
-    alignItems: "center",
-  },
-  progress: {
-    borderBottomColor: "rgba(255, 255, 255, 0.2)",
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    height: 60,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    paddingBottom: 16,
-  },
-  weightList: {
-    marginBottom: 16,
-  },
-  buttonContainer: {
-    width: "48%",
-    backgroundColor: COLORS.primary,
-    height: 40,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: "black",
+  historyDate: {
+    color: COLORS.textSecondary,
     fontSize: 14,
-    fontWeight: 600,
-    textAlign: "center",
   },
-  buttonWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginBottom: 16,
-    paddingBottom: 16,
-    borderBottomColor: "rgba(255, 255, 255, 0.2)",
-    borderBottomWidth: 1,
-    height: 70,
-  },
-  weightListTitle: {
-    fontSize: 20,
-    color: COLORS.primary,
+  emptyText: {
+    color: COLORS.textSecondary,
     textAlign: "center",
-    marginBottom: 15,
+    paddingVertical: 16,
+    fontSize: 14,
   },
   backgroundLoading: {
     position: "absolute",

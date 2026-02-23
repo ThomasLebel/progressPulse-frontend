@@ -64,18 +64,20 @@ export default function SigninScreen({ navigation }) {
             </Text>
           )}
           {signupError && <Text style={styles.error}>{signupError}</Text>}
-          <Button
-            textButton="Se connecter"
-            textColor="black"
-            width="50%"
-            height="40"
-            background={COLORS.primary}
-            onPress={handleSignin}
-            accessibilityLabel={"Permet de se connecter"}
-            accessibilityHint={
-              "Si vous avez rempli tous les champs, vous allez être redirigé sur la page d'acceuil"
-            }
-          />
+          <View style={styles.btnContainer}>
+            <Button
+              textButton="Se connecter"
+              textColor="black"
+              width="240"
+              height="40"
+              background={COLORS.primary}
+              onPress={handleSignin}
+              accessibilityLabel={"Permet de se connecter"}
+              accessibilityHint={
+                "Si vous avez rempli tous les champs, vous allez être redirigé sur la page d'acceuil"
+              }
+            />
+          </View>
           <TouchableOpacity
             onPress={handleGoToPasswordForgotten}
             accessibilityLabel="Mot de passe oublié"

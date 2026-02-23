@@ -10,6 +10,7 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import * as Progress from "react-native-progress";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import AddWeightModal from "./modals/AddWeightModal";
 import TargetWeightModal from "./modals/TargetWeightModal";
@@ -90,116 +91,139 @@ export default function WeightScreen({ navigation, route }) {
         onAddTarget={addTargetWeight}
       />
 
-      <View style={styles.topContainer}>
-        <TouchableOpacity
-          style={styles.backToContainer}
-          onPress={handleGoToStats}
-        >
-          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
-          <Text style={styles.backToText}>Statistiques</Text>
-        </TouchableOpacity>
-        <Text style={styles.topTitle}>Suivi de poids</Text>
+      <TouchableOpacity style={styles.backButton} onPress={handleGoToStats}>
+        <FontAwesome name={"chevron-left"} size={16} color={COLORS.primary} />
+        <Text style={styles.backText}>Statistiques</Text>
+      </TouchableOpacity>
+
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Suivi de poids</Text>
+        <Underline width={120} />
       </View>
+      <Text style={styles.nameSubtitle}>{username}</Text>
 
-      <Text style={styles.nameTitle}>{username}</Text>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>Mon objectif</Text>
+        </View>
 
-      <ScrollView style={styles.weightContainer}>
-        <View style={styles.objectif}>
-          <View style={styles.colunmContainer}>
-            <View style={styles.colunm}>
-              <Text style={styles.startTitle}>Début</Text>
-              <Text style={styles.textWeight}>{startWeight} kg</Text>
-              <Text style={styles.text}>{startDate}</Text>
+        <View style={styles.card}>
+          <View style={styles.columnRow}>
+            <View style={styles.column}>
+              <Text style={styles.columnTitle}>Début</Text>
+              <Text style={styles.columnWeight}>{startWeight} kg</Text>
+              <Text style={styles.columnDate}>{startDate}</Text>
             </View>
-            <View style={styles.colunm}>
-              <Text style={styles.startTitle}>Actuel</Text>
-              <Progress.Circle
-                progress={progressValue}
-                animated={true}
-                color={COLORS.primary}
-                unfilledColor="#0D0D36"
-                borderWidth={0.2}
-                size={100}
-                showsText={false}
-                strokeCap="round"
-              />
-              <View style={styles.textAbsolute}>
-                <Text style={styles.textWeight}>{currentWeight} kg</Text>
+
+            <View style={styles.column}>
+              <Text style={styles.columnTitle}>Actuel</Text>
+              <View style={styles.circleWrapper}>
+                <Progress.Circle
+                  progress={progressValue}
+                  animated={true}
+                  color={COLORS.primary}
+                  unfilledColor={COLORS.background}
+                  borderWidth={0.2}
+                  size={90}
+                  showsText={false}
+                  strokeCap="round"
+                />
+                <Text style={styles.circleText}>{currentWeight} kg</Text>
               </View>
-              <Text style={styles.text}>{currentDate}</Text>
+              <Text style={styles.columnDate}>{currentDate}</Text>
             </View>
-            <View style={styles.colunm}>
-              <Text style={styles.startTitle}>
+
+            <View style={styles.column}>
+              <Text style={styles.columnTitle}>
                 Objectif{" "}
-                {targetObjectif && targetObjectif === "Gain" ? (
+                {targetObjectif === "Gain" ? (
                   <FontAwesome6
                     name={"arrow-trend-up"}
-                    size={15}
+                    size={13}
                     color={COLORS.primary}
                   />
-                ) : (
-                  targetObjectif &&
-                  targetObjectif === "Loss" && (
-                    <FontAwesome6
-                      name={"arrow-trend-down"}
-                      size={15}
-                      color={COLORS.primary}
-                    />
-                  )
-                )}
+                ) : targetObjectif === "Loss" ? (
+                  <FontAwesome6
+                    name={"arrow-trend-down"}
+                    size={13}
+                    color={COLORS.primary}
+                  />
+                ) : null}
               </Text>
-              <Text style={styles.textWeight}>{targetWeight} kg</Text>
-              <Text style={styles.text}>{targetDate}</Text>
+              <Text style={styles.columnWeight}>{targetWeight} kg</Text>
+              <Text style={styles.columnDate}>{targetDate}</Text>
             </View>
           </View>
         </View>
 
-        <View style={styles.progress}>
-          <Text style={styles.text}>Progression</Text>
-          <Progress.Bar
-            progress={progressValue}
-            width={120}
-            animated={true}
-            color={COLORS.primary}
-            unfilledColor="#0D0D36"
-          />
-          <Text style={styles.text}>{progressValuePourcent} %</Text>
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>Progression</Text>
         </View>
 
-        <View style={styles.buttonWrapper}>
+        <View style={styles.card}>
+          <View style={styles.progressRow}>
+            <Text style={styles.progressLabel}>Avancement</Text>
+            <Progress.Bar
+              progress={progressValue}
+              width={160}
+              animated={true}
+              color={COLORS.primary}
+              unfilledColor={COLORS.background}
+              borderWidth={0}
+              height={8}
+              borderRadius={4}
+            />
+            <Text style={styles.progressPercent}>
+              {progressValuePourcent} %
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.buttonRow}>
           <TouchableOpacity
-            style={styles.buttonContainer}
+            style={styles.buttonPrimary}
             activeOpacity={0.8}
             onPress={() => setModalVisibleWeight(!modalVisibleWeight)}
           >
-            <Text style={styles.buttonText}>Ajouter mon poids</Text>
+            <Text style={styles.buttonPrimaryText}>Ajouter mon poids</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.buttonContainer}
+            style={styles.buttonSecondary}
             activeOpacity={0.8}
             onPress={() => setModalVisibleTarget(!modalVisibleTarget)}
           >
-            <Text style={styles.buttonText}>Ajouter un objectif de poids</Text>
+            <Text style={styles.buttonSecondaryText}>
+              Définir un objectif de poids
+            </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.weightList}>
-          <Text style={styles.weightListTitle}>Historique de Poids</Text>
-          {sortedWeights.map((element, index) => (
-            <View
-              key={index}
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: 10,
-              }}
-            >
-              <Text style={styles.text}>{element.weight} kg</Text>
-              <Text style={styles.text}>
-                {moment(element.date).format("Do MMM YYYY")}
-              </Text>
-            </View>
-          ))}
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>Historique de poids</Text>
+        </View>
+
+        <View style={styles.card}>
+          {sortedWeights.length === 0 ? (
+            <Text style={styles.emptyText}>Aucun poids enregistré</Text>
+          ) : (
+            sortedWeights.map((element, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.historyRow,
+                  index === sortedWeights.length - 1 && styles.historyRowLast,
+                ]}
+              >
+                <Text style={styles.historyWeight}>{element.weight} kg</Text>
+                <Text style={styles.historyDate}>
+                  {moment(element.date).format("Do MMM YYYY")}
+                </Text>
+              </View>
+            ))
+          )}
         </View>
       </ScrollView>
 

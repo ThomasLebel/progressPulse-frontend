@@ -4,10 +4,10 @@ import {
   Platform,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../../../components/Button";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./AddWeightModal.styles";
 
@@ -36,16 +36,15 @@ export default function AddWeightModal({
             <View style={styles.crossContainer}>
               <FontAwesome
                 name={"times"}
-                size={30}
-                color={"white"}
+                size={24}
+                color={COLORS.textSecondary}
                 onPress={onClose}
-                style={styles.infoIcon}
               />
             </View>
             <View style={styles.infoContainer}>
               <FontAwesome
                 name={"info-circle"}
-                size={25}
+                size={18}
                 color={COLORS.primary}
                 style={styles.infoIcon}
               />
@@ -58,22 +57,20 @@ export default function AddWeightModal({
           <View style={styles.bottomModal}>
             <TextInput
               style={styles.input}
-              placeholder="Ton poids"
+              placeholder="Ton poids (ex: 75.5)"
+              placeholderTextColor={COLORS.textSecondary}
               keyboardType="numeric"
               onChangeText={onChangeWeight}
               value={weight}
             />
             {error && <Text style={styles.errorText}>{errorMessage}</Text>}
-            <Button
-              textButton="Valider"
-              textColor={COLORS.primary}
-              width={180}
-              height={40}
-              background="#272D34"
-              borderWidth={1}
-              borderColor={COLORS.primary}
+            <TouchableOpacity
+              style={styles.button}
+              activeOpacity={0.8}
               onPress={onAddWeight}
-            />
+            >
+              <Text style={styles.buttonText}>Valider</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>

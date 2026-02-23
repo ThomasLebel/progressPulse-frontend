@@ -89,18 +89,20 @@ export default function PasswordForgottenScreen({ navigation }) {
                 </Text>
               )}
               {signupError && <Text style={styles.error}>{signupError}</Text>}
-              <Button
-                textButton="Envoyer le code"
-                textColor="black"
-                width="50%"
-                height="40"
-                background={COLORS.primary}
-                onPress={handleEmail}
-                accessibilityLabel={"Envoyer le code sur votre boîte mail"}
-                accessibilityHint={
-                  "Vous allez recevoir un email avec un code pour changer votre mot de passe"
-                }
-              />
+              <View style={styles.btnContainer}>
+                <Button
+                  textButton="Envoyer le code"
+                  textColor="black"
+                  width="240"
+                  height="40"
+                  background={COLORS.primary}
+                  onPress={handleEmail}
+                  accessibilityLabel={"Envoyer le code sur votre boîte mail"}
+                  accessibilityHint={
+                    "Vous allez recevoir un email avec un code pour changer votre mot de passe"
+                  }
+                />
+              </View>
             </View>
           )}
 
@@ -115,18 +117,20 @@ export default function PasswordForgottenScreen({ navigation }) {
                 accessibilityLabel="Entrez le code que vous avez reçu dans votre boîte mail"
               />
               {errorToken && <Text style={styles.error}>Token invalide</Text>}
-              <Button
-                textButton="Valider le code"
-                textColor="black"
-                width="50%"
-                height="40"
-                background={COLORS.primary}
-                onPress={handleCode}
-                accessibilityLabel={"Valider le code reçu"}
-                accessibilityHint={
-                  "Vous allez pouvoir changer votre mot de passe après avoir écrit le code reçu dans vos mails"
-                }
-              />
+              <View style={styles.btnContainer}>
+                <Button
+                  textButton="Valider le code"
+                  textColor="black"
+                  width="240"
+                  height="40"
+                  background={COLORS.primary}
+                  onPress={handleCode}
+                  accessibilityLabel={"Valider le code reçu"}
+                  accessibilityHint={
+                    "Vous allez pouvoir changer votre mot de passe après avoir écrit le code reçu dans vos mails"
+                  }
+                />
+              </View>
             </View>
           )}
 
@@ -155,16 +159,18 @@ export default function PasswordForgottenScreen({ navigation }) {
                   Les mots de passe ne correspondent pas
                 </Text>
               )}
-              <Button
-                textButton="Valider le mot de passe"
-                textColor="black"
-                width="60%"
-                height="50"
-                background={COLORS.primary}
-                onPress={handlePassword}
-                accessibilityLabel={"Valider le mot de passe"}
-                accessibilityHint={"Vous avez changer de mot de passe"}
-              />
+              <View style={styles.btnContainer}>
+                <Button
+                  textButton="Valider le mot de passe"
+                  textColor="black"
+                  width="240"
+                  height="50"
+                  background={COLORS.primary}
+                  onPress={handlePassword}
+                  accessibilityLabel={"Valider le mot de passe"}
+                  accessibilityHint={"Vous avez changer de mot de passe"}
+                />
+              </View>
             </View>
           )}
 
@@ -173,18 +179,20 @@ export default function PasswordForgottenScreen({ navigation }) {
               <Text style={styles.done}>
                 Le mot de passe a bien été modifié 🎉
               </Text>
-              <Button
-                textButton="Retourner à la connexion"
-                textColor="black"
-                width="60%"
-                height="50"
-                background={COLORS.primary}
-                onPress={handleGoToSignin}
-                accessibilityLabel={"Retourner à la connexion"}
-                accessibilityHint={
-                  "Après avoir changer de mot de passe vous aller pouvoir vous connecter"
-                }
-              />
+              <View style={styles.btnContainer}>
+                <Button
+                  textButton="Retourner à la connexion"
+                  textColor="black"
+                  width="240"
+                  height="50"
+                  background={COLORS.primary}
+                  onPress={handleGoToSignin}
+                  accessibilityLabel={"Retourner à la connexion"}
+                  accessibilityHint={
+                    "Après avoir changer de mot de passe vous aller pouvoir vous connecter"
+                  }
+                />
+              </View>
             </View>
           )}
 

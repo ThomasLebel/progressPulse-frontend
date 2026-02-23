@@ -79,4 +79,8 @@ export const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
+  btnContainer: {
+    marginTop: 30,
+    marginBottom: 30,
+  },
 });

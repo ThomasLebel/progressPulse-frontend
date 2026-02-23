@@ -127,7 +127,9 @@ export function useWeightScreen(navigation) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result === true) {
-          dispatch(updateTarget(data.weightTarget));
+          const now = new Date().toISOString();
+          dispatch(updateTarget({ ...data.weightTarget, startDate: now }));
+          dispatch(addWeight({ weight: parseFloat(initialWeightInput), date: now }));
           setIsLoading(false);
           closeModalTarget();
         } else {
@@ -171,8 +173,8 @@ export function useWeightScreen(navigation) {
     navigation.navigate("Stats");
   };
 
-  const startWeight = getStartWeight(user.weight);
-  const startDate = getStartDate(user.weight);
+  const startWeight = user.target?.initialWeight || getStartWeight(user.weight);
+  const startDate = getStartDate(user.weight, user.target);
   const currentDate = getCurrentDate(user.weight);
   const targetDate = getTargetDate(user.target);
   const sortedWeights = sortWeightsByDate(user.weight);

@@ -76,18 +76,20 @@ export default function SignupScreen({ navigation }) {
             </Text>
           )}
           {signupError && <Text style={styles.error}>{signupError}</Text>}
-          <Button
-            textButton="S'inscrire"
-            textColor="black"
-            width="50%"
-            height="40"
-            background={COLORS.primary}
-            onPress={handleSignup}
-            accessibilityLabel={"S'inscrire"}
-            accessibilityHint={
-              "Vous allez être redirigé vers la page d'acceuil de l'application"
-            }
-          />
+          <View style={styles.btnContainer}>
+            <Button
+              textButton="S'inscrire"
+              textColor="black"
+              width="240"
+              height="40"
+              background={COLORS.primary}
+              onPress={handleSignup}
+              accessibilityLabel={"S'inscrire"}
+              accessibilityHint={
+                "Vous allez être redirigé vers la page d'acceuil de l'application"
+              }
+            />
+          </View>
           <View style={styles.alreadyAccountSection}>
             <Text style={styles.alreadyAccount}>Déjà un compte ? </Text>
             <TouchableOpacity
