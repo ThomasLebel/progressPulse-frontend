@@ -27,7 +27,11 @@ export default function StatsScreen({ navigation }) {
   } = useStatsScreen(navigation);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 100 }}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Statistiques</Text>
         <Underline width={100} />

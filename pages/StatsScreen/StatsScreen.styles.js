@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#0D0D36",
-    paddingVertical: 60,
+    paddingTop: 60,
     paddingHorizontal: 20,
   },
   titleContainer: {

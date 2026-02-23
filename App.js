@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
+import { View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -70,43 +71,74 @@ const persistor = persistStore(store);
 
 const TabNavigator = () => {
   return (
-    <LinearGradient
-      colors={["#77778E", "#3D3D5C"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={{ flex: 1 }}
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, focused }) => {
+          let iconName = "";
+          if (route.name === "Stats") iconName = "bar-chart-o";
+          else if (route.name === "Home") iconName = "home";
+          else if (route.name === "Settings") iconName = "gears";
+
+          return (
+            <View style={{ alignItems: "center" }}>
+              <FontAwesome name={iconName} size={22} color={color} />
+              <View
+                style={{
+                  marginTop: 5,
+                  width: focused ? 16 : 0,
+                  height: 2,
+                  borderRadius: 1,
+                  backgroundColor: COLORS.accent,
+                }}
+              />
+            </View>
+          );
+        },
+        tabBarActiveTintColor: COLORS.accent,
+        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.35)",
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
+        tabBarBackground: () => (
+          <BlurView
+            intensity={85}
+            tint="dark"
+            style={{
+              flex: 1,
+              borderRadius: 40,
+              overflow: "hidden",
+              borderWidth: 1,
+              borderColor: "rgba(255, 255, 255, 0.1)",
+              backgroundColor: "rgba(255, 255, 255, 0.06)",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        ),
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 32,
+          left: 75,
+          right: 75,
+          backgroundColor: "transparent",
+          borderRadius: 40,
+          height: 64,
+          borderTopWidth: 0,
+          elevation: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+        },
+        tabBarItemStyle: {
+          height: 64,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      })}
     >
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color }) => {
-            let iconName = "";
-
-            if (route.name === "Stats") {
-              iconName = "bar-chart-o";
-            } else if (route.name === "Home") {
-              iconName = "home";
-            } else if (route.name === "Settings") {
-              iconName = "gears";
-            }
-
-            return <FontAwesome name={iconName} size={30} color={color} />;
-          },
-          tabBarActiveTintColor: COLORS.primary,
-          tabBarInactiveTintColor: "#EBF2F4",
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarStyle: {
-            backgroundColor: "rgba(13, 13, 54, 0.7)",
-            borderTopWidth: 0,
-            height: 80,
-          },
-        })}
-      >
-        <Tab.Screen name="Stats" component={StatsScreen} />
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </LinearGradient>
+      <Tab.Screen name="Stats" component={StatsScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };
 
