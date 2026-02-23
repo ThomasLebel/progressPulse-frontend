@@ -56,6 +56,10 @@ export function useProgressStatsScreen(navigation) {
     navigation.navigate('allWorkouts', { workouts: getMostFrequentWorkouts(history) });
   };
 
+  const handleNavigateToExercisesByMuscle = () => {
+    navigation.navigate('exercisesByMuscle');
+  };
+
   return {
     isLoading,
     totalWorkouts,
@@ -68,6 +72,7 @@ export function useProgressStatsScreen(navigation) {
     handleNavigateToExercise,
     handleNavigateToAllExercises,
     handleNavigateToAllWorkouts,
+    handleNavigateToExercisesByMuscle,
     selectedPeriod,
     setSelectedPeriod,
     dropdownOpen,

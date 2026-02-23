@@ -49,6 +49,7 @@ export default function ProgressStatsScreen({ navigation }) {
     handleNavigateToExercise,
     handleNavigateToAllExercises,
     handleNavigateToAllWorkouts,
+    handleNavigateToExercisesByMuscle,
     selectedPeriod,
     setSelectedPeriod,
     dropdownOpen,
@@ -179,7 +180,21 @@ export default function ProgressStatsScreen({ navigation }) {
           yAxisSuffix=""
         />
       </View>
-
+      <TouchableOpacity
+        style={styles.muscleStatsBtn}
+        activeOpacity={0.75}
+        onPress={handleNavigateToExercisesByMuscle}
+      >
+        <View style={styles.muscleStatsBtnLeft}>
+          <View style={styles.muscleStatsBtnIcon}>
+            <FontAwesome name="filter" size={14} color={COLORS.background} />
+          </View>
+          <Text style={styles.muscleStatsBtnText}>
+            Statistiques par groupe musculaire
+          </Text>
+        </View>
+        <FontAwesome name="chevron-right" size={12} color={COLORS.accent} />
+      </TouchableOpacity>
       <Text style={styles.sectionTitle}>Mes tops</Text>
       <View style={styles.topCardsRow}>
         {/* Card Top 3 exercices */}
@@ -204,10 +219,7 @@ export default function ProgressStatsScreen({ navigation }) {
                     ]}
                   >
                     <Text
-                      style={[
-                        styles.rankNumber,
-                        { color: RANK_COLORS[index] },
-                      ]}
+                      style={[styles.rankNumber, { color: RANK_COLORS[index] }]}
                     >
                       {index + 1}
                     </Text>
@@ -248,7 +260,11 @@ export default function ProgressStatsScreen({ navigation }) {
             onPress={handleNavigateToAllExercises}
           >
             <Text style={styles.seeAllBtnText}>Voir tous les exercices</Text>
-            <FontAwesome name="chevron-right" size={10} color={COLORS.background} />
+            <FontAwesome
+              name="chevron-right"
+              size={10}
+              color={COLORS.background}
+            />
           </TouchableOpacity>
         </View>
 
@@ -274,10 +290,7 @@ export default function ProgressStatsScreen({ navigation }) {
                     ]}
                   >
                     <Text
-                      style={[
-                        styles.rankNumber,
-                        { color: RANK_COLORS[index] },
-                      ]}
+                      style={[styles.rankNumber, { color: RANK_COLORS[index] }]}
                     >
                       {index + 1}
                     </Text>
@@ -313,7 +326,11 @@ export default function ProgressStatsScreen({ navigation }) {
             onPress={handleNavigateToAllWorkouts}
           >
             <Text style={styles.seeAllBtnText}>Voir toutes les séances</Text>
-            <FontAwesome name="chevron-right" size={10} color={COLORS.background} />
+            <FontAwesome
+              name="chevron-right"
+              size={10}
+              color={COLORS.background}
+            />
           </TouchableOpacity>
         </View>
       </View>

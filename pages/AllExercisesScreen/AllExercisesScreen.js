@@ -11,7 +11,7 @@ function getRankColor(index) {
 }
 
 export default function AllExercisesScreen({ navigation, route }) {
-  const { exercises, maxCount, handlePress } = useAllExercisesScreen(
+  const { exercises, title, maxCount, handlePress } = useAllExercisesScreen(
     navigation,
     route
   );
@@ -88,7 +88,7 @@ export default function AllExercisesScreen({ navigation, route }) {
           >
             <FontAwesome name="chevron-left" size={16} color={COLORS.accent} />
           </TouchableOpacity>
-          <Text style={styles.title}>Tous les exercices</Text>
+          <Text style={styles.title}>{title}</Text>
         </View>
       }
       ListEmptyComponent={
