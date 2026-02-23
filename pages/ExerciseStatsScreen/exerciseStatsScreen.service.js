@@ -67,23 +67,34 @@ export function getBestEstimated1RMForSession(sets) {
 
 export function get1RMProgressionChart(sessions, exerciseName) {
   if (sessions.length === 0) {
-    return { labels: [], data: [0] };
+    return { labels: [], data: [] };
   }
 
-  const points = sessions.map((workout) => {
-    const perf = workout.performances?.find(
-      (p) => p.exercise?.name === exerciseName
-    );
-    const best = perf ? getBestEstimated1RMForSession(perf.sets ?? []) : 0;
-    const label = moment(workout.date).locale('fr').format('DD/MM');
-    return { label, value: Math.round(best) };
-  });
+  const points = sessions
+    .map((workout) => {
+      const perf = workout.performances?.find(
+        (p) => p.exercise?.name === exerciseName
+      );
+      const best = perf ? getBestEstimated1RMForSession(perf.sets ?? []) : 0;
+      const label = moment(workout.date).locale('fr').format('DD/MM');
+      return { label, value: Math.round(best) };
+    })
+    .filter((p) => p.value > 0);
 
-  const last8 = points.slice(-8);
+  if (points.length === 0) {
+    return { labels: [], data: [] };
+  }
+
+  const MAX_LABELS = 8;
+  const step =
+    points.length > MAX_LABELS ? Math.ceil(points.length / MAX_LABELS) : 1;
+  const labels = points.map((p, i) =>
+    i % step === 0 || i === points.length - 1 ? p.label : ''
+  );
 
   return {
-    labels: last8.map((p) => p.label),
-    data: last8.map((p) => p.value),
+    labels,
+    data: points.map((p) => p.value),
   };
 }
 

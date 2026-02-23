@@ -7,21 +7,20 @@ import {
 } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Underline from '../../components/Underline';
 import { COLORS } from '../../constants/theme';
 import { styles } from './ExerciseStatsScreen.styles';
 import { useExerciseStatsScreen } from './useExerciseStatsScreen';
 
 const CHART_CONFIG = {
-  backgroundGradientFrom: COLORS.cardBackground,
-  backgroundGradientTo: COLORS.background,
+  backgroundGradientFrom: '#1C1C3A',
+  backgroundGradientTo: '#0D0D36',
   decimalPlaces: 0,
   color: (opacity = 1) => `rgba(163, 253, 1, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   propsForDots: {
     r: '5',
     strokeWidth: '2',
-    stroke: COLORS.primary,
+    stroke: '#8BC34A',
   },
 };
 
@@ -71,7 +70,6 @@ export default function ExerciseStatsScreen({ navigation, route }) {
           ) : null}
         </View>
       </View>
-      <Underline width={80} />
 
       {!hasData ? (
         <Text style={styles.emptyText}>
@@ -183,6 +181,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
             <>
               <View style={styles.chartContainer}>
                 <LineChart
+                  key={selectedPeriod}
                   data={{
                     labels: chartData.labels,
                     datasets: [{ data: chartData.data }],

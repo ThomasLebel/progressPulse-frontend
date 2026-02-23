@@ -37,8 +37,7 @@ export function useExerciseStatsScreen(navigation, route) {
   const best1RM = getBest1RM(allSessions, exerciseName);
   const chartData = get1RMProgressionChart(filteredSessions, exerciseName);
 
-  const hasChartData =
-    chartData.data.length > 0 && chartData.data.some((v) => v > 0);
+  const hasChartData = chartData.data.length > 0;
 
   const handleBack = () => navigation.goBack();
 

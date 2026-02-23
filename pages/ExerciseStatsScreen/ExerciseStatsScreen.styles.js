@@ -8,10 +8,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   topContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 6,
-    gap: 14,
+    flexDirection: 'column',
+    marginBottom: 12,
   },
   backButton: {
     width: 40,
@@ -20,10 +18,9 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.07)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 14,
   },
-  titleBlock: {
-    flex: 1,
-  },
+  titleBlock: {},
   title: {
     fontSize: 24,
     fontWeight: '700',
@@ -168,12 +165,12 @@ export const styles = StyleSheet.create({
     color: COLORS.textSecondary,
   },
   chartContainer: {
-    backgroundColor: COLORS.cardBackground,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
     overflow: 'hidden',
     marginTop: 8,
+    marginBottom: 8,
   },
   onermNote: {
     fontSize: 11,
