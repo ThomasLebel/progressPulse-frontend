@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
     flex: 1,
-    backgroundColor: COLORS.background,
   },
 
   topContainer: {
@@ -102,6 +101,7 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
+    backgroundColor: "#1A1740",
     overflow: "hidden",
   },
 
@@ -131,7 +131,7 @@ export const styles = StyleSheet.create({
   input: {
     width: "80%",
     height: 46,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
@@ -163,6 +163,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
     overflow: "hidden",
+    backgroundColor: "#1A1740",
   },
 
   pencil: {

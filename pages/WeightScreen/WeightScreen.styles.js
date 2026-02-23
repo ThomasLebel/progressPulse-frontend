@@ -4,7 +4,6 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
     paddingTop: 60,
     paddingHorizontal: 20,
   },
@@ -118,7 +117,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonPrimaryText: {
-    color: COLORS.background,
+    color: "black",
     fontSize: 15,
     fontWeight: "700",
   },

@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
   checkmark: {
     width: 10,
     height: 10,
-    backgroundColor: COLORS.background,
+    backgroundColor: "black",
     borderRadius: 2,
   },
   text: {
@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   buttonText: {
-    color: COLORS.background,
+    color: "black",
     fontSize: 15,
     fontWeight: "700",
   },

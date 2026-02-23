@@ -73,7 +73,7 @@ const ExerciseBtn = ({
           <FontAwesome
             name={isAdded ? "check" : "plus"}
             size={14}
-            color={isAdded ? COLORS.background : COLORS.background}
+            color={isAdded ? COLORS.accent : COLORS.accent}
           />
         </View>
       </View>

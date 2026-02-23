@@ -14,7 +14,6 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
     paddingVertical: 50,
     paddingHorizontal: 10,
   },
@@ -61,7 +60,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 6,
   },
   badgeCountText: {
-    color: COLORS.background,
+    color: "black",
     fontSize: 12,
     fontWeight: "700",
   },

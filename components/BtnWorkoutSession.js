@@ -51,11 +51,7 @@ export default function WorkoutSessionButton({
           </View>
           <View style={styles.btnContainer}>
             <Text style={styles.btnText}>{textBtn}</Text>
-            <FontAwesome
-              name={"long-arrow-right"}
-              size={14}
-              color={COLORS.background}
-            />
+            <FontAwesome name={"long-arrow-right"} size={14} color={"black"} />
           </View>
         </View>
       </View>
@@ -139,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   btnText: {
-    color: COLORS.background,
+    color: "black",
     fontWeight: "700",
     fontSize: 12,
   },

@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BlurView } from "expo-blur";
-import { View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -133,6 +134,8 @@ const TabNavigator = () => {
           justifyContent: "center",
           alignItems: "center",
         },
+        contentStyle: { backgroundColor: "transparent" },
+        sceneStyle: { backgroundColor: "transparent" },
       })}
     >
       <Tab.Screen name="Stats" component={StatsScreen} />
@@ -146,49 +149,75 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Signin" component={SigninScreen} />
-            <Stack.Screen
-              name="passwordForgotten"
-              component={PasswordForgottenScreen}
-            />
-            <Stack.Screen name="Signup" component={SignupScreen} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen name="song" component={SongScreen} />
-            <Stack.Screen name="weight" component={WeightScreen} />
-            <Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
-            <Stack.Screen
-              name="WorkoutDifficulty"
-              component={WorkoutDifficultyScreen}
-            />
-            <Stack.Screen
-              name="workoutChoice"
-              component={WorkoutChoiceScreen}
-            />
-            <Stack.Screen
-              name="workoutSummary"
-              component={WorkoutSummaryScreen}
-            />
-            <Stack.Screen name="muscleGroup" component={MuscleGroupScreen} />
-            <Stack.Screen
-              name="exercicesChoices"
-              component={ExercicesChoiceScreen}
-            />
-            <Stack.Screen name="startWorkout" component={StartWorkoutScreen} />
-            <Stack.Screen name="exercice" component={ExerciceScreen} />
-            <Stack.Screen name="timer" component={TimerScreen} />
-            <Stack.Screen
-              name="workoutEnding"
-              component={WorkoutEndingScreen}
-            />
-            <Stack.Screen
-              name="historyWorkout"
-              component={HystoryWorkoutScreen}
-            />
-            <Stack.Screen name="history" component={HistoryScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <View style={{ flex: 1 }}>
+          <LinearGradient
+            colors={["#0D0D36", "#2A1B5A", "#09091F"]}
+            style={StyleSheet.absoluteFill}
+          />
+          <NavigationContainer
+            theme={{
+              dark: true,
+              colors: {
+                background: "transparent",
+                primary: COLORS.primary,
+                card: COLORS.cardBackground,
+                text: COLORS.textPrimary,
+                border: "transparent",
+                notification: COLORS.primary,
+              },
+            }}
+          >
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: "transparent" },
+              }}
+            >
+              <Stack.Screen name="Signin" component={SigninScreen} />
+              <Stack.Screen
+                name="passwordForgotten"
+                component={PasswordForgottenScreen}
+              />
+              <Stack.Screen name="Signup" component={SignupScreen} />
+              <Stack.Screen name="TabNavigator" component={TabNavigator} />
+              <Stack.Screen name="song" component={SongScreen} />
+              <Stack.Screen name="weight" component={WeightScreen} />
+              <Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
+              <Stack.Screen
+                name="WorkoutDifficulty"
+                component={WorkoutDifficultyScreen}
+              />
+              <Stack.Screen
+                name="workoutChoice"
+                component={WorkoutChoiceScreen}
+              />
+              <Stack.Screen
+                name="workoutSummary"
+                component={WorkoutSummaryScreen}
+              />
+              <Stack.Screen name="muscleGroup" component={MuscleGroupScreen} />
+              <Stack.Screen
+                name="exercicesChoices"
+                component={ExercicesChoiceScreen}
+              />
+              <Stack.Screen
+                name="startWorkout"
+                component={StartWorkoutScreen}
+              />
+              <Stack.Screen name="exercice" component={ExerciceScreen} />
+              <Stack.Screen name="timer" component={TimerScreen} />
+              <Stack.Screen
+                name="workoutEnding"
+                component={WorkoutEndingScreen}
+              />
+              <Stack.Screen
+                name="historyWorkout"
+                component={HystoryWorkoutScreen}
+              />
+              <Stack.Screen name="history" component={HistoryScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
       </PersistGate>
     </Provider>
   );

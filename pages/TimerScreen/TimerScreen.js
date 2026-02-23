@@ -83,7 +83,7 @@ export default function TimerScreen({ navigation, route }) {
             <View style={styles.btn}>
               <Button
                 textButton="Démarrer le minuteur"
-                textColor={COLORS.background}
+                textColor={"black"}
                 width="70%"
                 height={50}
                 background={COLORS.primary}
@@ -148,7 +148,7 @@ export default function TimerScreen({ navigation, route }) {
                     ? "Passer à la série suivante"
                     : "Terminer l'exercice"
                 }
-                textColor={COLORS.background}
+                textColor={"black"}
                 width="70%"
                 height={50}
                 background={COLORS.primary}
@@ -163,7 +163,7 @@ export default function TimerScreen({ navigation, route }) {
           {!input && (
             <LinearGradient
               style={styles.linear}
-              colors={[COLORS.cardBackground, "#13132A"]}
+              colors={[COLORS.cardBackground]}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
             >
@@ -217,7 +217,7 @@ export default function TimerScreen({ navigation, route }) {
               <View style={styles.btnContainer}>
                 <Button
                   textButton="Valider la saisie"
-                  textColor={COLORS.background}
+                  textColor={"black"}
                   width="60%"
                   height={50}
                   background={COLORS.primary}
@@ -230,9 +230,7 @@ export default function TimerScreen({ navigation, route }) {
           {input && (
             <LinearGradient
               style={styles.linearInput}
-              colors={[COLORS.cardBackground, "#13132A"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
+              colors={[COLORS.cardBackground]}
             >
               <View style={styles.pencil}>
                 <FontAwesome

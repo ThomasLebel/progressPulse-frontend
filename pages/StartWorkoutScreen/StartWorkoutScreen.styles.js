@@ -4,7 +4,6 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
     paddingVertical: 50,
     paddingHorizontal: 10,
   },
@@ -15,7 +14,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 12,
     marginTop: 15,
-    marginBottom: 24,
+
     borderBottomWidth: 1,
     borderBottomColor: COLORS.accentBorder,
   },
@@ -66,6 +65,7 @@ export const styles = StyleSheet.create({
   groupTitle: {
     color: COLORS.textPrimary,
     fontSize: 20,
+    paddingTop: 20,
   },
   workoutNameSection: {
     flexDirection: "row",

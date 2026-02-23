@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   buttonText: {
-    color: COLORS.background,
+    color: "black",
     fontSize: 15,
     fontWeight: "700",
   },

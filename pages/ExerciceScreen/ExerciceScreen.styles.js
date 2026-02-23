@@ -4,7 +4,6 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
   },
 
   // ── Image section ──────────────────────────────────────────
@@ -28,7 +27,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 130,
+    height: 100,
   },
 
   backButton: {

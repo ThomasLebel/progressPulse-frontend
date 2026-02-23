@@ -48,7 +48,7 @@ export default function ExerciceScreen({ navigation, route }) {
       <View style={styles.imageWrapper}>
         <Image style={styles.image} source={imagePath} contentFit="cover" />
         <LinearGradient
-          colors={["transparent", COLORS.background]}
+          colors={["transparent", "#2A1B5A"]}
           style={styles.imageGradient}
         />
         <Pressable style={styles.backButton} onPress={goBack}>

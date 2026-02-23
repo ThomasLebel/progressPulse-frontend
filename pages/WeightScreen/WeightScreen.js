@@ -124,7 +124,7 @@ export default function WeightScreen({ navigation, route }) {
                   progress={progressValue}
                   animated={true}
                   color={COLORS.primary}
-                  unfilledColor={COLORS.background}
+                  unfilledColor={"transparent"}
                   borderWidth={0.2}
                   size={90}
                   showsText={false}
@@ -170,7 +170,7 @@ export default function WeightScreen({ navigation, route }) {
               width={160}
               animated={true}
               color={COLORS.primary}
-              unfilledColor={COLORS.background}
+              unfilledColor={"transparent"}
               borderWidth={0}
               height={8}
               borderRadius={4}
