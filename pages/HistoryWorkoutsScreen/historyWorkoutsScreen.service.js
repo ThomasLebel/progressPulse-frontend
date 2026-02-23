@@ -1,4 +1,6 @@
 import moment from "moment";
+import "moment/locale/fr";
+moment.locale("fr");
 
 /**
  * Filtre les entrées de l'historique par nom de séance.
@@ -22,7 +24,7 @@ export function sortWorkoutsByDate(workouts) {
  * Formate une date en chaîne lisible via moment ("Do MMM YYYY").
  */
 export function formatDate(dateStr) {
-  return moment(dateStr).format("Do MMM YYYY");
+  return moment(dateStr).format("D MMMM YYYY");
 }
 
 /**

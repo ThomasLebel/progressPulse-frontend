@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HystoryWorkouts from "../../components/HystoryWorkout";
@@ -34,7 +33,9 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
       const name = performance.exercise.name;
       return (
         <View key={j} style={{ width: "100%" }}>
-          <Text style={{ color: "white", fontSize: 16 }}>{name} :</Text>
+          <Text style={{ color: COLORS.textPrimary, fontSize: 16 }}>
+            {name} :
+          </Text>
           <Underline width={40} />
           <View
             style={{
@@ -47,43 +48,17 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
           >
             {performance.sets.map((set, k) =>
               muscleGroupe !== "Cardio" ? (
-                <LinearGradient
-                  key={k}
-                  colors={["#1C1C45", "#4645AB"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{
-                    height: 23,
-                    width: "45%",
-                    marginBottom: 10,
-                    marginRight: 10,
-                    borderRadius: 10,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ color: "#ffffff", textAlign: "center" }}>
+                <View key={k} style={styles.setChip}>
+                  <Text style={styles.setChipText}>
                     Série {k + 1} : {set.reps} x {set.weight} kg
                   </Text>
-                </LinearGradient>
+                </View>
               ) : (
-                <LinearGradient
-                  key={k}
-                  colors={["#1C1C45", "#4645AB"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{
-                    height: 23,
-                    width: "75%",
-                    marginBottom: 10,
-                    marginRight: 10,
-                    borderRadius: 10,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ color: "#ffffff", textAlign: "center" }}>
+                <View key={k} style={styles.setChipCardio}>
+                  <Text style={styles.setChipText}>
                     {formatCardioLabel(set)}
                   </Text>
-                </LinearGradient>
+                </View>
               ),
             )}
           </View>
@@ -99,7 +74,7 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
         stars={stars}
         ressenti={element.ressenti}
         workouts={groupedWorkouts}
-        accessibilityLabel={`Affiche les détails de notre séance`}
+        accessibilityLabel="Affiche les détails de notre séance"
       />
     );
   });
@@ -110,15 +85,22 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
         <TouchableOpacity
           style={styles.backToContainer}
           onPress={navigateBack}
-          accessibilityLabel="Retourn sur la page history"
-          accessibilityHint="On va retourner sur la page suivie de séance"
+          accessibilityLabel="Retourner sur la page historique"
+          accessibilityHint="On va retourner sur la page suivi de séance"
         >
-          <FontAwesome name={"chevron-left"} size={24} color={COLORS.primary} />
-          <Text style={styles.backToText}>Suivi</Text>
+          <FontAwesome name={"chevron-left"} size={16} color={COLORS.primary} />
+          <Text style={styles.backToText}>Suivi de séance</Text>
         </TouchableOpacity>
         <Text style={styles.topTitle}>{workoutName}</Text>
+        <Underline width={80} />
       </View>
-      <ScrollView style={styles.weightContainer}>{hystories}</ScrollView>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {hystories}
+      </ScrollView>
     </View>
   );
 }

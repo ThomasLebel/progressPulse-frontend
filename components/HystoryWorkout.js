@@ -25,7 +25,6 @@ export default function HystoryWorkout({
 
   useEffect(() => {
     if (isReady && expanded) {
-      // Lance l'animation d'agrandissement une fois la hauteur mesurée
       Animated.timing(cardHeight, {
         toValue: contentHeight.current + 90,
         duration: 300,
@@ -36,7 +35,6 @@ export default function HystoryWorkout({
 
   const toggleCard = () => {
     if (expanded) {
-      // Réduire la carte
       Animated.timing(cardHeight, {
         toValue: 90,
         duration: 300,
@@ -55,29 +53,35 @@ export default function HystoryWorkout({
       accessibilityLabel={accessibilityLabel}
     >
       <Animated.View style={[styles.card, { height: cardHeight }]}>
-        <View>
-          <Text style={styles.text}>{name}</Text>
-          <Text style={styles.text}>{date}</Text>
-        </View>
-        <FontAwesome
-          name={expanded ? "minus-circle" : "plus-circle"}
-          size={25}
-          color={COLORS.primary}
-          style={{ position: "absolute", right: 10, top: 10 }}
-        />
-        <View style={styles.starContainer}>{stars}</View>
+        {/* Barre d'accent gauche */}
+        <View style={styles.accentBar} />
 
-        <View
-          style={{ opacity: expanded ? 1 : 0, width: "100%" }}
-          onLayout={(event) => {
-            if (contentHeight.current === 0) {
-              contentHeight.current = event.nativeEvent.layout.height; // Mesure la hauteur
-              setIsReady(true);
-            }
-          }}
-        >
-          <Text style={styles.textRessenti}>Ressenti : {ressenti}</Text>
-          {workouts}
+        <View style={styles.cardContent}>
+          <View style={styles.header}>
+            <View style={styles.titleBlock}>
+              <Text style={styles.nameText}>Séance du {date}</Text>
+            </View>
+            <FontAwesome
+              name={expanded ? "minus-circle" : "plus-circle"}
+              size={22}
+              color={COLORS.primary}
+            />
+          </View>
+
+          <View style={styles.starContainer}>{stars}</View>
+
+          <View
+            style={{ opacity: expanded ? 1 : 0, width: "100%" }}
+            onLayout={(event) => {
+              if (contentHeight.current === 0) {
+                contentHeight.current = event.nativeEvent.layout.height;
+                setIsReady(true);
+              }
+            }}
+          >
+            <Text style={styles.ressentiText}>Ressenti : {ressenti}</Text>
+            {workouts}
+          </View>
         </View>
       </Animated.View>
     </TouchableOpacity>
@@ -86,46 +90,50 @@ export default function HystoryWorkout({
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 10,
-    padding: 10,
+    flexDirection: "row",
+    borderRadius: 16,
+    marginBottom: 12,
     overflow: "hidden",
-    marginBottom: 15,
-    borderBottomColor: "rgba(255, 255, 255, 0.2)",
-    borderBottomWidth: 1,
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
   },
-  text: {
-    color: "white",
+  accentBar: {
+    width: 4,
+    backgroundColor: COLORS.primary,
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
+  },
+  cardContent: {
+    flex: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  titleBlock: {
+    flex: 1,
+    marginRight: 10,
+  },
+  nameText: {
+    color: COLORS.textPrimary,
     fontSize: 16,
-    marginBottom: 5,
+    fontWeight: "600",
+    marginBottom: 2,
   },
+
   starContainer: {
     flexDirection: "row",
-    marginBottom: 5,
+    marginTop: 6,
+    marginBottom: 4,
   },
-  muscleGroupText: {
-    color: "white",
-    fontSize: 16,
-  },
-  perfcontainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
+  ressentiText: {
+    color: COLORS.textSecondary,
+    fontSize: 14,
     marginBottom: 10,
-  },
-  linearPerf: {
-    height: 23,
-    width: "45%",
-    marginBottom: 10,
-    borderRadius: 10,
-    justifyContent: "center",
-  },
-  perf: {
-    color: "#ffffff",
-    textAlign: "center",
-  },
-  textRessenti: {
-    color: "white",
-    fontSize: 16,
-    marginBottom: 5,
+    marginTop: 8,
   },
 });
