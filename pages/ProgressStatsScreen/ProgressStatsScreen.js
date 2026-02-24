@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { BarChart } from "react-native-chart-kit";
+import { useState } from "react";
+import { BarChart } from "react-native-gifted-charts";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
@@ -15,26 +16,8 @@ import { useProgressStatsScreen } from "./useProgressStatsScreen";
 
 const RANK_COLORS = [COLORS.rankGold, COLORS.rankSilver, COLORS.rankBronze];
 
-function makeChartConfig(barPercentage) {
-  return {
-    backgroundGradientFrom: "#1C1C3A",
-    backgroundGradientTo: "#0D0D36",
-    decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(163, 253, 1, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    barPercentage,
-    style: {
-      borderRadius: 0,
-    },
-    propsForDots: {
-      r: "4",
-      strokeWidth: "1",
-      stroke: "#1D632F",
-    },
-  };
-}
-
 const SCREEN_WIDTH = Dimensions.get("window").width - 40;
+const Y_AXIS_WIDTH = 44;
 
 export default function ProgressStatsScreen({ navigation }) {
   const {
@@ -43,7 +26,6 @@ export default function ProgressStatsScreen({ navigation }) {
     avgWorkoutsPerWeek,
     barChartData,
     chartTitle,
-    barPercentage,
     topExercises,
     topWorkouts,
     handleNavigateToExercise,
@@ -56,6 +38,19 @@ export default function ProgressStatsScreen({ navigation }) {
     setDropdownOpen,
     PERIODS,
   } = useProgressStatsScreen(navigation);
+
+  const [selectedBarIndex, setSelectedBarIndex] = useState(null);
+
+  const n = barChartData.length;
+  const chartAvailable = SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8;
+  const barWidth = Math.min(20, Math.max(12, Math.floor(chartAvailable / n / 2)));
+  const barSpacing = n > 1 ? Math.max(8, Math.floor((chartAvailable - n * barWidth) / n)) : chartAvailable - barWidth;
+
+  const chartData = barChartData.map((item, index) => ({
+    ...item,
+    onPress: () => setSelectedBarIndex(selectedBarIndex === index ? null : index),
+    frontColor: selectedBarIndex === index ? COLORS.primary : COLORS.accent,
+  }));
 
   if (isLoading) {
     return (
@@ -110,6 +105,7 @@ export default function ProgressStatsScreen({ navigation }) {
                   onPress={() => {
                     setSelectedPeriod(period.key);
                     setDropdownOpen(false);
+                    setSelectedBarIndex(null);
                   }}
                 >
                   <Text
@@ -159,26 +155,43 @@ export default function ProgressStatsScreen({ navigation }) {
       <Text style={styles.sectionTitle}>{chartTitle}</Text>
       <View style={styles.chartContainer}>
         <BarChart
-          data={{
-            labels: barChartData.labels,
-            datasets: [
-              {
-                data:
-                  barChartData.data.length > 0
-                    ? barChartData.data
-                    : barChartData.labels.map(() => 0),
-              },
-            ],
-          }}
-          width={SCREEN_WIDTH}
+          key={selectedPeriod}
+          data={chartData}
+          width={SCREEN_WIDTH - Y_AXIS_WIDTH}
           height={200}
-          fromZero
-          withInnerLines
-          chartConfig={makeChartConfig(barPercentage)}
-          style={{ borderRadius: 0 }}
-          yAxisLabel=""
-          yAxisSuffix=""
+          barWidth={barWidth}
+          spacing={barSpacing}
+          initialSpacing={16}
+          endSpacing={8}
+          frontColor={COLORS.accent}
+          roundedTop
+          noOfSections={4}
+          yAxisLabelWidth={Y_AXIS_WIDTH}
+          yAxisTextStyle={styles.chartYLabel}
+          xAxisLabelTextStyle={styles.chartXLabel}
+          yAxisColor="transparent"
+          xAxisColor="rgba(255,255,255,0.08)"
+          rulesColor="rgba(255,255,255,0.05)"
+          rulesType="solid"
+          backgroundColor={COLORS.cardBackground}
         />
+        <View style={styles.chartFooter}>
+          {selectedBarIndex !== null ? (
+            <>
+              <Text style={styles.chartFooterLabel}>
+                {barChartData[selectedBarIndex]?.label}
+              </Text>
+              <Text style={styles.chartFooterValue}>
+                {barChartData[selectedBarIndex]?.value}{" "}
+                séance{barChartData[selectedBarIndex]?.value > 1 ? "s" : ""}
+              </Text>
+            </>
+          ) : (
+            <Text style={styles.chartFooterHint}>
+              Appuie sur une barre pour voir le détail
+            </Text>
+          )}
+        </View>
       </View>
       <TouchableOpacity
         style={styles.muscleStatsBtn}

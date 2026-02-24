@@ -44,7 +44,7 @@ export function getBarChartData(history, period) {
       else if (day <= 21) weeks.S3++;
       else weeks.S4++;
     });
-    return { labels: Object.keys(weeks), data: Object.values(weeks) };
+    return Object.entries(weeks).map(([label, value]) => ({ label, value }));
   }
 
   if (period === '3months' || period === '6months') {
@@ -58,14 +58,12 @@ export function getBarChartData(history, period) {
       const key = moment(workout.date).format('YYYY-MM');
       if (key in buckets) buckets[key].count++;
     });
-    const entries = Object.values(buckets);
-    return { labels: entries.map((e) => e.label), data: entries.map((e) => e.count) };
+    return Object.values(buckets).map(({ label, count }) => ({ label, value: count }));
   }
 
   // 'all' : par année
   if (history.length === 0) {
-    const year = moment().year();
-    return { labels: [String(year)], data: [0] };
+    return [{ label: String(moment().year()), value: 0 }];
   }
   const earliest = moment.min(history.map((w) => moment(w.date)));
   const startYear = earliest.year();
@@ -76,11 +74,7 @@ export function getBarChartData(history, period) {
     const y = moment(workout.date).year();
     if (y in years) years[y]++;
   });
-  return { labels: Object.keys(years), data: Object.values(years) };
-}
-
-export function getBarPercentage(period) {
-  return period === '6months' ? 0.45 : 0.65;
+  return Object.entries(years).map(([label, value]) => ({ label, value }));
 }
 
 export function getAverageWorkoutsPerWeek(history) {

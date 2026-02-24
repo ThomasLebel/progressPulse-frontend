@@ -288,4 +288,36 @@ export const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
   },
+  chartFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255,255,255,0.06)",
+  },
+  chartFooterLabel: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: COLORS.textSecondary,
+  },
+  chartFooterValue: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: COLORS.primary,
+  },
+  chartFooterHint: {
+    fontSize: 11,
+    color: COLORS.textSecondary,
+    opacity: 0.6,
+  },
+  chartYLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 10,
+  },
+  chartXLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 8,
+  },
 });

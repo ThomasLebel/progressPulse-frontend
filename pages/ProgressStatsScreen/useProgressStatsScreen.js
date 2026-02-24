@@ -5,7 +5,6 @@ import {
   getTotalWorkouts,
   getAverageWorkoutsPerWeek,
   getBarChartData,
-  getBarPercentage,
   getMostFrequentExercises,
   getMostFrequentWorkouts,
   filterHistoryByPeriod,
@@ -40,7 +39,6 @@ export function useProgressStatsScreen(navigation) {
   const avgWorkoutsPerWeek = getAverageWorkoutsPerWeek(filteredHistory);
   const barChartData = getBarChartData(filteredHistory, selectedPeriod);
   const chartTitle = getChartTitle(selectedPeriod);
-  const barPercentage = getBarPercentage(selectedPeriod);
   const topExercises = getMostFrequentExercises(filteredHistory);
   const topWorkouts = getMostFrequentWorkouts(filteredHistory);
 
@@ -66,7 +64,6 @@ export function useProgressStatsScreen(navigation) {
     avgWorkoutsPerWeek,
     barChartData,
     chartTitle,
-    barPercentage,
     topExercises,
     topWorkouts,
     handleNavigateToExercise,
