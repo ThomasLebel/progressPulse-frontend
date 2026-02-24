@@ -30,22 +30,8 @@ export const styles = StyleSheet.create({
     height: 100,
   },
 
-  backButton: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(13, 13, 54, 0.65)",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: COLORS.accentBorder,
-  },
-
   // ── Scrollable content ─────────────────────────────────────
-  bottomContainer: {
+  scrollContent: {
     flex: 1,
     paddingHorizontal: 16,
   },
@@ -152,7 +138,7 @@ export const styles = StyleSheet.create({
 
   // ── Goals section ──────────────────────────────────────────
   goalsContainer: {
-    marginBottom: 130,
+    marginBottom: 120,
   },
 
   serieBadge: {
@@ -206,14 +192,30 @@ export const styles = StyleSheet.create({
     marginLeft: 16,
   },
 
-  // ── CTA button ─────────────────────────────────────────────
-  button: {
+  // ── Bottom navigation bar ──────────────────────────────────
+  bottomContainer: {
     position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    bottom: 32,
+    left: 70,
+    right: 70,
+    height: 64,
+    borderRadius: 40,
+    flexDirection: "row",
     alignItems: "center",
-    width: "100%",
-    paddingVertical: 20,
+    backgroundColor: "rgba(30, 30, 30, 0.9)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.05)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 12,
+  },
+
+  footerItem: {
+    flex: 1,
+    height: 64,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

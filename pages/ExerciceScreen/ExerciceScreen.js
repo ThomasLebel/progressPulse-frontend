@@ -1,4 +1,4 @@
-import { BlurView } from "expo-blur";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../components/Button";
 import { COLORS } from "../../constants/theme";
 import { styles } from "./ExerciceScreen.styles";
 import InstructionsModal from "./modals/InstructionsModal";
@@ -51,20 +49,12 @@ export default function ExerciceScreen({ navigation, route }) {
           colors={["transparent", "#2A1B5A"]}
           style={styles.imageGradient}
         />
-        <Pressable style={styles.backButton} onPress={goBack}>
-          <FontAwesome
-            name="chevron-left"
-            size={20}
-            color={COLORS.primary}
-            accessibilityLabel="Retour à la liste des exercices"
-          />
-        </Pressable>
       </View>
 
       {/* ── Scrollable content ── */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={styles.bottomContainer}
+        style={styles.scrollContent}
       >
         {/* Title + instructions button */}
         <View style={styles.headerSection}>
@@ -184,23 +174,33 @@ export default function ExerciceScreen({ navigation, route }) {
         </View>
       </ScrollView>
 
-      {/* ── CTA button ── */}
-      <BlurView style={[styles.button]} intensity={60} tint="dark">
-        <Button
-          textButton={
-            muscleGroup !== "Cardio"
-              ? "Valider la série"
-              : "Commencer l'exercice"
-          }
-          textColor="black"
-          background={COLORS.primary}
-          width={250}
-          height={60}
-          borderColor="none"
-          accessibilityLabel="Aller à la page du minuteur"
+      {/* ── Bottom navigation bar ── */}
+      <View style={styles.bottomContainer}>
+        <Pressable
+          style={styles.footerItem}
+          onPress={goBack}
+          accessibilityLabel="Retour à la liste des exercices"
+        >
+          <FontAwesome6
+            name="circle-chevron-left"
+            size={32}
+            color={COLORS.tabBarStart}
+          />
+        </Pressable>
+
+        <Pressable
+          style={styles.footerItem}
           onPress={goToTimer}
-        />
-      </BlurView>
+          accessibilityLabel="Aller à la page du minuteur"
+        >
+          <FontAwesome6
+            name={muscleGroup !== "Cardio" ? "circle-check" : "circle-play"}
+            solid
+            size={32}
+            color={COLORS.accent}
+          />
+        </Pressable>
+      </View>
     </View>
   );
 }
