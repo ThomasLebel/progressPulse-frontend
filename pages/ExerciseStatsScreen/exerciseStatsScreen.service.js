@@ -27,45 +27,7 @@ export function getTotalVolume(sessions, exerciseName) {
   }, 0);
 }
 
-export function getPersonalRecord(sessions, exerciseName) {
-  let record = null;
-
-  sessions.forEach((workout) => {
-    const perf = workout.performances?.find(
-      (p) => p.exercise?.name === exerciseName
-    );
-    if (!perf) return;
-
-    perf.sets?.forEach((set) => {
-      const weight = set.weight ?? 0;
-      if (!record || weight > record.weight) {
-        record = {
-          weight,
-          reps: set.reps ?? 0,
-          date: moment(workout.date).locale('fr').format('D MMM YYYY'),
-        };
-      }
-    });
-  });
-
-  return record;
-}
-
-export function getEstimated1RM(weight, reps) {
-  if (reps === 0 || weight === 0) return 0;
-  return weight * (1 + reps / 30);
-}
-
-export function getBestEstimated1RMForSession(sets) {
-  let best = 0;
-  sets.forEach((set) => {
-    const est = getEstimated1RM(set.weight ?? 0, set.reps ?? 0);
-    if (est > best) best = est;
-  });
-  return best;
-}
-
-export function get1RMProgressionChart(sessions, exerciseName) {
+export function getVolumeProgressionChart(sessions, exerciseName) {
   if (sessions.length === 0) {
     return { labels: [], data: [] };
   }
@@ -75,9 +37,9 @@ export function get1RMProgressionChart(sessions, exerciseName) {
       const perf = workout.performances?.find(
         (p) => p.exercise?.name === exerciseName
       );
-      const best = perf ? getBestEstimated1RMForSession(perf.sets ?? []) : 0;
+      const volume = perf ? calculateSessionVolume(perf.sets ?? []) : 0;
       const label = moment(workout.date).locale('fr').format('DD/MM');
-      return { label, value: Math.round(best) };
+      return { label, value: volume };
     })
     .filter((p) => p.value > 0);
 
@@ -85,21 +47,33 @@ export function get1RMProgressionChart(sessions, exerciseName) {
     return { labels: [], data: [] };
   }
 
-  const MAX_LABELS = 8;
+  // Limit to last MAX_POINTS to avoid rendering issues with many data points
+  const MAX_POINTS = 15;
+  const trimmed =
+    points.length > MAX_POINTS ? points.slice(points.length - MAX_POINTS) : points;
+
+  const MAX_LABELS = 6;
   const step =
-    points.length > MAX_LABELS ? Math.ceil(points.length / MAX_LABELS) : 1;
-  const labels = points.map((p, i) =>
-    i % step === 0 || i === points.length - 1 ? p.label : ''
+    trimmed.length > MAX_LABELS ? Math.ceil(trimmed.length / MAX_LABELS) : 1;
+  const labels = trimmed.map((p, i) =>
+    i % step === 0 || i === trimmed.length - 1 ? p.label : ''
   );
 
   return {
     labels,
-    data: points.map((p) => p.value),
+    data: trimmed.map((p) => p.value),
   };
 }
 
-export function getBest1RM(sessions, exerciseName) {
+export function getAverageVolumePerSession(sessions, exerciseName) {
+  if (sessions.length === 0) return 0;
+  const total = getTotalVolume(sessions, exerciseName);
+  return Math.round(total / sessions.length);
+}
+
+export function getBestPerformance(sessions, exerciseName) {
   let best = null;
+  let bestVolume = -1;
 
   sessions.forEach((workout) => {
     const perf = workout.performances?.find(
@@ -107,26 +81,49 @@ export function getBest1RM(sessions, exerciseName) {
     );
     if (!perf) return;
 
-    perf.sets?.forEach((set) => {
-      const weight = set.weight ?? 0;
-      const reps = set.reps ?? 0;
-      const estimated = getEstimated1RM(weight, reps);
-      if (!best || estimated > best.estimated) {
-        best = {
-          estimated: Math.round(estimated),
-          weight,
-          reps,
-          date: moment(workout.date).locale('fr').format('D MMM YYYY'),
-        };
-      }
-    });
+    const volume = calculateSessionVolume(perf.sets ?? []);
+    if (volume > bestVolume) {
+      bestVolume = volume;
+      best = {
+        date: moment(workout.date).locale('fr').format('D MMM YYYY'),
+        sets: perf.sets ?? [],
+        volume,
+      };
+    }
   });
 
   return best;
 }
 
-export function getAverageVolumePerSession(sessions, exerciseName) {
-  if (sessions.length === 0) return 0;
-  const total = getTotalVolume(sessions, exerciseName);
-  return Math.round(total / sessions.length);
+export function getVolumeProgression(sessions, exerciseName) {
+  if (sessions.length < 2) return null;
+
+  const firstPerf = sessions[0].performances?.find(
+    (p) => p.exercise?.name === exerciseName
+  );
+  const lastPerf = sessions[sessions.length - 1].performances?.find(
+    (p) => p.exercise?.name === exerciseName
+  );
+
+  const firstVolume = firstPerf ? calculateSessionVolume(firstPerf.sets ?? []) : 0;
+  const lastVolume = lastPerf ? calculateSessionVolume(lastPerf.sets ?? []) : 0;
+
+  if (firstVolume === 0) return null;
+
+  const percent = Math.round(((lastVolume - firstVolume) / firstVolume) * 100);
+  return percent;
+}
+
+export function getLastPerformances(sessions, exerciseName) {
+  // sessions are sorted asc (oldest → newest), take last 10 in reverse
+  const recent = [...sessions].reverse().slice(0, 10);
+  return recent.map((workout) => {
+    const perf = workout.performances?.find(
+      (p) => p.exercise?.name === exerciseName
+    );
+    return {
+      date: moment(workout.date).locale('fr').format('D MMM YYYY'),
+      sets: perf?.sets ?? [],
+    };
+  });
 }

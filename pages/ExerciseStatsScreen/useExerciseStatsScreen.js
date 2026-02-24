@@ -7,10 +7,11 @@ import {
 import {
   getSessionsForExercise,
   getTotalVolume,
-  getPersonalRecord,
-  get1RMProgressionChart,
-  getBest1RM,
+  getVolumeProgressionChart,
   getAverageVolumePerSession,
+  getLastPerformances,
+  getBestPerformance,
+  getVolumeProgression,
 } from './exerciseStatsScreen.service';
 
 export function useExerciseStatsScreen(navigation, route) {
@@ -33,11 +34,12 @@ export function useExerciseStatsScreen(navigation, route) {
   const sessionCount = filteredSessions.length;
   const totalVolume = getTotalVolume(filteredSessions, exerciseName);
   const averageVolume = getAverageVolumePerSession(filteredSessions, exerciseName);
-  const personalRecord = getPersonalRecord(allSessions, exerciseName);
-  const best1RM = getBest1RM(allSessions, exerciseName);
-  const chartData = get1RMProgressionChart(filteredSessions, exerciseName);
+  const chartData = getVolumeProgressionChart(filteredSessions, exerciseName);
 
   const hasChartData = chartData.data.length > 0;
+  const lastPerformances = getLastPerformances(allSessions, exerciseName);
+  const bestPerformance = getBestPerformance(filteredSessions, exerciseName);
+  const volumeProgression = getVolumeProgression(filteredSessions, exerciseName);
 
   const handleBack = () => navigation.goBack();
 
@@ -52,11 +54,12 @@ export function useExerciseStatsScreen(navigation, route) {
     sessionCount,
     totalVolume,
     averageVolume,
-    personalRecord,
-    best1RM,
     chartData,
     hasChartData,
     hasData: allSessions.length > 0,
+    lastPerformances,
+    bestPerformance,
+    volumeProgression,
     handleBack,
   };
 }
