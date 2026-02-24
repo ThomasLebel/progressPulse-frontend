@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
     right: 0,
     backgroundColor: COLORS.modalBackground,
     borderWidth: 1,
-    borderColor: COLORS.accentBorder,
+    borderColor: COLORS.borderSubtle,
     borderRadius: 12,
     zIndex: 100,
     elevation: 10,
@@ -51,14 +51,14 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   dropdownItemActive: {
-    backgroundColor: COLORS.accentBorder,
+    backgroundColor: COLORS.rankBarBg,
   },
   dropdownItemText: {
     fontSize: 13,
     color: COLORS.textSecondary,
   },
   dropdownItemTextActive: {
-    color: COLORS.accent,
+    color: COLORS.textPrimary,
     fontWeight: "600",
   },
   title: {

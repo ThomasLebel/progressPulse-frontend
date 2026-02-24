@@ -15,6 +15,9 @@ export const COLORS = {
   textPrimary: "#FFFFFF",
   textSecondary: "rgba(255, 255, 255, 0.55)",
 
+  // Borders
+  borderSubtle: "rgba(255, 255, 255, 0.1)",
+
   // Tab bar gradient
   tabBarStart: "#77778E",
   tabBarEnd: "#3D3D5C",
