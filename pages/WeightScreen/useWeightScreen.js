@@ -173,7 +173,7 @@ export function useWeightScreen(navigation) {
   };
 
   const handleGoToStats = () => {
-    navigation.navigate("Stats");
+    navigation.goBack();
   };
 
   const startWeight = user.target?.initialWeight || getStartWeight(user.weight);

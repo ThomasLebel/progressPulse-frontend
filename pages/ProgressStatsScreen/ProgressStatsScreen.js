@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -6,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
 import { BarChart } from "react-native-gifted-charts";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
@@ -43,12 +43,19 @@ export default function ProgressStatsScreen({ navigation }) {
 
   const n = barChartData.length;
   const chartAvailable = SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8;
-  const barWidth = Math.min(20, Math.max(12, Math.floor(chartAvailable / n / 2)));
-  const barSpacing = n > 1 ? Math.max(8, Math.floor((chartAvailable - n * barWidth) / n)) : chartAvailable - barWidth;
+  const barWidth = Math.min(
+    20,
+    Math.max(12, Math.floor(chartAvailable / n / 2)),
+  );
+  const barSpacing =
+    n > 1
+      ? Math.max(8, Math.floor((chartAvailable - n * barWidth) / n))
+      : chartAvailable - barWidth;
 
   const chartData = barChartData.map((item, index) => ({
     ...item,
-    onPress: () => setSelectedBarIndex(selectedBarIndex === index ? null : index),
+    onPress: () =>
+      setSelectedBarIndex(selectedBarIndex === index ? null : index),
     frontColor: selectedBarIndex === index ? COLORS.primary : COLORS.accent,
   }));
 
@@ -182,8 +189,8 @@ export default function ProgressStatsScreen({ navigation }) {
                 {barChartData[selectedBarIndex]?.label}
               </Text>
               <Text style={styles.chartFooterValue}>
-                {barChartData[selectedBarIndex]?.value}{" "}
-                séance{barChartData[selectedBarIndex]?.value > 1 ? "s" : ""}
+                {barChartData[selectedBarIndex]?.value} séance
+                {barChartData[selectedBarIndex]?.value > 1 ? "s" : ""}
               </Text>
             </>
           ) : (
@@ -200,7 +207,7 @@ export default function ProgressStatsScreen({ navigation }) {
       >
         <FontAwesome name="th-large" size={15} color={COLORS.background} />
         <Text style={styles.muscleStatsBtnText}>
-          Statistiques par groupe musculaire
+          Statistiques détaillées des exercices
         </Text>
         <FontAwesome name="chevron-right" size={12} color={COLORS.background} />
       </TouchableOpacity>
@@ -220,46 +227,60 @@ export default function ProgressStatsScreen({ navigation }) {
             top3Exercises.map((item, index) => {
               const maxCount = top3Exercises[0].count;
               return (
-                <View key={item.name} style={styles.rankItem}>
-                  <View
-                    style={[
-                      styles.rankBadge,
-                      { borderColor: RANK_COLORS[index] },
-                    ]}
-                  >
-                    <Text
-                      style={[styles.rankNumber, { color: RANK_COLORS[index] }]}
+                <TouchableOpacity
+                  key={item.name}
+                  onPress={() => {
+                    navigation.navigate("exerciseStats", {
+                      exerciseName: item.name,
+                    });
+                  }}
+                >
+                  <View style={styles.rankItem}>
+                    <View
+                      style={[
+                        styles.rankBadge,
+                        { borderColor: RANK_COLORS[index] },
+                      ]}
                     >
-                      {index + 1}
-                    </Text>
-                  </View>
-                  <View style={styles.rankContent}>
-                    <View style={styles.rankTopRow}>
-                      <Text style={styles.rankName} numberOfLines={1}>
-                        {item.name}
+                      <Text
+                        style={[
+                          styles.rankNumber,
+                          { color: RANK_COLORS[index] },
+                        ]}
+                      >
+                        {index + 1}
                       </Text>
-                      <View style={styles.rankCountPill}>
-                        <Text style={styles.rankCountText}>×{item.count}</Text>
+                    </View>
+                    <View style={styles.rankContent}>
+                      <View style={styles.rankTopRow}>
+                        <Text style={styles.rankName} numberOfLines={1}>
+                          {item.name}
+                        </Text>
+                        <View style={styles.rankCountPill}>
+                          <Text style={styles.rankCountText}>
+                            ×{item.count}
+                          </Text>
+                        </View>
+                      </View>
+                      {item.muscleGroupe ? (
+                        <Text style={styles.rankSub} numberOfLines={1}>
+                          {item.muscleGroupe}
+                        </Text>
+                      ) : null}
+                      <View style={styles.rankBarBg}>
+                        <View
+                          style={[
+                            styles.rankBarFill,
+                            {
+                              width: `${Math.round((item.count / maxCount) * 100)}%`,
+                              backgroundColor: RANK_COLORS[index],
+                            },
+                          ]}
+                        />
                       </View>
                     </View>
-                    {item.muscleGroupe ? (
-                      <Text style={styles.rankSub} numberOfLines={1}>
-                        {item.muscleGroupe}
-                      </Text>
-                    ) : null}
-                    <View style={styles.rankBarBg}>
-                      <View
-                        style={[
-                          styles.rankBarFill,
-                          {
-                            width: `${Math.round((item.count / maxCount) * 100)}%`,
-                            backgroundColor: RANK_COLORS[index],
-                          },
-                        ]}
-                      />
-                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             })
           )}
@@ -291,41 +312,55 @@ export default function ProgressStatsScreen({ navigation }) {
             top3Workouts.map((item, index) => {
               const maxCount = top3Workouts[0].count;
               return (
-                <View key={item.name} style={styles.rankItem}>
-                  <View
-                    style={[
-                      styles.rankBadge,
-                      { borderColor: RANK_COLORS[index] },
-                    ]}
-                  >
-                    <Text
-                      style={[styles.rankNumber, { color: RANK_COLORS[index] }]}
+                <TouchableOpacity
+                  key={item.name}
+                  onPress={() => {
+                    navigation.navigate("historyWorkout", {
+                      workoutName: item.name,
+                    });
+                  }}
+                >
+                  <View style={styles.rankItem}>
+                    <View
+                      style={[
+                        styles.rankBadge,
+                        { borderColor: RANK_COLORS[index] },
+                      ]}
                     >
-                      {index + 1}
-                    </Text>
-                  </View>
-                  <View style={styles.rankContent}>
-                    <View style={styles.rankTopRow}>
-                      <Text style={styles.rankName} numberOfLines={2}>
-                        {item.name}
+                      <Text
+                        style={[
+                          styles.rankNumber,
+                          { color: RANK_COLORS[index] },
+                        ]}
+                      >
+                        {index + 1}
                       </Text>
-                      <View style={styles.rankCountPill}>
-                        <Text style={styles.rankCountText}>×{item.count}</Text>
+                    </View>
+                    <View style={styles.rankContent}>
+                      <View style={styles.rankTopRow}>
+                        <Text style={styles.rankName} numberOfLines={2}>
+                          {item.name}
+                        </Text>
+                        <View style={styles.rankCountPill}>
+                          <Text style={styles.rankCountText}>
+                            ×{item.count}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.rankBarBg}>
+                        <View
+                          style={[
+                            styles.rankBarFill,
+                            {
+                              width: `${Math.round((item.count / maxCount) * 100)}%`,
+                              backgroundColor: RANK_COLORS[index],
+                            },
+                          ]}
+                        />
                       </View>
                     </View>
-                    <View style={styles.rankBarBg}>
-                      <View
-                        style={[
-                          styles.rankBarFill,
-                          {
-                            width: `${Math.round((item.count / maxCount) * 100)}%`,
-                            backgroundColor: RANK_COLORS[index],
-                          },
-                        ]}
-                      />
-                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             })
           )}

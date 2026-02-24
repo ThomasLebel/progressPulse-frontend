@@ -7,15 +7,6 @@ export const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 20,
   },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.07)",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 12,
-  },
   titleContainer: {
     marginBottom: 6,
   },

@@ -10,7 +10,6 @@ import {
 import ConfettiCannon from "react-native-confetti-cannon";
 import { LineChart } from "react-native-gifted-charts";
 import * as Progress from "react-native-progress";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
@@ -96,10 +95,6 @@ export default function WeightScreen({ navigation, route }) {
         errorMessage={errorMessage}
         onAddTarget={addTargetWeight}
       />
-
-      <TouchableOpacity style={styles.backButton} onPress={handleGoToStats}>
-        <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
-      </TouchableOpacity>
 
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Suivi de poids</Text>
@@ -226,7 +221,7 @@ export default function WeightScreen({ navigation, route }) {
               height={200}
               spacing={Math.floor(
                 (SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8) /
-                  (weightChartPoints.length - 1)
+                  (weightChartPoints.length - 1),
               )}
               initialSpacing={16}
               endSpacing={8}

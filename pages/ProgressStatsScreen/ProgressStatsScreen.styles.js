@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
   },
   title: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: "700",
     color: COLORS.textPrimary,
   },

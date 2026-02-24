@@ -1,41 +1,43 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import currentWorkout from "./reducers/currentWorkout";
-import user from "./reducers/user";
+import user, { logout } from "./reducers/user";
 import workoutCreation from "./reducers/workoutCreation";
-import workouts from "./reducers/workouts";
-import workoutsHistory from "./reducers/workoutsHistory";
+import workouts, { removeAllWorkout } from "./reducers/workouts";
+import workoutsHistory, {
+  resetWorkoutsHistory,
+} from "./reducers/workoutsHistory";
 
+import { FontAwesome6 } from "@expo/vector-icons";
 import { COLORS } from "./constants/theme";
+import AllExercisesScreen from "./pages/AllExercisesScreen";
+import AllWorkoutsScreen from "./pages/AllWorkoutsScreen";
 import ExercicesChoiceScreen from "./pages/ExercicesChoiceScreen";
 import ExerciceScreen from "./pages/ExerciceScreen";
+import ExercisesByMuscleScreen from "./pages/ExercisesByMuscleScreen";
+import ExerciseStatsScreen from "./pages/ExerciseStatsScreen";
 import HistoryScreen from "./pages/HistoryScreen";
 import HystoryWorkoutScreen from "./pages/HistoryWorkoutsScreen";
 import HomeScreen from "./pages/HomeScreen";
 import MuscleGroupScreen from "./pages/MuscleGroupScreen";
 import PasswordForgottenScreen from "./pages/PasswordForgottenScreen";
+import ProgressStatsScreen from "./pages/ProgressStatsScreen";
 import SettingsScreen from "./pages/SettingsScreen";
 import SigninScreen from "./pages/SigninScreen";
 import SignupScreen from "./pages/SignupScreen";
 import SongScreen from "./pages/SongScreen";
 import StartWorkoutScreen from "./pages/StartWorkoutScreen";
-import ExerciseStatsScreen from "./pages/ExerciseStatsScreen";
-import AllExercisesScreen from "./pages/AllExercisesScreen";
-import AllWorkoutsScreen from "./pages/AllWorkoutsScreen";
-import ExercisesByMuscleScreen from "./pages/ExercisesByMuscleScreen";
-import ProgressStatsScreen from "./pages/ProgressStatsScreen";
-import StatsScreen from "./pages/StatsScreen";
 import TimerScreen from "./pages/TimerScreen";
 import WeightScreen from "./pages/WeightScreen";
 import WorkoutChoiceScreen from "./pages/WorkoutChoiceScreen";
@@ -76,24 +78,64 @@ const store = configureStore({
 const persistor = persistStore(store);
 
 const TabNavigator = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const handleLogout = () => {
+    Alert.alert("Déconnexion", "Es-tu sûr de vouloir te déconnecter ?", [
+      { text: "Annuler", style: "cancel" },
+      {
+        text: "Se déconnecter",
+        style: "destructive",
+        onPress: () => {
+          dispatch(removeAllWorkout());
+          dispatch(resetWorkoutsHistory());
+          dispatch(logout());
+          navigation.navigate("Signin");
+        },
+      },
+    ]);
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, focused }) => {
+          if (route.name === "Home") {
+            return (
+              <View
+                style={{
+                  width: 54,
+                  height: 54,
+                  borderRadius: 27,
+                  backgroundColor: focused ? COLORS.accent : COLORS.primary,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 26,
+                  elevation: 10,
+                }}
+              >
+                <FontAwesome6
+                  name="house"
+                  size={20}
+                  color={COLORS.background}
+                />
+              </View>
+            );
+          }
+
           let iconName = "";
-          if (route.name === "Stats") iconName = "bar-chart-o";
-          else if (route.name === "Home") iconName = "home";
-          else if (route.name === "ProgressStats") iconName = "line-chart";
-          else if (route.name === "Weight") iconName = "balance-scale";
-          else if (route.name === "Settings") iconName = "gears";
+          if (route.name === "ProgressStats") iconName = "chart-line";
+          else if (route.name === "Weight") iconName = "weight-scale";
+          else if (route.name === "Settings") iconName = "gear";
 
           return (
             <View style={{ alignItems: "center" }}>
-              <FontAwesome name={iconName} size={22} color={color} />
+              <FontAwesome6 name={iconName} size={21} color={color} />
               <View
                 style={{
                   marginTop: 5,
-                  width: focused ? 16 : 0,
+                  width: focused ? 14 : 0,
                   height: 2,
                   borderRadius: 1,
                   backgroundColor: COLORS.accent,
@@ -145,11 +187,33 @@ const TabNavigator = () => {
         sceneStyle: { backgroundColor: "transparent" },
       })}
     >
-      <Tab.Screen name="Stats" component={StatsScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="ProgressStats" component={ProgressStatsScreen} />
       <Tab.Screen name="Weight" component={WeightScreen} />
+      <Tab.Screen name="ProgressStats" component={ProgressStatsScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen
+        name="LogoutAction"
+        component={HomeScreen}
+        options={{
+          tabBarButton: () => (
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={handleLogout}
+              activeOpacity={0.7}
+            >
+              <FontAwesome
+                name="power-off"
+                size={21}
+                color="rgba(255, 255, 255, 0.35)"
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -190,7 +254,7 @@ export default function App() {
               <Stack.Screen name="Signup" component={SignupScreen} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
               <Stack.Screen name="song" component={SongScreen} />
-<Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
+              <Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
               <Stack.Screen
                 name="WorkoutDifficulty"
                 component={WorkoutDifficultyScreen}
@@ -231,10 +295,7 @@ export default function App() {
                 name="allExercises"
                 component={AllExercisesScreen}
               />
-              <Stack.Screen
-                name="allWorkouts"
-                component={AllWorkoutsScreen}
-              />
+              <Stack.Screen name="allWorkouts" component={AllWorkoutsScreen} />
               <Stack.Screen
                 name="exercisesByMuscle"
                 component={ExercisesByMuscleScreen}

@@ -6,7 +6,7 @@ export function useHistoryScreen(navigation) {
   const uniqueWorkoutNames = getUniqueWorkoutNames(history);
 
   function navigateToStats() {
-    navigation.navigate("Stats");
+    navigation.goBack();
   }
 
   function navigateToWorkout(workoutName) {
