@@ -1,7 +1,6 @@
-import { BlurView } from "expo-blur";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../components/Button";
 import ExerciseCard from "../../components/ExerciseCard";
 import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
@@ -80,14 +79,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
       />
 
       <View style={styles.topContainer}>
-        <Pressable style={styles.backRowContainer} onPress={handleGoToHome}>
-          <FontAwesome
-            name="chevron-left"
-            size={20}
-            color={COLORS.primary}
-            accessibilityLabel="Redirection vers la page d'accueil"
-          />
-        </Pressable>
+        <View style={styles.headerSpacer} />
 
         <View style={styles.workoutNameSection}>
           <Text style={styles.topTitle} numberOfLines={1}>
@@ -151,35 +143,62 @@ export default function StartWorkoutScreen({ navigation, route }) {
         </ScrollView>
       </View>
 
-      <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
-        <Button
-          background={COLORS.primary}
-          borderColor="none"
-          textButton={isEditable ? "Commencer la séance" : "Terminer la séance"}
-          textColor="black"
-          width={250}
-          height={50}
-          onPress={handlePressButton}
-          isLinearGradiant={false}
-          accessibilityLabel={
-            isEditable
-              ? "Permet de commencer la séance"
-              : "Permet de terminer la séance"
-          }
-          accessibilityHint={
-            isEditable &&
-            "Redirection vers la page pour donner son avis sur la séance"
-          }
-        />
-        <FontAwesome
-          name={"plus-circle"}
-          accessibilityLabel={`Permet de rajouter un nouveau exercice`}
-          size={45}
-          color={COLORS.primary}
-          style={{ marginRight: 15 }}
+      <View style={styles.bottomContainer}>
+        {/* Retour */}
+        <Pressable
+          style={styles.footerItem}
+          onPress={handleGoToHome}
+          accessibilityLabel="Retour à l'accueil"
+        >
+          <FontAwesome6
+            name="circle-chevron-left"
+            size={32}
+            color={COLORS.tabBarStart}
+          />
+        </Pressable>
+        {isEditable ? (
+          <Pressable
+            style={styles.footerItem}
+            onPress={handlePressButton}
+            accessibilityLabel="Commencer la séance"
+          >
+            <FontAwesome6
+              name="circle-play"
+              size={48}
+              color={COLORS.accent}
+              solid
+            />
+          </Pressable>
+        ) : (
+          <Pressable
+            style={styles.footerItem}
+            onPress={handlePressButton}
+            accessibilityLabel="Terminer la séance"
+          >
+            <View style={styles.backgroundDisk}>
+              <FontAwesome6
+                name="flag-checkered"
+                solid
+                size={28}
+                color={"black"}
+              />
+            </View>
+          </Pressable>
+        )}
+
+        {/* Ajouter un exercice */}
+        <Pressable
+          style={styles.footerItem}
           onPress={handleAddExercise}
-        />
-      </BlurView>
+          accessibilityLabel="Ajouter un exercice"
+        >
+          <FontAwesome6
+            name="circle-plus"
+            size={32}
+            color={COLORS.tabBarStart}
+          />
+        </Pressable>
+      </View>
 
       {isLoading && (
         <View style={styles.backgroundLoading}>

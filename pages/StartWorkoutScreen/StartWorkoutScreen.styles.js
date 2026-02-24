@@ -4,7 +4,7 @@ import { COLORS } from "../../constants/theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 50,
+    paddingTop: 50,
     paddingHorizontal: 10,
   },
   topContainer: {
@@ -18,13 +18,9 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.accentBorder,
   },
-  backRowContainer: {
+  headerSpacer: {
     width: 40,
     height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.07)",
-    alignItems: "center",
-    justifyContent: "center",
   },
   binContainer: {
     width: 40,
@@ -45,18 +41,43 @@ export const styles = StyleSheet.create({
   mainContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: "100vh",
+    flex: 1,
   },
   bottomContainer: {
     position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    paddingVertical: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    bottom: 32,
+    left: 40,
+    right: 40,
+    height: 64,
+    borderRadius: 40,
     flexDirection: "row",
-    gap: 20,
+    alignItems: "center",
+    backgroundColor: "rgba(30, 30, 30, 0.9)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.05)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 12,
+  },
+  footerItem: {
+    flex: 1,
+    height: 64,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  footerHeroBtnDimmed: {
+    backgroundColor: COLORS.primary,
+    opacity: 0.45,
+  },
+  backgroundDisk: {
+    height: 48,
+    width: 48,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.accent,
+    borderRadius: 30,
   },
   groupTitleSection: {
     justifyContent: "flex-start",
