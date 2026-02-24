@@ -84,6 +84,7 @@ const TabNavigator = () => {
           if (route.name === "Stats") iconName = "bar-chart-o";
           else if (route.name === "Home") iconName = "home";
           else if (route.name === "ProgressStats") iconName = "line-chart";
+          else if (route.name === "Weight") iconName = "balance-scale";
           else if (route.name === "Settings") iconName = "gears";
 
           return (
@@ -125,8 +126,8 @@ const TabNavigator = () => {
         tabBarStyle: {
           position: "absolute",
           bottom: 32,
-          left: 75,
-          right: 75,
+          left: 40,
+          right: 40,
           backgroundColor: "transparent",
           borderRadius: 40,
           height: 64,
@@ -147,6 +148,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Stats" component={StatsScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="ProgressStats" component={ProgressStatsScreen} />
+      <Tab.Screen name="Weight" component={WeightScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
@@ -188,8 +190,7 @@ export default function App() {
               <Stack.Screen name="Signup" component={SignupScreen} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
               <Stack.Screen name="song" component={SongScreen} />
-              <Stack.Screen name="weight" component={WeightScreen} />
-              <Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
+<Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
               <Stack.Screen
                 name="WorkoutDifficulty"
                 component={WorkoutDifficultyScreen}

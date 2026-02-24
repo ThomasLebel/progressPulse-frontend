@@ -104,3 +104,26 @@ export function computeProgressPercent(initialWeight, currentWeight, targetWeigh
 export function sortWeightsByDate(weights) {
   return [...weights].sort((a, b) => new Date(b.date) - new Date(a.date));
 }
+
+/**
+ * Retourne les points de données pour le graphique gifted-charts (15 derniers max).
+ * Les valeurs sont normalisées (min soustrait) pour que l'axe Y parte de 0 et
+ * affiche correctement la variation. La valeur réelle est dans `originalValue`.
+ * Chaque point : { value, originalValue, label, date }
+ * @param {Array} weights - tableau des entrées de poids
+ * @returns {{ points: Array, minValue: number }}
+ */
+export function getWeightChartPoints(weights) {
+  if (!weights || weights.length === 0) return { points: [], minValue: 0 };
+  const sorted = [...weights]
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
+    .slice(-15);
+  const minValue = Math.min(...sorted.map((e) => e.weight));
+  const points = sorted.map((entry) => ({
+    value: parseFloat((entry.weight - minValue).toFixed(1)),
+    originalValue: entry.weight,
+    label: moment(entry.date).format("DD/MM"),
+    date: moment(entry.date).format("Do MMM YYYY"),
+  }));
+  return { points, minValue };
+}

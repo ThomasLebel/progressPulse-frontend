@@ -162,4 +162,40 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  chartContainer: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    overflow: "hidden",
+    marginBottom: 20,
+  },
+  chartYLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 10,
+  },
+  chartXLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 8,
+  },
+  tooltip: {
+    backgroundColor: COLORS.modalBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    width: 130,
+  },
+  tooltipDate: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: COLORS.accent,
+    marginBottom: 4,
+    textTransform: "capitalize",
+  },
+  tooltipValue: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: COLORS.textPrimary,
+  },
 });

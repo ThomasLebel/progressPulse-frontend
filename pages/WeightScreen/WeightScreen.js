@@ -1,12 +1,14 @@
 import moment from "moment";
 import {
   ActivityIndicator,
+  Dimensions,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
+import { LineChart } from "react-native-gifted-charts";
 import * as Progress from "react-native-progress";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
@@ -16,6 +18,9 @@ import AddWeightModal from "./modals/AddWeightModal";
 import TargetWeightModal from "./modals/TargetWeightModal";
 import { useWeightScreen } from "./useWeightScreen";
 import { styles } from "./WeightScreen.styles";
+
+const SCREEN_WIDTH = Dimensions.get("window").width - 40;
+const Y_AXIS_WIDTH = 52;
 
 export default function WeightScreen({ navigation, route }) {
   const {
@@ -48,6 +53,7 @@ export default function WeightScreen({ navigation, route }) {
     targetWeight,
     targetDate,
     sortedWeights,
+    weightChartPoints,
     showDatePicker,
     hideDatePicker,
     handleConfirmDate,
@@ -199,6 +205,74 @@ export default function WeightScreen({ navigation, route }) {
             </Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>Évolution du poids</Text>
+        </View>
+
+        {weightChartPoints.length < 2 ? (
+          <View style={styles.card}>
+            <Text style={styles.emptyText}>
+              Ajoute au moins 2 pesées pour voir ton évolution.
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.chartContainer}>
+            <LineChart
+              data={weightChartPoints}
+              areaChart
+              curved
+              width={SCREEN_WIDTH - Y_AXIS_WIDTH}
+              height={200}
+              spacing={Math.floor(
+                (SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8) /
+                  (weightChartPoints.length - 1)
+              )}
+              initialSpacing={16}
+              endSpacing={8}
+              color={COLORS.accent}
+              startFillColor={COLORS.accent}
+              endFillColor="transparent"
+              startOpacity={0.18}
+              endOpacity={0}
+              thickness={2}
+              dataPointsColor={COLORS.primary}
+              dataPointsRadius={4}
+              yAxisTextStyle={styles.chartYLabel}
+              xAxisLabelTextStyle={styles.chartXLabel}
+              yAxisColor="transparent"
+              xAxisColor="rgba(255,255,255,0.08)"
+              rulesColor="rgba(255,255,255,0.05)"
+              rulesType="solid"
+              yAxisLabelWidth={Y_AXIS_WIDTH}
+              noOfSections={4}
+              yAxisSuffix=" kg"
+              hideDataPoints={false}
+              pointerConfig={{
+                pointerStripUptoDataPoint: true,
+                pointerStripColor: "rgba(163, 253, 1, 0.25)",
+                pointerStripWidth: 1,
+                pointerColor: COLORS.accent,
+                radius: 6,
+                pointerLabelWidth: 130,
+                pointerLabelHeight: 56,
+                activatePointersOnLongPress: false,
+                autoAdjustPointerLabelPosition: true,
+                pointerLabelComponent: (items) => {
+                  const item = items[0];
+                  return (
+                    <View style={styles.tooltip}>
+                      <Text style={styles.tooltipDate}>{item.date}</Text>
+                      <Text style={styles.tooltipValue}>
+                        {item.originalValue} kg
+                      </Text>
+                    </View>
+                  );
+                },
+              }}
+            />
+          </View>
+        )}
 
         <View style={styles.sectionTitleContainer}>
           <Text style={styles.sectionTitle}>Historique de poids</Text>

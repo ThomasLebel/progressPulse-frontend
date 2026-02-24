@@ -26,7 +26,7 @@ export function useStatsScreen(navigation) {
   const labelsBarChart = Object.keys(trainingData);
   const dataBarChart = Object.values(trainingData);
 
-  const handleNavigateToWeight = () => navigation.navigate("weight");
+  const handleNavigateToWeight = () => navigation.navigate("Weight");
   const handleNavigateToHistory = () => navigation.navigate("history");
 
   return {

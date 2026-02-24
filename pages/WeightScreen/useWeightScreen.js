@@ -12,6 +12,7 @@ import {
   getStartDate,
   getTargetDate,
   sortWeightsByDate,
+  getWeightChartPoints,
 } from "./weight.service";
 
 export function useWeightScreen(navigation) {
@@ -178,6 +179,8 @@ export function useWeightScreen(navigation) {
   const currentDate = getCurrentDate(user.weight);
   const targetDate = getTargetDate(user.target);
   const sortedWeights = sortWeightsByDate(user.weight);
+  const { points: weightChartPoints, minValue: weightChartMin } =
+    getWeightChartPoints(user.weight);
 
   return {
     modalVisibleWeight,
@@ -209,6 +212,8 @@ export function useWeightScreen(navigation) {
     targetWeight,
     targetDate,
     sortedWeights,
+    weightChartPoints,
+    weightChartMin,
     showDatePicker,
     hideDatePicker,
     handleConfirmDate,
