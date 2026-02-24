@@ -9,6 +9,7 @@ import {
 export function useHomeScreen(navigation) {
   const user = useSelector((state) => state.user.value);
   const workouts = useSelector((state) => state.workouts.value);
+  const currentWorkout = useSelector((state) => state.currentWorkout.value);
 
   const workoutsDisplayData = workouts.map((workout) => ({
     _id: workout._id,
@@ -27,6 +28,7 @@ export function useHomeScreen(navigation) {
     user,
     workouts,
     workoutsDisplayData,
+    currentWorkoutID: currentWorkout.workout,
     handleAddWorkout,
     handleWorkoutNavigation,
   };

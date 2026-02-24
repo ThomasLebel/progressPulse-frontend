@@ -11,6 +11,7 @@ export default function HomeScreen({ navigation }) {
     user,
     workouts,
     workoutsDisplayData,
+    currentWorkoutID,
     handleAddWorkout,
     handleWorkoutNavigation,
   } = useHomeScreen(navigation);
@@ -25,7 +26,7 @@ export default function HomeScreen({ navigation }) {
       accessibilityLabel={`Commencer la séance ${workout.name}`}
       accessibilityHint="On va être diriger vers le résumé de notre séance avant de la commencer"
       image={workout.image}
-      textBtn="Start Workout"
+      textBtn={currentWorkoutID === workout._id ? "Reprendre" : "Démarrer"}
     />
   ));
 

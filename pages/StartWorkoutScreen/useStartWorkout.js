@@ -20,7 +20,10 @@ import {
 } from "./startWorkout.service";
 
 export function useStartWorkout(navigation, workoutID) {
-  const [isEditable, setIsEditable] = useState(true);
+  const currentWorkout = useSelector((state) => state.currentWorkout.value);
+  const [isEditable, setIsEditable] = useState(
+    currentWorkout.workout !== workoutID,
+  );
   const [modalCustomSetsVisible, setModalCustomSetsVisible] = useState(false);
   const [exerciseName, setExerciseName] = useState("");
   const [exerciseID, setExerciseID] = useState("");
@@ -38,7 +41,6 @@ export function useStartWorkout(navigation, workoutID) {
 
   const workouts = useSelector((state) => state.workouts.value);
   const workoutSelected = workouts.find((workout) => workout._id === workoutID);
-  const currentWorkout = useSelector((state) => state.currentWorkout.value);
   const user = useSelector((state) => state.user.value);
 
   const [workoutNameInput, setWorkoutNameInput] = useState(
@@ -184,34 +186,43 @@ export function useStartWorkout(navigation, workoutID) {
     navigation.navigate("exercice", { exerciseID, workoutID });
   };
 
+  const startWorkoutSession = () => {
+    setIsEditable(false);
+    dispatch(addWorkoutInformation({ userToken: user.token, workoutID }));
+  };
+
   const handlePressButton = () => {
     if (isEditable) {
-      setIsEditable(false);
-      dispatch(addWorkoutInformation({ userToken: user.token, workoutID }));
+      if (currentWorkout.workout && currentWorkout.workout !== workoutID) {
+        const ongoingWorkout = workouts.find(
+          (w) => w._id === currentWorkout.workout,
+        );
+        const ongoingName = ongoingWorkout ? ongoingWorkout.name : "une séance";
+        Alert.alert(
+          "Séance en cours",
+          `La séance "${ongoingName}" est déjà en enregistrement. Démarrer cette séance supprimera sa progression.`,
+          [
+            { text: "Annuler", style: "cancel" },
+            {
+              text: "Démarrer quand même",
+              style: "destructive",
+              onPress: () => {
+                dispatch(resetCurrentWorkout());
+                startWorkoutSession();
+              },
+            },
+          ],
+        );
+      } else {
+        startWorkoutSession();
+      }
     } else {
       navigation.navigate("workoutEnding", { workoutID });
     }
   };
 
   const handleGoToHome = () => {
-    if (currentWorkout.workout) {
-      Alert.alert(
-        "Attention",
-        "La séance est démarée, en quittant cette page vous perdrez votre progression.",
-        [
-          { text: "Annuler", style: "cancel" },
-          {
-            text: "Abandonner ma séance",
-            onPress: () => {
-              dispatch(resetCurrentWorkout());
-              navigation.navigate("Home");
-            },
-          },
-        ],
-      );
-    } else {
-      navigation.navigate("Home");
-    }
+    navigation.navigate("Home");
   };
 
   const handleDeleteWorkout = () => {
