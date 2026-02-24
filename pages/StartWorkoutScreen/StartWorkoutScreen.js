@@ -146,57 +146,38 @@ export default function StartWorkoutScreen({ navigation, route }) {
       <View style={styles.bottomContainer}>
         {/* Retour */}
         <Pressable
-          style={styles.footerItem}
+          style={styles.sideBtn}
           onPress={handleGoToHome}
           accessibilityLabel="Retour à l'accueil"
         >
-          <FontAwesome6
-            name="circle-chevron-left"
-            size={32}
-            color={COLORS.tabBarStart}
-          />
+          <FontAwesome6 name="chevron-left" size={14} color={COLORS.textSecondary} />
+          <Text style={styles.sideBtnText}>Retour</Text>
         </Pressable>
-        {isEditable ? (
-          <Pressable
-            style={styles.footerItem}
-            onPress={handlePressButton}
-            accessibilityLabel="Commencer la séance"
-          >
-            <FontAwesome6
-              name="circle-play"
-              size={48}
-              color={COLORS.accent}
-              solid
-            />
-          </Pressable>
-        ) : (
-          <Pressable
-            style={styles.footerItem}
-            onPress={handlePressButton}
-            accessibilityLabel="Terminer la séance"
-          >
-            <View style={styles.backgroundDisk}>
-              <FontAwesome6
-                name="flag-checkered"
-                solid
-                size={28}
-                color={"black"}
-              />
-            </View>
-          </Pressable>
-        )}
+
+        {/* CTA central */}
+        <Pressable
+          style={[styles.ctaBtn, !isEditable && styles.ctaBtnEnd]}
+          onPress={handlePressButton}
+          accessibilityLabel={isEditable ? "Commencer la séance" : "Terminer la séance"}
+        >
+          <FontAwesome6
+            name={isEditable ? "play" : "flag-checkered"}
+            size={15}
+            color={COLORS.background}
+          />
+          <Text style={styles.ctaBtnText}>
+            {isEditable ? "Commencer" : "Terminer"}
+          </Text>
+        </Pressable>
 
         {/* Ajouter un exercice */}
         <Pressable
-          style={styles.footerItem}
+          style={styles.sideBtn}
           onPress={handleAddExercise}
           accessibilityLabel="Ajouter un exercice"
         >
-          <FontAwesome6
-            name="circle-plus"
-            size={32}
-            color={COLORS.tabBarStart}
-          />
+          <FontAwesome6 name="plus" size={14} color={COLORS.textSecondary} />
+          <Text style={styles.sideBtnText}>Ajouter</Text>
         </Pressable>
       </View>
 
