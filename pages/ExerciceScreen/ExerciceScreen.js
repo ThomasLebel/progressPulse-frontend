@@ -177,28 +177,29 @@ export default function ExerciceScreen({ navigation, route }) {
       {/* ── Bottom navigation bar ── */}
       <View style={styles.bottomContainer}>
         <Pressable
-          style={styles.footerItem}
+          style={styles.backBtn}
           onPress={goBack}
           accessibilityLabel="Retour à la liste des exercices"
         >
-          <FontAwesome6
-            name="circle-chevron-left"
-            size={32}
-            color={COLORS.tabBarStart}
-          />
+          <FontAwesome6 name="chevron-left" size={14} color={COLORS.textSecondary} />
+          <Text style={styles.backBtnText}>Retour</Text>
         </Pressable>
 
         <Pressable
-          style={styles.footerItem}
+          style={styles.validateBtn}
           onPress={goToTimer}
-          accessibilityLabel="Aller à la page du minuteur"
+          accessibilityLabel="Valider la série et démarrer le repos"
         >
           <FontAwesome6
-            name={muscleGroup !== "Cardio" ? "circle-check" : "circle-play"}
-            solid
-            size={32}
-            color={COLORS.accent}
+            name={muscleGroup !== "Cardio" ? "check" : "play"}
+            size={15}
+            color={COLORS.background}
           />
+          <Text style={styles.validateBtnText}>
+            {muscleGroup !== "Cardio"
+              ? `Valider · S${currentSet}`
+              : `Démarrer · S${currentSet}`}
+          </Text>
         </Pressable>
       </View>
     </View>

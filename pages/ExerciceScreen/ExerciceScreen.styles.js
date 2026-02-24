@@ -196,15 +196,17 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     position: "absolute",
     bottom: 32,
-    left: 70,
-    right: 70,
+    left: 16,
+    right: 16,
     height: 64,
     borderRadius: 40,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(30, 30, 30, 0.9)",
+    justifyContent: "space-between",
+    backgroundColor: "rgba(20, 20, 40, 0.95)",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.05)",
+    borderColor: "rgba(255,255,255,0.08)",
+    paddingHorizontal: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
@@ -212,10 +214,33 @@ export const styles = StyleSheet.create({
     elevation: 12,
   },
 
-  footerItem: {
-    flex: 1,
-    height: 64,
-    justifyContent: "center",
+  backBtn: {
+    flexDirection: "row",
     alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+
+  backBtnText: {
+    color: COLORS.textSecondary,
+    fontSize: 14,
+    fontWeight: "600",
+  },
+
+  validateBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: COLORS.primary,
+    borderRadius: 32,
+    paddingVertical: 12,
+    paddingHorizontal: 22,
+  },
+
+  validateBtnText: {
+    color: COLORS.background,
+    fontSize: 15,
+    fontWeight: "700",
   },
 });
