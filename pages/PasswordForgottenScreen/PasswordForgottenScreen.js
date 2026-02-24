@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -12,6 +11,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
+import Loader from "../../components/Loader";
 import { COLORS } from "../../constants/theme";
 import { styles } from "./PasswordForgottenScreen.styles";
 import { usePasswordForgottenScreen } from "./usePasswordForgottenScreen";
@@ -202,11 +202,7 @@ export default function PasswordForgottenScreen({ navigation }) {
 
           {isLoading && (
             <View style={styles.backgroundLoading}>
-              <ActivityIndicator
-                size="large"
-                color={COLORS.primary}
-                animating={true}
-              />
+              <Loader></Loader>
             </View>
           )}
         </View>

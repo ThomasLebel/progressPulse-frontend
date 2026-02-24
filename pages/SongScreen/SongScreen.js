@@ -1,5 +1,6 @@
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Loader from "../../components/Loader";
 import { COLORS } from "../../constants/theme";
 import { styles } from "./SongScreen.styles";
 import { useSongScreen } from "./useSongScreen";
@@ -71,11 +72,7 @@ export default function SongScreen({ navigation }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator
-            size="large"
-            color={COLORS.primary}
-            animating={true}
-          />
+          <Loader></Loader>
         </View>
       )}
     </View>

@@ -1,14 +1,9 @@
 import { BlurView } from "expo-blur";
-import {
-  ActivityIndicator,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "../../components/Button";
 import ExerciseCard from "../../components/ExerciseCard";
+import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import ModalCustomSets from "./modals/ModalCustomSets";
@@ -153,11 +148,7 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
       </BlurView>
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator
-            size="large"
-            color={COLORS.primary}
-            animating={true}
-          />
+          <Loader></Loader>
         </View>
       )}
     </View>

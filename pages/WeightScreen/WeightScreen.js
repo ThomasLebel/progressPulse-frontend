@@ -1,6 +1,5 @@
 import moment from "moment";
 import {
-  ActivityIndicator,
   Dimensions,
   ScrollView,
   Text,
@@ -11,6 +10,7 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import { LineChart } from "react-native-gifted-charts";
 import * as Progress from "react-native-progress";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import AddWeightModal from "./modals/AddWeightModal";
@@ -306,11 +306,7 @@ export default function WeightScreen({ navigation, route }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator
-            size="large"
-            color={COLORS.primary}
-            animating={true}
-          />
+          <Loader></Loader>
         </View>
       )}
     </View>

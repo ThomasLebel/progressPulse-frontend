@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -10,6 +9,7 @@ import {
   View,
 } from "react-native";
 import Button from "../../components/Button";
+import Loader from "../../components/Loader";
 import { COLORS } from "../../constants/theme";
 import { styles } from "./SigninScreen.styles";
 import { useSigninScreen } from "./useSigninScreen";
@@ -97,11 +97,7 @@ export default function SigninScreen({ navigation }) {
           </View>
           {isLoading && (
             <View style={styles.backgroundLoading}>
-              <ActivityIndicator
-                size="large"
-                color={COLORS.primary}
-                animating={true}
-              />
+              <Loader></Loader>
             </View>
           )}
         </View>

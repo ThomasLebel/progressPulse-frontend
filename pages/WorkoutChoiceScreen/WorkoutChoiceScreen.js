@@ -1,12 +1,7 @@
-import {
-  ActivityIndicator,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import BtnWorkoutSession from "../../components/BtnWorkoutSession";
+import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import { useWorkoutChoiceScreen } from "./useWorkoutChoiceScreen";
@@ -62,11 +57,7 @@ export default function WorkoutChoiceScreen({ navigation, route }) {
       </View>
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <ActivityIndicator
-            size="large"
-            color={COLORS.primary}
-            animating={true}
-          />
+          <Loader></Loader>
         </View>
       )}
     </View>
