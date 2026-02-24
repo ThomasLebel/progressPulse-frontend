@@ -47,16 +47,20 @@ export const styles = StyleSheet.create({
   btn: {
     borderRadius: 16,
     overflow: "hidden",
+    flexDirection: "center",
+    alignItems: "center",
   },
   card: {
     height: 160,
-    width: "100%",
+    width: "95%",
     maxWidth: 500,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: COLORS.cardBackground,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
+    borderRadius: 20,
   },
   accentBar: {
     width: 4,

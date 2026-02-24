@@ -2,8 +2,10 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import {
+  Platform,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -35,6 +37,7 @@ export default function ExerciceScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
       <InstructionsModal
         visible={modalVisible}
         onClose={closeModal}
@@ -181,7 +184,11 @@ export default function ExerciceScreen({ navigation, route }) {
           onPress={goBack}
           accessibilityLabel="Retour à la liste des exercices"
         >
-          <FontAwesome6 name="chevron-left" size={14} color={COLORS.textSecondary} />
+          <FontAwesome6
+            name="chevron-left"
+            size={14}
+            color={COLORS.textSecondary}
+          />
           <Text style={styles.backBtnText}>Retour</Text>
         </Pressable>
 

@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -46,8 +47,10 @@ export default function TimerScreen({ navigation, route }) {
   } = useTimerScreen(navigation, route);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
+    <>
+      <StatusBar barStyle="light-content" />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={200}
@@ -263,7 +266,8 @@ export default function TimerScreen({ navigation, route }) {
             </LinearGradient>
           )}
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </>
   );
 }

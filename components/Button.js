@@ -76,10 +76,6 @@ const Button = ({
         borderRadius: radius,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: background,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.4,
-        shadowRadius: 10,
       }}
     >
       <Text
