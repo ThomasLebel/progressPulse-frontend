@@ -252,7 +252,11 @@ export default function App() {
                 component={PasswordForgottenScreen}
               />
               <Stack.Screen name="Signup" component={SignupScreen} />
-              <Stack.Screen name="TabNavigator" component={TabNavigator} />
+              <Stack.Screen
+                name="TabNavigator"
+                component={TabNavigator}
+                options={{ gestureEnabled: false }}
+              />
               <Stack.Screen name="song" component={SongScreen} />
               <Stack.Screen name="WorkoutType" component={WorkoutTypeScreen} />
               <Stack.Screen

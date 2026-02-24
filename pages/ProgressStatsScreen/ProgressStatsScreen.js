@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  ActivityIndicator,
   Dimensions,
   ScrollView,
   Text,
@@ -9,6 +8,7 @@ import {
 } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import { styles } from "./ProgressStatsScreen.styles";
@@ -62,7 +62,7 @@ export default function ProgressStatsScreen({ navigation }) {
   if (isLoading) {
     return (
       <View style={[styles.container, styles.loaderContainer]}>
-        <ActivityIndicator size="large" color={COLORS.accent} />
+        <Loader></Loader>
       </View>
     );
   }

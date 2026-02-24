@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addAllWorkoutsHistory } from '../../reducers/workoutsHistory';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAllWorkoutsHistory } from "../../reducers/workoutsHistory";
 import {
-  getTotalWorkouts,
+  filterHistoryByPeriod,
   getAverageWorkoutsPerWeek,
   getBarChartData,
+  getChartTitle,
   getMostFrequentExercises,
   getMostFrequentWorkouts,
-  filterHistoryByPeriod,
+  getTotalWorkouts,
   PERIODS,
-  getChartTitle,
-} from './progressStatsScreen.service';
+} from "./progressStatsScreen.service";
 
 export function useProgressStatsScreen(navigation) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const history = useSelector((state) => state.workoutsHistory.value);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState('month');
+  const [selectedPeriod, setSelectedPeriod] = useState("month");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -43,19 +43,21 @@ export function useProgressStatsScreen(navigation) {
   const topWorkouts = getMostFrequentWorkouts(filteredHistory);
 
   const handleNavigateToExercise = (exerciseName) => {
-    navigation.navigate('exerciseStats', { exerciseName });
+    navigation.navigate("exerciseStats", { exerciseName });
   };
 
   const handleNavigateToAllExercises = () => {
-    navigation.navigate('allExercises', { exercises: topExercises });
+    navigation.navigate("allExercises", { exercises: topExercises });
   };
 
   const handleNavigateToAllWorkouts = () => {
-    navigation.navigate('allWorkouts', { workouts: getMostFrequentWorkouts(history) });
+    navigation.navigate("allWorkouts", {
+      workouts: getMostFrequentWorkouts(history),
+    });
   };
 
   const handleNavigateToExercisesByMuscle = () => {
-    navigation.navigate('exercisesByMuscle');
+    navigation.navigate("exercisesByMuscle");
   };
 
   return {
