@@ -258,4 +258,43 @@ export const styles = StyleSheet.create({
   progressionNegative: {
     color: '#FF4D4D',
   },
+  chartYLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 10,
+  },
+  chartXLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 8,
+  },
+  tooltip: {
+    backgroundColor: COLORS.modalBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: 164,
+  },
+  tooltipDate: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: COLORS.accent,
+    marginBottom: 6,
+    textTransform: 'capitalize',
+  },
+  tooltipSet: {
+    fontSize: 11,
+    color: COLORS.textPrimary,
+    marginBottom: 3,
+  },
+  tooltipDivider: {
+    height: 1,
+    backgroundColor: COLORS.accentBorder,
+    marginVertical: 6,
+  },
+  tooltipVolume: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: COLORS.accent,
+  },
 });

@@ -5,26 +5,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import { LineChart } from 'react-native-gifted-charts';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { COLORS } from '../../constants/theme';
 import { styles } from './ExerciseStatsScreen.styles';
 import { useExerciseStatsScreen } from './useExerciseStatsScreen';
 
-const CHART_CONFIG = {
-  backgroundGradientFrom: '#1C1C3A',
-  backgroundGradientTo: '#0D0D36',
-  decimalPlaces: 0,
-  color: (opacity = 1) => `rgba(163, 253, 1, ${opacity})`,
-  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-  propsForDots: {
-    r: '5',
-    strokeWidth: '2',
-    stroke: '#8BC34A',
-  },
-};
-
 const SCREEN_WIDTH = Dimensions.get('window').width - 40;
+const Y_AXIS_WIDTH = 44;
 
 export default function ExerciseStatsScreen({ navigation, route }) {
   const {
@@ -38,7 +26,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
     sessionCount,
     totalVolume,
     averageVolume,
-    chartData,
+    chartPoints,
     hasChartData,
     hasData,
     lastPerformances,
@@ -46,6 +34,19 @@ export default function ExerciseStatsScreen({ navigation, route }) {
     volumeProgression,
     handleBack,
   } = useExerciseStatsScreen(navigation, route);
+
+  const isCardio = muscleGroup === 'Cardio';
+  // Fit all points exactly within the chart width (no minimum floor).
+  // initialSpacing=16 + endSpacing=8 are subtracted so the last point
+  // never overflows the container and gets clipped.
+  const chartSpacing =
+    chartPoints.length > 1
+      ? Math.floor((SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8) / (chartPoints.length - 1))
+      : SCREEN_WIDTH - Y_AXIS_WIDTH - 16;
+
+  const chartMinValue = chartPoints.length > 0
+    ? Math.min(...chartPoints.map((p) => p.value))
+    : 0;
 
   return (
     <ScrollView
@@ -268,25 +269,72 @@ export default function ExerciseStatsScreen({ navigation, route }) {
               Pas de données de charge pour cet exercice.
             </Text>
           ) : (
-            <>
-              <View style={styles.chartContainer}>
-                <LineChart
-                  key={selectedPeriod}
-                  data={{
-                    labels: chartData.labels,
-                    datasets: [{ data: chartData.data }],
-                  }}
-                  width={SCREEN_WIDTH}
-                  height={220}
-                  withInnerLines
-                  fromZero={false}
-                  yAxisSuffix=" kg"
-                  chartConfig={CHART_CONFIG}
-                  bezier
-                  style={{ borderRadius: 0 }}
-                />
-              </View>
-            </>
+            <View style={styles.chartContainer}>
+              <LineChart
+                key={selectedPeriod}
+                data={chartPoints}
+                areaChart
+                curved
+                width={SCREEN_WIDTH - Y_AXIS_WIDTH}
+                height={200}
+                spacing={chartSpacing}
+                initialSpacing={16}
+                endSpacing={8}
+                color={COLORS.accent}
+                startFillColor={COLORS.accent}
+                endFillColor="transparent"
+                startOpacity={0.18}
+                endOpacity={0}
+                thickness={2}
+                dataPointsColor={COLORS.primary}
+                dataPointsRadius={4}
+                yAxisTextStyle={styles.chartYLabel}
+                xAxisLabelTextStyle={styles.chartXLabel}
+                yAxisColor="transparent"
+                xAxisColor="rgba(255,255,255,0.08)"
+                rulesColor="rgba(255,255,255,0.05)"
+                rulesType="solid"
+                yAxisLabelWidth={Y_AXIS_WIDTH}
+                noOfSections={4}
+                yAxisOffset={chartMinValue}
+                yAxisSuffix=" kg"
+                hideDataPoints={false}
+                pointerConfig={{
+                  pointerStripUptoDataPoint: true,
+                  pointerStripColor: 'rgba(163, 253, 1, 0.25)',
+                  pointerStripWidth: 1,
+                  pointerColor: COLORS.accent,
+                  radius: 6,
+                  pointerLabelWidth: 164,
+                  pointerLabelHeight: 170,
+                  activatePointersOnLongPress: false,
+                  autoAdjustPointerLabelPosition: true,
+                  pointerLabelComponent: (items) => {
+                    const item = items[0];
+                    return (
+                      <View style={styles.tooltip}>
+                        <Text style={styles.tooltipDate}>{item.date}</Text>
+                        {item.sets.map((set, i) => (
+                          <Text key={i} style={styles.tooltipSet}>
+                            {isCardio
+                              ? `S${i + 1}  ${set.rest / 60} min · Rés. ${set.weight}`
+                              : `S${i + 1}  ${set.reps} × ${set.weight} kg`}
+                          </Text>
+                        ))}
+                        {!isCardio && item.value > 0 && (
+                          <View style={styles.tooltipDivider} />
+                        )}
+                        {!isCardio && item.value > 0 && (
+                          <Text style={styles.tooltipVolume}>
+                            {item.value.toLocaleString('fr-FR')} kg
+                          </Text>
+                        )}
+                      </View>
+                    );
+                  },
+                }}
+              />
+            </View>
           )}
 
           {/* Effort sur la période */}

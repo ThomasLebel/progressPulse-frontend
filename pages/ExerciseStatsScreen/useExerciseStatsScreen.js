@@ -8,6 +8,7 @@ import {
   getSessionsForExercise,
   getTotalVolume,
   getVolumeProgressionChart,
+  getChartDataPoints,
   getAverageVolumePerSession,
   getLastPerformances,
   getBestPerformance,
@@ -35,8 +36,9 @@ export function useExerciseStatsScreen(navigation, route) {
   const totalVolume = getTotalVolume(filteredSessions, exerciseName);
   const averageVolume = getAverageVolumePerSession(filteredSessions, exerciseName);
   const chartData = getVolumeProgressionChart(filteredSessions, exerciseName);
+  const chartPoints = getChartDataPoints(filteredSessions, exerciseName, selectedPeriod);
 
-  const hasChartData = chartData.data.length > 0;
+  const hasChartData = chartPoints.length > 0;
   const lastPerformances = getLastPerformances(allSessions, exerciseName);
   const bestPerformance = getBestPerformance(filteredSessions, exerciseName);
   const volumeProgression = getVolumeProgression(filteredSessions, exerciseName);
@@ -55,6 +57,7 @@ export function useExerciseStatsScreen(navigation, route) {
     totalVolume,
     averageVolume,
     chartData,
+    chartPoints,
     hasChartData,
     hasData: allSessions.length > 0,
     lastPerformances,

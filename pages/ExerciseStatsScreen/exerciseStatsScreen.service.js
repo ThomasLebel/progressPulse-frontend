@@ -114,6 +114,44 @@ export function getVolumeProgression(sessions, exerciseName) {
   return percent;
 }
 
+export function getChartDataPoints(sessions, exerciseName, period = '3months') {
+  const isCurrentMonth = period === 'month';
+  const points = sessions
+    .map((workout) => {
+      const perf = workout.performances?.find(
+        (p) => p.exercise?.name === exerciseName
+      );
+      const sets = perf?.sets ?? [];
+      const volume = calculateSessionVolume(sets);
+      // "Ce mois-ci" → day number ('D') ; other periods → month abbrev ('MMM')
+      // Both are short enough to fit in the compressed axis slot.
+      // The full date is always visible in the tooltip.
+      const label = isCurrentMonth
+        ? moment(workout.date).locale('fr').format('D')
+        : moment(workout.date).locale('fr').format('MMM').replace('.', '').substring(0, 3);
+      const date = moment(workout.date).locale('fr').format('D MMM YYYY');
+      return { label, value: volume, date, sets };
+    })
+    .filter((p) => p.value > 0);
+
+  if (points.length === 0) return [];
+
+  const MAX_POINTS = 20;
+  const trimmed =
+    points.length > MAX_POINTS ? points.slice(points.length - MAX_POINTS) : points;
+
+  const MAX_LABELS = 6;
+  const step =
+    trimmed.length > MAX_LABELS ? Math.ceil(trimmed.length / MAX_LABELS) : 1;
+
+  return trimmed.map((p, i) => ({
+    value: p.value,
+    label: i % step === 0 || i === trimmed.length - 1 ? p.label : '',
+    date: p.date,
+    sets: (p.sets ?? []).map((s) => ({ ...s })),
+  }));
+}
+
 export function getLastPerformances(sessions, exerciseName) {
   // sessions are sorted asc (oldest → newest), take last 10 in reverse
   const recent = [...sessions].reverse().slice(0, 10);
