@@ -6,7 +6,6 @@ import { isEmailValid } from "./signup.service";
 export function useSignupScreen(navigation) {
   const dispatch = useDispatch();
   const valeurDuReducer = useSelector((state) => state.user.value);
-  console.log(valeurDuReducer);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -41,7 +40,6 @@ export function useSignupScreen(navigation) {
           .then((response) => response.json())
           .then((data) => {
             if (data.result === false) {
-              console.log(data.error);
               setSignupError(data.error);
               setIsLoading(false);
             } else {

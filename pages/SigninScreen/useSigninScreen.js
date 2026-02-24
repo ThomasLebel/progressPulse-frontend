@@ -8,7 +8,6 @@ import { isEmailValid } from "./signin.service";
 export function useSigninScreen(navigation) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  console.log(user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

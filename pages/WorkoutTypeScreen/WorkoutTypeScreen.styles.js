@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: "row",
     alignItems: "center",
+    width: "80%",
   },
   infoIcon: {
     marginRight: 10,
@@ -44,8 +45,10 @@ export const styles = StyleSheet.create({
   },
   card: {
     height: 240,
-    width: "100%",
-    maxWidth: 500,
+    width: "95%",
+    alignSelf: "center",
+    maxWidth: 400,
+    borderRadius: 20,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: COLORS.cardBackground,

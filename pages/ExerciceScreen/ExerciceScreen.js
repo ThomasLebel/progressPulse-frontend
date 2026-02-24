@@ -46,7 +46,7 @@ export default function ExerciceScreen({ navigation, route }) {
 
       {/* ── Full-width GIF with gradient overlay ── */}
       <View style={styles.imageWrapper}>
-        <Image style={styles.image} source={imagePath} contentFit="cover" />
+        <Image style={styles.image} source={imagePath} contentFit="contain" />
         <LinearGradient
           colors={["transparent", "#2A1B5A"]}
           style={styles.imageGradient}

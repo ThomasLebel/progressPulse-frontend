@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -150,20 +149,23 @@ const TabNavigator = () => {
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         tabBarBackground: () => (
-          <BlurView
-            intensity={85}
-            tint="dark"
+          <View
             style={{
               flex: 1,
               borderRadius: 40,
               overflow: "hidden",
-              borderWidth: 1,
-              borderColor: "rgba(255, 255, 255, 0.1)",
-              backgroundColor: "rgba(255, 255, 255, 0.06)",
               justifyContent: "center",
               alignItems: "center",
+              borderWidth: 1,
+              borderColor: "rgba(255,255,255,0.05)",
+              backgroundColor: "rgba(30, 30, 30, 0.85)", // gris foncé semi-opaque
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 6,
+              elevation: 10,
             }}
-          />
+          ></View>
         ),
         tabBarStyle: {
           position: "absolute",

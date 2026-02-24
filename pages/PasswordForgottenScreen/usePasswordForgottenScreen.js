@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Keyboard, Platform } from "react-native";
 import { isEmailValid } from "./passwordForgotten.service";
 
@@ -20,10 +20,16 @@ export function usePasswordForgottenScreen(navigation) {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   useEffect(() => {
-    const showEvent = Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
-    const hideEvent = Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
-    const showSub = Keyboard.addListener(showEvent, () => setIsKeyboardVisible(true));
-    const hideSub = Keyboard.addListener(hideEvent, () => setIsKeyboardVisible(false));
+    const showEvent =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+    const showSub = Keyboard.addListener(showEvent, () =>
+      setIsKeyboardVisible(true),
+    );
+    const hideSub = Keyboard.addListener(hideEvent, () =>
+      setIsKeyboardVisible(false),
+    );
     return () => {
       showSub.remove();
       hideSub.remove();
@@ -50,12 +56,10 @@ export function usePasswordForgottenScreen(navigation) {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             if (data.result === false) {
               setSignupError(data.error);
               setIsLoading(false);
             } else {
-              console.log("c'est bon");
               setValidEmail(false);
               setCodeMail(true);
               setIsLoading(false);
@@ -91,11 +95,14 @@ export function usePasswordForgottenScreen(navigation) {
       setNoMatchPassword(false);
       const obj = { email, token: code, newPassword: password };
       setIsLoading(true);
-      fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/users/changeForgottenPassword`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(obj),
-      })
+      fetch(
+        `${process.env.EXPO_PUBLIC_SERVER_IP}/users/changeForgottenPassword`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(obj),
+        },
+      )
         .then((response) => response.json())
         .then((data) => {
           setNewPassword(false);

@@ -163,7 +163,7 @@ export default function TimerScreen({ navigation, route }) {
           {!input && (
             <LinearGradient
               style={styles.linear}
-              colors={[COLORS.cardBackground]}
+              colors={[COLORS.cardBackground, COLORS.cardBackground]}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
             >
@@ -230,7 +230,7 @@ export default function TimerScreen({ navigation, route }) {
           {input && (
             <LinearGradient
               style={styles.linearInput}
-              colors={[COLORS.cardBackground]}
+              colors={[COLORS.cardBackground, COLORS.cardBackground]}
             >
               <View style={styles.pencil}>
                 <FontAwesome

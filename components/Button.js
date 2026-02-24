@@ -1,6 +1,5 @@
-import React from "react";
-import { Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Text, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants/theme";
 
 const Button = ({
@@ -34,7 +33,6 @@ const Button = ({
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.35,
           shadowRadius: 10,
-          elevation: 6,
         }}
       >
         <LinearGradient
@@ -82,7 +80,6 @@ const Button = ({
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.4,
         shadowRadius: 10,
-        elevation: 6,
       }}
     >
       <Text

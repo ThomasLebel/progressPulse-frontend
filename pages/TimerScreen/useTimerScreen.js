@@ -1,13 +1,13 @@
+import { Audio } from "expo-av";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Audio } from "expo-av";
-import sounds from "../../utils/sounds";
 import { addExerciseSet } from "../../reducers/currentWorkout";
+import sounds from "../../utils/sounds";
 import {
+  buildSetPayload,
   convertRestTime,
   formatMinuteTime,
   formatSecondTime,
-  buildSetPayload,
 } from "./timerScreen.service";
 
 export function useTimerScreen(navigation, route) {
@@ -44,7 +44,7 @@ export function useTimerScreen(navigation, route) {
   const currentWorkout = useSelector((state) => state.currentWorkout.value);
   // Récupération de l'exercice en cours
   const currentExercise = currentWorkout.performances.find(
-    (e) => e.exercise === exerciseID
+    (e) => e.exercise === exerciseID,
   );
 
   // Récupération de la séance en cours
@@ -52,7 +52,7 @@ export function useTimerScreen(navigation, route) {
   const workoutSelected = workouts.find((workout) => workout._id === workoutID);
   // Récupération de l'exercice sélectionné dans la séance
   const exerciseSelected = workoutSelected.exercises.find(
-    (exercise) => exercise.exercise._id === exerciseID
+    (exercise) => exercise.exercise._id === exerciseID,
   );
   // Stockage du nom du groupe musculaire de l'exercice sélectionné
   const muscleGroup = exerciseSelected.exercise.muscleGroupe;
@@ -61,7 +61,8 @@ export function useTimerScreen(navigation, route) {
   // Récupération du temps de repos de l'exercice
   const restTime = exerciseSelected.rest;
 
-  const { minutes: restMinutes, seconds: restSeconds } = convertRestTime(restTime);
+  const { minutes: restMinutes, seconds: restSeconds } =
+    convertRestTime(restTime);
 
   const [minutes, setMinutes] = useState(restMinutes);
   const [secondes, setSecondes] = useState(restSeconds);
@@ -106,10 +107,15 @@ export function useTimerScreen(navigation, route) {
     }
     if (muscleGroup != "Cardio") {
       if (input) {
-        const setToAdd = buildSetPayload({ exerciseID, weight, reps, minutes, secondes });
+        const setToAdd = buildSetPayload({
+          exerciseID,
+          weight,
+          reps,
+          minutes,
+          secondes,
+        });
         dispatch(addExerciseSet(setToAdd));
         if (currentExercise) {
-          console.log("Current : " + currentExercise.sets.length + "NbSets : " + nbSets);
           if (currentExercise.sets.length + 1 < nbSets) {
             navigation.navigate("exercice", {
               exerciseID: exerciseID,
@@ -137,7 +143,13 @@ export function useTimerScreen(navigation, route) {
     } else {
       if (input) {
         setEmptyFields(false);
-        const setToAdd = buildSetPayload({ exerciseID, weight, reps: 1, minutes, secondes });
+        const setToAdd = buildSetPayload({
+          exerciseID,
+          weight,
+          reps: 1,
+          minutes,
+          secondes,
+        });
         dispatch(addExerciseSet(setToAdd));
         navigation.navigate("startWorkout", { workoutID: workoutID });
       } else {
