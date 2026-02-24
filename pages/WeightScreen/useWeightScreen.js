@@ -5,14 +5,14 @@ import { addWeight, updateTarget } from "../../reducers/user";
 import {
   computeProgressPercent,
   computeProgressValue,
-  getCurrentWeight,
-  getStartWeight,
-  getTargetWeight,
   getCurrentDate,
+  getCurrentWeight,
   getStartDate,
+  getStartWeight,
   getTargetDate,
-  sortWeightsByDate,
+  getTargetWeight,
   getWeightChartPoints,
+  sortWeightsByDate,
 } from "./weight.service";
 
 export function useWeightScreen(navigation) {
@@ -81,6 +81,7 @@ export function useWeightScreen(navigation) {
       return;
     }
     setIsLoading(true);
+    closeModalWeight();
     fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/users/addWeight`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -96,7 +97,6 @@ export function useWeightScreen(navigation) {
         } else {
           dispatch(addWeight(data.newWeight));
           setIsLoading(false);
-          closeModalWeight();
         }
       });
   };
@@ -114,6 +114,7 @@ export function useWeightScreen(navigation) {
     }
     const objectif = isCheckedGain ? "Gain" : "Loss";
     setIsLoading(true);
+    closeModalTarget();
     fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/users/weightTarget`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -130,9 +131,10 @@ export function useWeightScreen(navigation) {
         if (data.result === true) {
           const now = new Date().toISOString();
           dispatch(updateTarget({ ...data.weightTarget, startDate: now }));
-          dispatch(addWeight({ weight: parseFloat(initialWeightInput), date: now }));
+          dispatch(
+            addWeight({ weight: parseFloat(initialWeightInput), date: now }),
+          );
           setIsLoading(false);
-          closeModalTarget();
         } else {
           setError(true);
           setErrorMessage(data.error);
