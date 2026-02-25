@@ -267,6 +267,24 @@ export function useStartWorkout(navigation, workoutID) {
     });
   };
 
+  const handleStopWorkout = () => {
+    Alert.alert(
+      "Arrêter la séance",
+      "Êtes-vous sûr de vouloir arrêter la séance en cours ? Les données saisies seront perdues.",
+      [
+        { text: "Continuer", style: "cancel" },
+        {
+          text: "Arrêter",
+          style: "destructive",
+          onPress: () => {
+            dispatch(resetCurrentWorkout());
+            setIsEditable(true);
+          },
+        },
+      ],
+    );
+  };
+
   return {
     isEditable,
     modalCustomSetsVisible,
@@ -300,5 +318,6 @@ export function useStartWorkout(navigation, workoutID) {
     handleGoToHome,
     openAlertDeleteWorkout,
     handleAddExercise,
+    handleStopWorkout,
   };
 }

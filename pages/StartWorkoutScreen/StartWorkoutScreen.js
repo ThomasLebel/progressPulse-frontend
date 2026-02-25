@@ -46,6 +46,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
     handleGoToHome,
     openAlertDeleteWorkout,
     handleAddExercise,
+    handleStopWorkout,
   } = useStartWorkout(navigation, workoutID);
 
   return (
@@ -95,14 +96,22 @@ export default function StartWorkoutScreen({ navigation, route }) {
           )}
         </View>
 
-        <Pressable
-          style={[styles.binContainer, !isEditable && styles.binHidden]}
-          onPress={isEditable ? openAlertDeleteWorkout : undefined}
-        >
-          {isEditable && (
+        {isEditable ? (
+          <Pressable
+            style={styles.binContainer}
+            onPress={openAlertDeleteWorkout}
+          >
             <FontAwesome name="trash" size={16} color={COLORS.primary} />
-          )}
-        </Pressable>
+          </Pressable>
+        ) : (
+          <Pressable
+            style={styles.stopBtn}
+            onPress={handleStopWorkout}
+            accessibilityLabel="Arrêter la séance"
+          >
+            <FontAwesome6 name="stop" size={13} color="#FF4D4D" />
+          </Pressable>
+        )}
       </View>
 
       <View style={styles.mainContainer}>

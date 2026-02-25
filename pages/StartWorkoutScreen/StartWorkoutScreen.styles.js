@@ -120,6 +120,14 @@ export const styles = StyleSheet.create({
   binHidden: {
     opacity: 0,
   },
+  stopBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 77, 77, 0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   backgroundLoading: {
     position: "absolute",
     top: 0,
