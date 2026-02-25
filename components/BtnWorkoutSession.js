@@ -1,5 +1,13 @@
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useRef } from "react";
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../constants/theme";
 
@@ -12,50 +20,106 @@ export default function WorkoutSessionButton({
   accessibilityHint,
   image,
   textBtn,
+  isActive,
 }) {
+  const glowAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (isActive) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(glowAnim, {
+            toValue: 1,
+            duration: 1200,
+            useNativeDriver: false,
+          }),
+          Animated.timing(glowAnim, {
+            toValue: 0,
+            duration: 1200,
+            useNativeDriver: false,
+          }),
+        ]),
+      ).start();
+    } else {
+      glowAnim.stopAnimation();
+      glowAnim.setValue(0);
+    }
+  }, [isActive]);
+
+  const borderColor = glowAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgba(163, 253, 1, 0.12)", "rgba(163, 253, 1, 0.85)"],
+  });
+
+  const shadowRadius = glowAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 14],
+  });
+
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      onPress={() => onPress(name)}
-      style={styles.wrapper}
+    <Animated.View
+      style={[
+        styles.wrapper,
+        {
+          borderWidth: 1,
+          borderRadius: 16,
+          borderColor,
+          shadowColor: COLORS.accent,
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius,
+        },
+      ]}
     >
-      <View style={styles.card}>
-        <View style={styles.accentBar} />
+      <TouchableOpacity
+        activeOpacity={0.8}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}
+        onPress={() => onPress(name)}
+      >
+        <View style={styles.card}>
+          <View style={styles.accentBar} />
 
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={
-              !image
-                ? require("../assets/imagesWorkout/Coaches-amico.png")
-                : image[0].source
-            }
-          />
-        </View>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={
+                !image
+                  ? require("../assets/imagesWorkout/Coaches-amico.png")
+                  : image[0].source
+              }
+            />
+          </View>
 
-        <View style={styles.textContainer}>
-          <Text style={styles.title} numberOfLines={1}>
-            {name}
-          </Text>
-          <View style={styles.iconWrapper}>
-            <View style={styles.iconTimeContainer}>
-              <FontAwesome name={"clock-o"} size={13} color={COLORS.accent} />
-              <Text style={styles.text}>{time}</Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.title} numberOfLines={1}>
+              {name}
+            </Text>
+            <View style={styles.iconWrapper}>
+              <View style={styles.iconTimeContainer}>
+                <FontAwesome name={"clock-o"} size={13} color={COLORS.accent} />
+                <Text style={styles.text}>{time}</Text>
+              </View>
+              <View style={styles.iconExerciseContainer}>
+                <FontAwesome5
+                  name={"dumbbell"}
+                  size={12}
+                  color={COLORS.accent}
+                />
+                <Text style={styles.text}>{nbExercise}</Text>
+              </View>
             </View>
-            <View style={styles.iconExerciseContainer}>
-              <FontAwesome5 name={"dumbbell"} size={12} color={COLORS.accent} />
-              <Text style={styles.text}>{nbExercise}</Text>
+            <View style={styles.btnContainer}>
+              <Text style={styles.btnText}>{textBtn}</Text>
+              <FontAwesome
+                name={"long-arrow-right"}
+                size={14}
+                color={"black"}
+              />
             </View>
           </View>
-          <View style={styles.btnContainer}>
-            <Text style={styles.btnText}>{textBtn}</Text>
-            <FontAwesome name={"long-arrow-right"} size={14} color={"black"} />
-          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
   );
 }
 
@@ -71,15 +135,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: COLORS.cardBackground,
-    borderWidth: 1,
-    borderColor: COLORS.accentBorder,
     overflow: "hidden",
   },
-  accentBar: {
-    width: 4,
-    height: "100%",
-    backgroundColor: COLORS.primary,
-  },
+
   imageContainer: {
     marginLeft: 14,
     width: 76,

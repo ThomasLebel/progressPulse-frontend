@@ -25,8 +25,6 @@ export default function TargetWeightModal({
   onShowDatePicker,
   onHideDatePicker,
   onConfirmDate,
-  isCheckedLoss,
-  isCheckedGain,
   onCheckbox,
   error,
   errorMessage,
@@ -102,41 +100,6 @@ export default function TargetWeightModal({
                 minimumDate={new Date()}
               />
             </TouchableOpacity>
-
-            <View style={styles.checkboxWrapper}>
-              <View style={styles.checkboxContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.checkbox,
-                    {
-                      backgroundColor: isCheckedLoss
-                        ? COLORS.primary
-                        : "transparent",
-                    },
-                  ]}
-                  onPress={() => onCheckbox("Loss")}
-                >
-                  {isCheckedLoss && <View style={styles.checkmark} />}
-                </TouchableOpacity>
-                <Text style={styles.text}>Objectif perte de poids</Text>
-              </View>
-              <View style={styles.checkboxContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.checkbox,
-                    {
-                      backgroundColor: isCheckedGain
-                        ? COLORS.primary
-                        : "transparent",
-                    },
-                  ]}
-                  onPress={() => onCheckbox("Gain")}
-                >
-                  {isCheckedGain && <View style={styles.checkmark} />}
-                </TouchableOpacity>
-                <Text style={styles.text}>Objectif gain de poids</Text>
-              </View>
-            </View>
 
             {error && <Text style={styles.errorText}>{errorMessage}</Text>}
             <TouchableOpacity

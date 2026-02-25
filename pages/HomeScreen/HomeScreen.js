@@ -27,6 +27,7 @@ export default function HomeScreen({ navigation }) {
       accessibilityHint="On va être diriger vers le résumé de notre séance avant de la commencer"
       image={workout.image}
       textBtn={currentWorkoutID === workout._id ? "Reprendre" : "Démarrer"}
+      isActive={currentWorkoutID === workout._id}
     />
   ));
 

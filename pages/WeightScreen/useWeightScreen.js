@@ -25,8 +25,6 @@ export function useWeightScreen(navigation) {
   const [date, setDate] = useState(new Date());
   const [progressValue, setProgressValue] = useState(0);
   const [progressValuePourcent, setProgressValuePourcent] = useState(0);
-  const [isCheckedLoss, setIsCheckedLoss] = useState(false);
-  const [isCheckedGain, setIsCheckedGain] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -107,12 +105,7 @@ export function useWeightScreen(navigation) {
       setErrorMessage("Veuillez remplir correctement les champs de saisies");
       return;
     }
-    if (!isCheckedGain && !isCheckedLoss) {
-      setError(true);
-      setErrorMessage("Veuillez cocher une case");
-      return;
-    }
-    const objectif = isCheckedGain ? "Gain" : "Loss";
+    const objectif = initialWeightInput < weightTarget ? "Gain" : "Loss";
     setIsLoading(true);
     closeModalTarget();
     fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/users/weightTarget`, {
@@ -157,19 +150,7 @@ export function useWeightScreen(navigation) {
     setErrorMessage("");
     setWeightTarget(null);
     setDate(new Date());
-    setIsCheckedGain(false);
-    setIsCheckedLoss(false);
     setInitialWeighInput(null);
-  };
-
-  const handleCheckbox = (name) => {
-    if (name === "Loss") {
-      setIsCheckedLoss(true);
-      setIsCheckedGain(false);
-    } else {
-      setIsCheckedLoss(false);
-      setIsCheckedGain(true);
-    }
   };
 
   const handleGoToStats = () => {
@@ -198,8 +179,6 @@ export function useWeightScreen(navigation) {
     date,
     progressValue,
     progressValuePourcent,
-    isCheckedLoss,
-    isCheckedGain,
     isLoading,
     showConfetti,
     isDatePickerVisible,
@@ -223,7 +202,6 @@ export function useWeightScreen(navigation) {
     addTargetWeight,
     closeModalWeight,
     closeModalTarget,
-    handleCheckbox,
     handleGoToStats,
   };
 }

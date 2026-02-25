@@ -42,12 +42,12 @@ export const styles = StyleSheet.create({
 
   btnContainer: {
     display: "flex",
+    marginTop: 20,
   },
 
   btn: {
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 10,
     marginTop: 20,
   },
 

@@ -47,7 +47,7 @@ export default function WorkoutEndingScreen({ navigation, route }) {
           <Underline width={80} />
         </View>
         <View style={styles.note}>
-          <Text style={styles.text}>Comment s'est passsé ta séance ? </Text>
+          <Text style={styles.text}>Comment s'est passé ta séance ? </Text>
           <View style={styles.star}>
             {starsData.map((star, index) => (
               <TouchableOpacity

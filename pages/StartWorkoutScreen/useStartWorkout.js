@@ -132,9 +132,14 @@ export function useStartWorkout(navigation, workoutID) {
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            dispatch(updateWorkoutName({ workoutID, newName: workoutNameInput }));
             dispatch(
-              updateNameWorkoutHistory({ workoutID, newName: workoutNameInput }),
+              updateWorkoutName({ workoutID, newName: workoutNameInput }),
+            );
+            dispatch(
+              updateNameWorkoutHistory({
+                workoutID,
+                newName: workoutNameInput,
+              }),
             );
             setIsLoading(false);
           } else {
@@ -200,7 +205,7 @@ export function useStartWorkout(navigation, workoutID) {
         const ongoingName = ongoingWorkout ? ongoingWorkout.name : "une séance";
         Alert.alert(
           "Séance en cours",
-          `La séance "${ongoingName}" est déjà en enregistrement. Démarrer cette séance supprimera sa progression.`,
+          `La séance "${ongoingName}" n’a pas été enregistrée. En lançant une nouvelle séance, vous perdrez les données saisies.`,
           [
             { text: "Annuler", style: "cancel" },
             {

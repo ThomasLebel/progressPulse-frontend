@@ -36,8 +36,6 @@ export default function WeightScreen({ navigation, route }) {
     date,
     progressValue,
     progressValuePourcent,
-    isCheckedLoss,
-    isCheckedGain,
     isLoading,
     showConfetti,
     isDatePickerVisible,
@@ -60,7 +58,6 @@ export default function WeightScreen({ navigation, route }) {
     addTargetWeight,
     closeModalWeight,
     closeModalTarget,
-    handleCheckbox,
     handleGoToStats,
   } = useWeightScreen(navigation);
 
@@ -88,9 +85,6 @@ export default function WeightScreen({ navigation, route }) {
         onShowDatePicker={showDatePicker}
         onHideDatePicker={hideDatePicker}
         onConfirmDate={handleConfirmDate}
-        isCheckedLoss={isCheckedLoss}
-        isCheckedGain={isCheckedGain}
-        onCheckbox={handleCheckbox}
         error={error}
         errorMessage={errorMessage}
         onAddTarget={addTargetWeight}
