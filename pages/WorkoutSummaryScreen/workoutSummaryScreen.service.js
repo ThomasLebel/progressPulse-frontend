@@ -59,7 +59,7 @@ export function convertRestForStorage(restMinutes, restSeconds, muscleGroup) {
 export function buildCustomSets(nbSets, charge, nbReps) {
   const sets = [];
   for (let i = 0; i < parseInt(nbSets); i++) {
-    sets.push({ weight: parseInt(charge), reps: parseInt(nbReps) });
+    sets.push({ weight: parseFloat(String(charge).replace(",", ".")), reps: parseInt(nbReps) });
   }
   return sets;
 }

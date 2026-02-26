@@ -43,7 +43,7 @@ export function formatSecondTime({ seconds }) {
 export function buildSetPayload({ exerciseID, weight, reps, minutes, secondes }) {
   return {
     exerciseID,
-    weight: parseInt(weight),
+    weight: parseFloat(String(weight).replace(",", ".")),
     reps: parseInt(reps),
     rest: parseInt(minutes) * 60 + parseInt(secondes),
   };

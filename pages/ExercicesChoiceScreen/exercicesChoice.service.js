@@ -33,7 +33,7 @@ export function validateCardioFields(charge, restMinutes, restSeconds) {
 export function buildStrengthExercise(exerciseID, exerciseName, muscleGroupName, charge, nbSets, nbReps, restMinutes, restSeconds, imagePath) {
   const customSets = [];
   for (let i = 0; i < parseInt(nbSets); i++) {
-    customSets.push({ weight: parseInt(charge), reps: parseInt(nbReps) });
+    customSets.push({ weight: parseFloat(String(charge).replace(",", ".")), reps: parseInt(nbReps) });
   }
   const rest = parseInt(restMinutes) * 60 + parseInt(restSeconds);
   return {
@@ -50,7 +50,7 @@ export function buildStrengthExercise(exerciseID, exerciseName, muscleGroupName,
  * Construit l'objet exercice à ajouter pour un exercice cardio.
  */
 export function buildCardioExercise(exerciseID, exerciseName, muscleGroupName, charge, restMinutes, restSeconds) {
-  const customSets = [{ weight: parseInt(charge), reps: 1 }];
+  const customSets = [{ weight: parseFloat(String(charge).replace(",", ".")), reps: 1 }];
   const rest = parseInt(restMinutes) * 60 * 60 + parseInt(restSeconds) * 60;
   return {
     exercise: exerciseID,
