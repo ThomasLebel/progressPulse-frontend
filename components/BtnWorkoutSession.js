@@ -1,14 +1,12 @@
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { useEffect, useRef } from "react";
 import {
   Animated,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../constants/theme";
 
 export default function WorkoutSessionButton({
@@ -80,13 +78,11 @@ export default function WorkoutSessionButton({
           <View style={styles.accentBar} />
 
           <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={
-                !image
-                  ? require("../assets/imagesWorkout/Coaches-amico.png")
-                  : image[0].source
-              }
+            <FontAwesome6
+              name={image || "dumbbell"}
+              size={36}
+              color={COLORS.accent}
+              solid
             />
           </View>
 
@@ -96,11 +92,11 @@ export default function WorkoutSessionButton({
             </Text>
             <View style={styles.iconWrapper}>
               <View style={styles.iconTimeContainer}>
-                <FontAwesome name={"clock-o"} size={13} color={COLORS.accent} />
+                <FontAwesome6 name={"clock"} size={13} color={COLORS.accent} />
                 <Text style={styles.text}>{time}</Text>
               </View>
               <View style={styles.iconExerciseContainer}>
-                <FontAwesome5
+                <FontAwesome6
                   name={"dumbbell"}
                   size={12}
                   color={COLORS.accent}
@@ -110,8 +106,8 @@ export default function WorkoutSessionButton({
             </View>
             <View style={styles.btnContainer}>
               <Text style={styles.btnText}>{textBtn}</Text>
-              <FontAwesome
-                name={"long-arrow-right"}
+              <FontAwesome6
+                name={"arrow-right-long"}
                 size={14}
                 color={"black"}
               />
@@ -144,13 +140,10 @@ const styles = StyleSheet.create({
     height: 76,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 12,
-  },
-  image: {
-    width: 56,
-    height: 56,
-    resizeMode: "cover",
-    borderRadius: 10,
+    borderRadius: 100,
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
   },
   textContainer: {
     flex: 1,

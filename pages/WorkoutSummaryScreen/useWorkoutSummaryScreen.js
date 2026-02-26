@@ -7,12 +7,10 @@ import {
   updateCustomSets,
 } from "../../reducers/workoutCreation";
 import { addWorkout } from "../../reducers/workouts";
-import imagesWorkout from "../../utils/imagesWorkout";
 import {
   buildCustomSets,
   buildWorkoutPayload,
   convertRestForStorage,
-  getRandomImageIndex,
   groupExercisesByMuscleGroup,
 } from "./workoutSummaryScreen.service";
 
@@ -33,12 +31,11 @@ export function useWorkoutSummaryScreen(navigation, route) {
   const [muscleGroup, setMuscleGroup] = useState("");
   const [postError, setPostError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState("dumbbell");
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const workout = useSelector((state) => state.workoutCreation.value);
-
-  const randomImage = getRandomImageIndex(imagesWorkout.length);
 
   const groupedExercises = groupExercisesByMuscleGroup(workout.exercises);
 
@@ -106,7 +103,7 @@ export function useWorkoutSummaryScreen(navigation, route) {
         user.token,
         workoutName,
         workout.exercises,
-        imagesWorkout[randomImage].name,
+        selectedIcon,
       );
       setModalTitleVisible(false);
       setIsLoading(true);
@@ -160,6 +157,8 @@ export function useWorkoutSummaryScreen(navigation, route) {
     emptyFields,
     workoutName,
     setWorkoutName,
+    selectedIcon,
+    setSelectedIcon,
     postError,
     isLoading,
     groupedExercises,

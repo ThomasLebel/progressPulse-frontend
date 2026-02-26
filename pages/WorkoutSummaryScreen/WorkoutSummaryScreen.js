@@ -32,6 +32,8 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
     emptyFields,
     workoutName,
     setWorkoutName,
+    selectedIcon,
+    setSelectedIcon,
     postError,
     isLoading,
     groupedExercises,
@@ -49,6 +51,8 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         onClose={() => setModalTitleVisible(false)}
         workoutName={workoutName}
         onChangeWorkoutName={setWorkoutName}
+        selectedIcon={selectedIcon}
+        onSelectIcon={setSelectedIcon}
         emptyFields={emptyFields}
         postError={postError}
         onSubmit={handleSubmit}

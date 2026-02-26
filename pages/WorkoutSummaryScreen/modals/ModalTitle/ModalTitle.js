@@ -1,7 +1,9 @@
+import { FontAwesome6 } from "@expo/vector-icons";
 import {
   KeyboardAvoidingView,
   Modal,
   Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,11 +13,39 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./ModalTitle.styles";
 
+const WORKOUT_ICONS = [
+  { name: "dumbbell" },
+  { name: "fire" },
+  { name: "bolt" },
+  { name: "rocket" },
+  { name: "bomb" },
+  { name: "heart" },
+  { name: "heart-circle-bolt" },
+  { name: "explosion" },
+
+  { name: "weight-hanging" },
+  { name: "trophy" },
+  { name: "medal" },
+  { name: "crown" },
+  { name: "star" },
+  { name: "shield" },
+  { name: "stopwatch" },
+  { name: "hand-fist" },
+  { name: "crosshairs" },
+  { name: "bolt-lightning" },
+  { name: "brain" },
+  { name: "gem" },
+  { name: "flask" },
+  { name: "skull" },
+];
+
 export default function ModalTitle({
   visible,
   onClose,
   workoutName,
   onChangeWorkoutName,
+  selectedIcon,
+  onSelectIcon,
   emptyFields,
   postError,
   onSubmit,
@@ -61,6 +91,40 @@ export default function ModalTitle({
               value={workoutName}
             />
           </View>
+
+          <View style={styles.iconPickerSection}>
+            <Text style={styles.iconPickerTitle}>
+              Choisis un logo pour ta séance
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.iconScrollContent}
+            >
+              {WORKOUT_ICONS.map((icon) => {
+                const isSelected = selectedIcon === icon.name;
+                return (
+                  <TouchableOpacity
+                    key={icon.name}
+                    style={[
+                      styles.iconItem,
+                      isSelected && styles.iconItemSelected,
+                    ]}
+                    onPress={() => onSelectIcon(icon.name)}
+                    activeOpacity={0.7}
+                  >
+                    <FontAwesome6
+                      name={icon.name}
+                      size={22}
+                      color={isSelected ? COLORS.background : COLORS.accent}
+                      solid
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </View>
+
           {emptyFields && (
             <Text style={styles.errorMessage}>
               Veuillez saisir un nom de séance

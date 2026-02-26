@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
-import imagesWorkout from "../../utils/imagesWorkout";
 import {
   calculateWorkoutDuration,
-  findWorkoutImage,
   formatExerciseCount,
 } from "./homeScreen.service";
 
@@ -14,7 +12,7 @@ export function useHomeScreen(navigation) {
   const workoutsDisplayData = workouts.map((workout) => ({
     _id: workout._id,
     name: workout.name,
-    image: findWorkoutImage(workout.image, imagesWorkout),
+    image: workout.image,
     nbExercises: formatExerciseCount(workout.exercises.length),
     duration: calculateWorkoutDuration(workout.exercises),
   }));
