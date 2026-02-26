@@ -132,6 +132,7 @@ export function useStartWorkout(navigation, workoutID) {
     setEmptyFields(false);
     setIconError(false);
     setIsLoading(true);
+    setModalTitleVisible(false);
     fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/usersWorkouts/updateName`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -148,9 +149,9 @@ export function useStartWorkout(navigation, workoutID) {
           dispatch(updateWorkoutName({ workoutID, newName: workoutNameInput }));
           dispatch(updateWorkoutImage({ workoutID, newImage: selectedIcon }));
           dispatch(updateNameWorkoutHistory({ workoutID, newName: workoutNameInput }));
-          setModalTitleVisible(false);
           setIsLoading(false);
         } else {
+          setModalTitleVisible(true);
           setEmptyFields(true);
           setIsLoading(false);
         }
