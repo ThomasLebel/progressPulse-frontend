@@ -96,6 +96,13 @@ export function useWeightScreen(navigation) {
           dispatch(addWeight(data.newWeight));
           setIsLoading(false);
         }
+      })
+      .catch((error) => {
+        console.error("addWeight fetch error:", error);
+        setIsLoading(false);
+        setError(true);
+        setErrorMessage("Erreur réseau, veuillez réessayer");
+        setModalVisibleWeight(true);
       });
   };
 
@@ -139,18 +146,25 @@ export function useWeightScreen(navigation) {
           setModalVisibleTarget(true);
           setIsLoading(false);
         }
+      })
+      .catch((error) => {
+        console.error("weightTarget fetch error:", error);
+        setIsLoading(false);
+        setError(true);
+        setErrorMessage("Erreur réseau, veuillez réessayer");
+        setModalVisibleTarget(true);
       });
   };
 
   const closeModalWeight = () => {
-    setModalVisibleWeight(!modalVisibleWeight);
+    setModalVisibleWeight(false);
     setError(false);
     setErrorMessage("");
     setWeight(null);
   };
 
   const closeModalTarget = () => {
-    setModalVisibleTarget(!modalVisibleTarget);
+    setModalVisibleTarget(false);
     setError(false);
     setErrorMessage("");
     setWeightTarget(null);

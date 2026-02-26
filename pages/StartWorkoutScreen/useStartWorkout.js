@@ -188,6 +188,10 @@ export function useStartWorkout(navigation, workoutID) {
           dispatch(updateWorkoutSets(updateExerciseSets));
         }
         setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("updateSets fetch error:", error);
+        setIsLoading(false);
       });
   };
 

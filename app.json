@@ -3,7 +3,7 @@
     "name": "ProgressPulse",
     "slug": "progresspule",
     "description": "Une application de suivi d'entraînement pour les sportifs.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "orientation": "portrait",
     "icon": "./assets/illustrations/LogoV2.png",
     "userInterfaceStyle": "light",
