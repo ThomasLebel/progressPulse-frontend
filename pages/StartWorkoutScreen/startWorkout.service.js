@@ -45,7 +45,10 @@ export function computeRestDisplay(rest, muscleGroup) {
 export function buildCustomSets(nbSets, charge, nbReps) {
   const sets = [];
   for (let i = 0; i < parseInt(nbSets); i++) {
-    sets.push({ weight: parseInt(charge), reps: parseInt(nbReps) });
+    sets.push({
+      weight: parseFloat(String(charge).replace(",", ".")),
+      reps: parseInt(nbReps),
+    });
   }
   return sets;
 }
@@ -59,8 +62,10 @@ export function buildCustomSets(nbSets, charge, nbReps) {
  * @returns {number} valeur convertie en secondes
  */
 export function convertRestToSeconds(restMinutes, restSeconds, muscleGroup) {
+  const mins = parseInt(String(restMinutes).replace(",", "."));
+  const secs = parseInt(String(restSeconds).replace(",", "."));
   if (muscleGroup !== "Cardio") {
-    return parseInt(restMinutes) * 60 + parseInt(restSeconds);
+    return mins * 60 + secs;
   }
-  return parseInt(restMinutes) * 3600 + parseInt(restSeconds) * 60;
+  return mins * 3600 + secs * 60;
 }

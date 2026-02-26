@@ -125,7 +125,12 @@ export function useWeightScreen(navigation) {
           const now = new Date().toISOString();
           dispatch(updateTarget({ ...data.weightTarget, startDate: now }));
           dispatch(
-            addWeight({ weight: parseFloat(initialWeightInput), date: now }),
+            addWeight({
+              weight: parseFloat(
+                initialWeightInput.toString().trim().replace(",", "."),
+              ),
+              date: now,
+            }),
           );
           setIsLoading(false);
         } else {
