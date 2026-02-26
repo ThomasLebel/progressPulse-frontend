@@ -89,6 +89,11 @@ export default function StartWorkoutScreen({ navigation, route }) {
         <View style={styles.headerSpacer} />
 
         <View style={styles.workoutNameSection}>
+          <FontAwesome6
+            name={workoutSelected.image || "dumbbell"}
+            size={18}
+            color={COLORS.accent}
+          />
           <Text style={styles.topTitle} numberOfLines={1}>
             {workoutSelected.name}
           </Text>
