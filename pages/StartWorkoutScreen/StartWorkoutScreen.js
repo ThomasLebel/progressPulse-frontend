@@ -31,9 +31,12 @@ export default function StartWorkoutScreen({ navigation, route }) {
     restSeconds,
     setRestSeconds,
     emptyFields,
+    iconError,
     isLoading,
     workoutNameInput,
     setWorkoutNameInput,
+    selectedIcon,
+    setSelectedIcon,
     workoutSelected,
     exercisesByGroup,
     openModalCustomSets,
@@ -56,7 +59,10 @@ export default function StartWorkoutScreen({ navigation, route }) {
         onClose={() => setModalTitleVisible(false)}
         workoutNameInput={workoutNameInput}
         onChangeWorkoutName={(value) => setWorkoutNameInput(value)}
+        selectedIcon={selectedIcon}
+        onSelectIcon={setSelectedIcon}
         emptyFields={emptyFields}
+        iconError={iconError}
         onChangeName={handleChangeName}
       />
 

@@ -8,6 +8,7 @@ import {
 import {
   removeExercise,
   removeWorkout,
+  updateWorkoutImage,
   updateWorkoutName,
   updateWorkoutSets,
 } from "../../reducers/workouts";
@@ -34,6 +35,7 @@ export function useStartWorkout(navigation, workoutID) {
   const [restMinutes, setRestMinutes] = useState("1");
   const [restSeconds, setRestSeconds] = useState("00");
   const [emptyFields, setEmptyFields] = useState(false);
+  const [iconError, setIconError] = useState(false);
   const [modalTitleVisible, setModalTitleVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,6 +47,9 @@ export function useStartWorkout(navigation, workoutID) {
 
   const [workoutNameInput, setWorkoutNameInput] = useState(
     workoutSelected.name,
+  );
+  const [selectedIcon, setSelectedIcon] = useState(
+    workoutSelected.image || "dumbbell",
   );
 
   const groupedExercises = groupExercisesByMuscleGroup(
@@ -116,41 +121,40 @@ export function useStartWorkout(navigation, workoutID) {
   };
 
   const handleChangeName = () => {
-    if (workoutNameInput) {
-      setEmptyFields(false);
-      setModalTitleVisible(false);
-      setIsLoading(true);
-      fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/usersWorkouts/updateName`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          workoutID,
-          newWorkoutName: workoutNameInput,
-          token: user.token,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.result) {
-            dispatch(
-              updateWorkoutName({ workoutID, newName: workoutNameInput }),
-            );
-            dispatch(
-              updateNameWorkoutHistory({
-                workoutID,
-                newName: workoutNameInput,
-              }),
-            );
-            setIsLoading(false);
-          } else {
-            setEmptyFields(true);
-            setIsLoading(false);
-          }
-        });
-    } else {
-      setEmptyFields(true);
-      setIsLoading(false);
+    if (!selectedIcon) {
+      setIconError(true);
+      return;
     }
+    if (!workoutNameInput) {
+      setEmptyFields(true);
+      return;
+    }
+    setEmptyFields(false);
+    setIconError(false);
+    setIsLoading(true);
+    fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/usersWorkouts/updateName`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        workoutID,
+        newWorkoutName: workoutNameInput,
+        newIcon: selectedIcon,
+        token: user.token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(updateWorkoutName({ workoutID, newName: workoutNameInput }));
+          dispatch(updateWorkoutImage({ workoutID, newImage: selectedIcon }));
+          dispatch(updateNameWorkoutHistory({ workoutID, newName: workoutNameInput }));
+          setModalTitleVisible(false);
+          setIsLoading(false);
+        } else {
+          setEmptyFields(true);
+          setIsLoading(false);
+        }
+      });
   };
 
   const handleUpdateExercise = () => {
@@ -303,9 +307,12 @@ export function useStartWorkout(navigation, workoutID) {
     restSeconds,
     setRestSeconds,
     emptyFields,
+    iconError,
     isLoading,
     workoutNameInput,
     setWorkoutNameInput,
+    selectedIcon,
+    setSelectedIcon,
     workoutSelected,
     exercisesByGroup,
     openModalCustomSets,

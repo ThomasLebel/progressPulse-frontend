@@ -61,6 +61,32 @@ export const styles = StyleSheet.create({
     color: COLORS.textPrimary,
     fontSize: 15,
   },
+  iconPickerSection: {
+    marginBottom: 16,
+  },
+  iconPickerTitle: {
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    marginBottom: 10,
+  },
+  iconScrollContent: {
+    gap: 8,
+    paddingVertical: 4,
+  },
+  iconItem: {
+    width: 56,
+    height: 56,
+    borderRadius: 12,
+    backgroundColor: COLORS.cardBackground,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconItemSelected: {
+    backgroundColor: COLORS.accent,
+    borderColor: COLORS.accent,
+  },
   errorMessage: {
     color: "#FF4500",
     fontSize: 13,

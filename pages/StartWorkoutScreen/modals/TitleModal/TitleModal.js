@@ -1,7 +1,9 @@
+import { FontAwesome6 } from "@expo/vector-icons";
 import {
   KeyboardAvoidingView,
   Modal,
   Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,12 +13,40 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../../../../constants/theme";
 import { styles } from "./TitleModal.styles";
 
+const WORKOUT_ICONS = [
+  { name: "dumbbell" },
+  { name: "fire" },
+  { name: "bolt" },
+  { name: "rocket" },
+  { name: "bomb" },
+  { name: "heart" },
+  { name: "heart-circle-bolt" },
+  { name: "explosion" },
+  { name: "weight-hanging" },
+  { name: "trophy" },
+  { name: "medal" },
+  { name: "crown" },
+  { name: "star" },
+  { name: "shield" },
+  { name: "stopwatch" },
+  { name: "hand-fist" },
+  { name: "crosshairs" },
+  { name: "bolt-lightning" },
+  { name: "brain" },
+  { name: "gem" },
+  { name: "flask" },
+  { name: "skull" },
+];
+
 export default function TitleModal({
   visible,
   onClose,
   workoutNameInput,
   onChangeWorkoutName,
+  selectedIcon,
+  onSelectIcon,
   emptyFields,
+  iconError,
   onChangeName,
 }) {
   return (
@@ -46,7 +76,7 @@ export default function TitleModal({
               color={COLORS.primary}
               style={styles.infoIcon}
             />
-            <Text style={styles.textInfo}>Nomme ta séance</Text>
+            <Text style={styles.textInfo}>Modifie ta séance</Text>
           </View>
           <View style={styles.inputsContainer}>
             <Text style={styles.inputText}>Renomme ta séance</Text>
@@ -58,9 +88,48 @@ export default function TitleModal({
               value={workoutNameInput}
             />
           </View>
+
+          <View style={styles.iconPickerSection}>
+            <Text style={styles.iconPickerTitle}>
+              Choisis un logo pour ta séance
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.iconScrollContent}
+            >
+              {WORKOUT_ICONS.map((icon) => {
+                const isSelected = selectedIcon === icon.name;
+                return (
+                  <TouchableOpacity
+                    key={icon.name}
+                    style={[
+                      styles.iconItem,
+                      isSelected && styles.iconItemSelected,
+                    ]}
+                    onPress={() => onSelectIcon(icon.name)}
+                    activeOpacity={0.7}
+                  >
+                    <FontAwesome6
+                      name={icon.name}
+                      size={22}
+                      color={isSelected ? COLORS.background : COLORS.accent}
+                      solid
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </View>
+
+          {iconError && (
+            <Text style={styles.errorMessage}>
+              Veuillez choisir un logo pour ta séance
+            </Text>
+          )}
           {emptyFields && (
             <Text style={styles.errorMessage}>
-              Veuillez saisir un nom de séance
+              Veuillez changer le nom de la séance ou le logo pour mettre à jour
             </Text>
           )}
           <TouchableOpacity
@@ -68,7 +137,7 @@ export default function TitleModal({
             style={styles.button}
             onPress={onChangeName}
           >
-            <Text style={styles.buttonText}>Renommer ma séance</Text>
+            <Text style={styles.buttonText}>Enregistrer les modifications</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

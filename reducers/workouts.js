@@ -71,6 +71,15 @@ export const workoutsSlice = createSlice({
       }
     },
 
+    updateWorkoutImage: (state, action) => {
+      // payload: { workoutID: string, newImage: string }
+      for (let workout of state.value) {
+        if (workout._id === action.payload.workoutID) {
+          workout.image = action.payload.newImage;
+        }
+      }
+    },
+
     removeAllWorkout: (state) => {
       state.value = [];
     },
@@ -84,6 +93,7 @@ export const {
   updateWorkoutSets,
   removeExercise,
   updateWorkoutName,
+  updateWorkoutImage,
   updateExercises,
   removeAllWorkout,
 } = workoutsSlice.actions;

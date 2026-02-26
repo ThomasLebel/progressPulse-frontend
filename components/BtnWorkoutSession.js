@@ -81,7 +81,7 @@ export default function WorkoutSessionButton({
             <FontAwesome6
               name={image || "dumbbell"}
               size={36}
-              color={COLORS.accent}
+              color={COLORS.primary}
               solid
             />
           </View>
