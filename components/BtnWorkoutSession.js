@@ -80,8 +80,8 @@ export default function WorkoutSessionButton({
           <View style={styles.imageContainer}>
             <FontAwesome6
               name={image || "dumbbell"}
-              size={36}
-              color={COLORS.primary}
+              size={30}
+              color={"rgba(255, 255, 255, 0.70)"}
               solid
             />
           </View>
@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     marginLeft: 14,
-    width: 76,
-    height: 76,
+    width: 68,
+    height: 68,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 100,
-    backgroundColor: COLORS.cardBackground,
+    borderRadius: 14,
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
     borderWidth: 1,
-    borderColor: COLORS.accentBorder,
+    borderColor: "rgba(255, 255, 255, 0.09)",
   },
   textContainer: {
     flex: 1,
