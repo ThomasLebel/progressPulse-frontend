@@ -1,7 +1,5 @@
-import { BlurView } from "expo-blur";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../components/Button";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import ExerciseBtn from "../../components/ExerciseBtn";
 import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
@@ -31,7 +29,9 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
     emptyFields,
     isCardio,
     isLoading,
-    handleFinish,
+    handleBack,
+    handleValidate,
+    validateLabel,
     openModal,
     closeModal,
     addToWorkout,
@@ -61,22 +61,6 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
         addToExistingWorkout={addToExistingWorkout}
       />
       <View style={styles.topContainer}>
-        <Pressable
-          style={styles.backButtonContainer}
-          onPress={() =>
-            navigation.navigate("muscleGroup", {
-              isWorkoutAlreadyCreated,
-              workoutID,
-            })
-          }
-        >
-          <FontAwesome
-            name={"chevron-left"}
-            size={20}
-            color={COLORS.primary}
-            accessibilityLabel="Revenir sur la page pour choisir le groupe musculaire"
-          />
-        </Pressable>
         <View style={{ marginVertical: 20 }}>
           <Text style={styles.title}>{name}</Text>
           <Underline width={40} />
@@ -105,21 +89,24 @@ export default function ExercicesChoicesScreen({ navigation, route }) {
           ))}
         </ScrollView>
       </View>
-      <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
-        <Button
-          background={COLORS.primary}
-          borderColor="none"
-          textButton="Terminer"
-          textColor="black"
-          width={240}
-          height={50}
-          onPress={handleFinish}
-          isLinearGradiant={false}
-          accessibilityLabel={
-            "Revenir sur la page pour choisir le groupe musculaire"
-          }
-        />
-      </BlurView>
+      <View style={styles.bottomContainer}>
+        <Pressable
+          style={styles.backBtn}
+          onPress={handleBack}
+          accessibilityLabel="Revenir sur la page pour choisir le groupe musculaire"
+        >
+          <FontAwesome6 name="chevron-left" size={14} color={COLORS.textSecondary} />
+          <Text style={styles.backBtnText}>Retour</Text>
+        </Pressable>
+        <Pressable
+          style={styles.validateBtn}
+          onPress={handleValidate}
+          accessibilityLabel={validateLabel}
+        >
+          <FontAwesome6 name="check" size={15} color={COLORS.background} />
+          <Text style={styles.validateBtnText}>{validateLabel}</Text>
+        </Pressable>
+      </View>
       {isLoading && (
         <View style={styles.backgroundLoading}>
           <Loader></Loader>

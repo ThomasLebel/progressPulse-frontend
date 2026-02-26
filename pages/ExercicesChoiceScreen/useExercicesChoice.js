@@ -43,9 +43,19 @@ export function useExercicesChoice(navigation, route) {
       });
   }, []);
 
-  const handleFinish = () => {
+  const handleBack = () => {
     navigation.navigate("muscleGroup", { workoutID, isWorkoutAlreadyCreated });
   };
+
+  const handleValidate = () => {
+    if (!isWorkoutAlreadyCreated) {
+      navigation.navigate("workoutSummary", { backTo: "muscleGroup" });
+    } else {
+      navigation.navigate("startWorkout", { workoutID });
+    }
+  };
+
+  const validateLabel = isWorkoutAlreadyCreated ? "Retourner à ma séance" : "Voir le récap";
 
   const openModal = (textButton, id, image) => {
     setModalVisible(true);
@@ -154,7 +164,9 @@ export function useExercicesChoice(navigation, route) {
     emptyFields,
     isCardio,
     isLoading,
-    handleFinish,
+    handleBack,
+    handleValidate,
+    validateLabel,
     openModal,
     closeModal,
     addToWorkout,

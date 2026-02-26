@@ -1,7 +1,5 @@
-import { BlurView } from "expo-blur";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "../../components/Button";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import ExerciseCard from "../../components/ExerciseCard";
 import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
@@ -73,14 +71,14 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         emptyFields={emptyFields}
         onSubmit={updateExercise}
       />
-      <Pressable
-        style={styles.backButton}
-        onPress={() => navigation.navigate(backTo, { name: name })}
-        accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
-      >
-        <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
-      </Pressable>
+
       <View style={styles.mainContainer}>
+        {Object.keys(groupedExercises).length === 0 && (
+          <View style={styles.emptyContainer}>
+            <FontAwesome6 name="dumbbell" size={36} color={COLORS.textSecondary} />
+            <Text style={styles.emptyText}>Aucun exercice encore ajouté</Text>
+          </View>
+        )}
         <ScrollView
           style={{ width: "100%" }}
           contentContainerStyle={{ paddingBottom: 75 }}
@@ -120,32 +118,24 @@ export default function WorkoutSummaryScreen({ navigation, route }) {
         </ScrollView>
       </View>
 
-      <BlurView style={styles.bottomContainer} intensity={60} tint="dark">
-        <Button
-          background={COLORS.primary}
-          borderColor="none"
-          textButton="Valider ma séance"
-          textColor="black"
-          width={250}
-          height={50}
-          onPress={() => setModalTitleVisible(true)}
-          isLinearGradiant={false}
-          accessibilityLabel={
-            "Valider la et accepter si des changements ont été apporté sur la séance"
-          }
-          accessibilityHint={
-            "Redirection sur la page d'accueil, votre séance si affichera"
-          }
-        />
-        <FontAwesome
-          name={"plus-circle"}
+      <View style={styles.bottomContainer}>
+        <Pressable
+          style={styles.backBtn}
+          onPress={() => navigation.navigate(backTo, { name: name })}
           accessibilityLabel={`Permet de revenir sur la page ${backTo}`}
-          size={45}
-          color={COLORS.primary}
-          style={{ marginRight: 15 }}
-          onPress={() => navigation.navigate("muscleGroup")}
-        />
-      </BlurView>
+        >
+          <FontAwesome6 name="chevron-left" size={14} color={COLORS.textSecondary} />
+          <Text style={styles.backBtnText}>Retour</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.validateBtn, Object.keys(groupedExercises).length === 0 && styles.validateBtnDisabled]}
+          onPress={() => Object.keys(groupedExercises).length > 0 && setModalTitleVisible(true)}
+          accessibilityLabel="Valider la séance"
+        >
+          <FontAwesome6 name="check" size={15} color={COLORS.background} />
+          <Text style={styles.validateBtnText}>Valider ma séance</Text>
+        </Pressable>
+      </View>
       {isLoading && (
         <View style={styles.backgroundLoading}>
           <Loader></Loader>

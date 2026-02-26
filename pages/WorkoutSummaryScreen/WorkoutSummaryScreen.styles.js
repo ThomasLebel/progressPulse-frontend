@@ -1,17 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.07)",
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 15,
-    marginBottom: 20,
-    marginTop: 20,
-  },
   container: {
     flex: 1,
     paddingVertical: 50,
@@ -19,14 +8,49 @@ export const styles = StyleSheet.create({
   },
   bottomContainer: {
     position: "absolute",
-    bottom: 0,
-    right: 0,
-    left: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    bottom: 32,
+    left: 16,
+    right: 16,
+    height: 64,
+    borderRadius: 40,
     flexDirection: "row",
-    paddingVertical: 20,
-    gap: 20,
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "rgba(20, 20, 40, 0.95)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    paddingHorizontal: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 12,
+  },
+  backBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  backBtnText: {
+    color: "rgba(255, 255, 255, 0.55)",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  validateBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: "#8BC34A",
+    borderRadius: 32,
+    paddingVertical: 12,
+    paddingHorizontal: 22,
+  },
+  validateBtnText: {
+    color: "#0D0D36",
+    fontSize: 15,
+    fontWeight: "700",
   },
   mainContainer: {
     flex: 5,
@@ -40,6 +64,19 @@ export const styles = StyleSheet.create({
   groupTitle: {
     color: "white",
     fontSize: 20,
+  },
+  emptyContainer: {
+    position: "absolute",
+    alignItems: "center",
+    gap: 12,
+  },
+  emptyText: {
+    color: "rgba(255, 255, 255, 0.55)",
+    fontSize: 15,
+    fontWeight: "500",
+  },
+  validateBtnDisabled: {
+    backgroundColor: "rgba(139, 195, 74, 0.35)",
   },
   backgroundLoading: {
     position: "absolute",
