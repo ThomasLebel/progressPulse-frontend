@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
 import {
   addAllExercise,
   resetWorkoutCreation,
 } from "../../reducers/workoutCreation";
 import imagesWorkout from "../../utils/imagesWorkout";
+import { RootStackParamList } from "../../models/navigation";
+import { fetchWorkoutsByDifficulty, WorkoutAPI } from "./workoutChoice.api";
 import {
   calculateWorkoutTime,
   formatExerciseCount,
@@ -12,23 +16,33 @@ import {
   buildExercisesToAdd,
 } from "./workoutChoice.service";
 
-export function useWorkoutChoiceScreen(navigation, route) {
+type Navigation = NativeStackNavigationProp<RootStackParamList, "workoutChoice">;
+type Route = RouteProp<RootStackParamList, "workoutChoice">;
+
+type WorkoutItem = {
+  key: number;
+  name: string;
+  time: string;
+  nbExercise: string;
+  image: { name: string; source: unknown }[];
+  onPress: () => void;
+};
+
+export function useWorkoutChoiceScreen(navigation: Navigation, route: Route) {
   const { name } = route.params;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState<WorkoutAPI[]>([]);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${process.env.EXPO_PUBLIC_SERVER_IP}/workouts/byDifficulty/${name}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setWorkouts(data.data);
-        setIsLoading(false);
-      });
+    fetchWorkoutsByDifficulty(name).then((data) => {
+      setWorkouts(data);
+      setIsLoading(false);
+    });
   }, []);
 
-  const handleNavigateToSummary = (exercicesData) => {
+  const handleNavigateToSummary = (exercicesData: WorkoutAPI["exercices"]) => {
     dispatch(resetWorkoutCreation());
     const exercisesToAdd = buildExercisesToAdd(exercicesData);
     dispatch(addAllExercise(exercisesToAdd));
@@ -40,7 +54,7 @@ export function useWorkoutChoiceScreen(navigation, route) {
 
   const handleBack = () => navigation.navigate("WorkoutDifficulty");
 
-  const workoutItems = workouts.map((data, i) => ({
+  const workoutItems: WorkoutItem[] = workouts.map((data, i) => ({
     key: i,
     name: data.name,
     time: calculateWorkoutTime(data.exercices) + " min",

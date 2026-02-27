@@ -1,16 +1,20 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import BtnWorkoutSession from "../../components/BtnWorkoutSession";
 import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
+import { RootStackParamList } from "../../models/navigation";
 import { useWorkoutChoiceScreen } from "./useWorkoutChoiceScreen";
 import { styles } from "./WorkoutChoiceScreen.styles";
 
-export default function WorkoutChoiceScreen({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, "workoutChoice">;
+
+export default function WorkoutChoiceScreen({ navigation, route }: Props) {
   const { name, isLoading, workoutItems, handleBack } = useWorkoutChoiceScreen(
     navigation,
-    route,
+    route
   );
 
   return (

@@ -1,9 +1,13 @@
 import images from "../../utils/images";
+import { WorkoutExerciseCreation } from "../../reducers/workoutCreation/workoutCreation.types";
+import { WorkoutExerciseDataAPI } from "./workoutChoice.api";
 
-/**
- * Calcule la durée estimée d'une séance en minutes à partir de ses exercices.
- */
-export function calculateWorkoutTime(exercises) {
+type ImageWorkout = {
+  name: string;
+  source: unknown;
+};
+
+export function calculateWorkoutTime(exercises: WorkoutExerciseDataAPI[]): number {
   let times = 0;
   for (let i = 0; i < exercises.length; i++) {
     times +=
@@ -14,17 +18,11 @@ export function calculateWorkoutTime(exercises) {
   return Math.round(times);
 }
 
-/**
- * Formate le nombre d'exercices en chaîne affichable.
- */
-export function formatExerciseCount(count) {
+export function formatExerciseCount(count: number): string {
   return count + " exercices";
 }
 
-/**
- * Recherche la source d'image correspondant au nom d'image donné dans la liste des images de séance.
- */
-export function findWorkoutImage(imageName, imageList) {
+export function findWorkoutImage(imageName: string, imageList: ImageWorkout[]): ImageWorkout[] {
   return imageList.filter((imageWorkout) => {
     if (imageWorkout.name === imageName) {
       return imageWorkout.source;
@@ -32,19 +30,16 @@ export function findWorkoutImage(imageName, imageList) {
   });
 }
 
-/**
- * Construit la liste des exercices formatés pour le dispatch Redux à partir des données brutes de la séance.
- */
-export function buildExercisesToAdd(exercicesData) {
+export function buildExercisesToAdd(exercicesData: WorkoutExerciseDataAPI[]): WorkoutExerciseCreation[] {
+  const imagesMap = images as Record<string, Record<string, unknown>>;
   return exercicesData.map((exercise) => {
     const customSets = exercise.sets.map((set) => ({
       weight: set.weight,
       reps: set.rep,
     }));
-    const imagePath =
-      images[exercise.exercice.muscleGroupe.toLowerCase()][
-        exercise.exercice.image
-      ];
+    const imagePath = imagesMap[exercise.exercice.muscleGroupe.toLowerCase()][
+      exercise.exercice.image
+    ] as string;
     return {
       exercise: exercise.exercice._id,
       exerciseName: exercise.exercice.name,

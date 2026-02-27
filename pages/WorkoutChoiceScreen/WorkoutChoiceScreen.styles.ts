@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 28,
     color: "white",
-    fontWeight: 600,
+    fontWeight: "600",
   },
 
   infoContainer: {
@@ -65,7 +65,6 @@ export const styles = StyleSheet.create({
 
   btn: {
     fontSize: 40,
-    borderRadius: 10,
     backgroundColor: COLORS.primary,
     margin: 20,
     borderRadius: 20,
@@ -73,7 +72,7 @@ export const styles = StyleSheet.create({
 
   btnText: {
     fontSize: 30,
-    fontWeight: 600,
+    fontWeight: "600",
     top: 40,
     right: 10,
     position: "absolute",
