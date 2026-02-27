@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../models/navigation';
+import { RootState } from '../../reducers/store.types';
+import { Exercise } from '../../shared/types';
 import {
   filterHistoryByPeriod,
   PERIODS,
@@ -15,9 +20,12 @@ import {
   getVolumeProgression,
 } from './exerciseStatsScreen.service';
 
-export function useExerciseStatsScreen(navigation, route) {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'exerciseStats'>;
+type RoutePropType = RouteProp<RootStackParamList, 'exerciseStats'>;
+
+export function useExerciseStatsScreen(navigation: NavigationProp, route: RoutePropType) {
   const { exerciseName } = route.params;
-  const history = useSelector((state) => state.workoutsHistory.value);
+  const history = useSelector((state: RootState) => state.workoutsHistory.value);
 
   const [selectedPeriod, setSelectedPeriod] = useState('3months');
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -27,10 +35,14 @@ export function useExerciseStatsScreen(navigation, route) {
   const filteredHistory = filterHistoryByPeriod(history, selectedPeriod);
   const filteredSessions = getSessionsForExercise(filteredHistory, exerciseName);
 
+  const muscleGroupPerf = allSessions[0]?.performances?.find((p) => {
+    if (typeof p.exercise === 'string') return false;
+    return (p.exercise as Exercise).name === exerciseName;
+  });
   const muscleGroup =
-    allSessions[0]?.performances?.find(
-      (p) => p.exercise?.name === exerciseName
-    )?.exercise?.muscleGroupe ?? '';
+    muscleGroupPerf && typeof muscleGroupPerf.exercise !== 'string'
+      ? (muscleGroupPerf.exercise as Exercise).muscleGroupe ?? ''
+      : '';
 
   const sessionCount = filteredSessions.length;
   const totalVolume = getTotalVolume(filteredSessions, exerciseName);

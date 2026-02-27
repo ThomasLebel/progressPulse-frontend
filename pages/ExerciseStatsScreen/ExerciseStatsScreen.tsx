@@ -1,3 +1,4 @@
+import { ComponentType } from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -7,14 +8,22 @@ import {
 } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { COLORS } from '../../constants/theme';
+import { RootStackParamList } from '../../models/navigation';
+import { ChartDataPoint } from './ExerciseStatsScreen.types';
 import { styles } from './ExerciseStatsScreen.styles';
 import { useExerciseStatsScreen } from './useExerciseStatsScreen';
+
+type LineChartExtendedProps = Parameters<typeof LineChart>[0] & { yAxisSuffix?: string };
+const LineChartExtended = LineChart as ComponentType<LineChartExtendedProps>;
 
 const SCREEN_WIDTH = Dimensions.get('window').width - 40;
 const Y_AXIS_WIDTH = 44;
 
-export default function ExerciseStatsScreen({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, 'exerciseStats'>;
+
+export default function ExerciseStatsScreen({ navigation, route }: Props) {
   const {
     exerciseName,
     muscleGroup,
@@ -36,17 +45,13 @@ export default function ExerciseStatsScreen({ navigation, route }) {
   } = useExerciseStatsScreen(navigation, route);
 
   const isCardio = muscleGroup === 'Cardio';
-  // Fit all points exactly within the chart width (no minimum floor).
-  // initialSpacing=16 + endSpacing=8 are subtracted so the last point
-  // never overflows the container and gets clipped.
   const chartSpacing =
     chartPoints.length > 1
       ? Math.floor((SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8) / (chartPoints.length - 1))
       : SCREEN_WIDTH - Y_AXIS_WIDTH - 16;
 
-  const chartMinValue = chartPoints.length > 0
-    ? Math.min(...chartPoints.map((p) => p.value))
-    : 0;
+  const chartMinValue =
+    chartPoints.length > 0 ? Math.min(...chartPoints.map((p) => p.value)) : 0;
 
   return (
     <ScrollView
@@ -97,7 +102,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
               {lastPerformances.map((session, i) => {
                 const sessionTotal = session.sets.reduce(
                   (acc, s) => acc + (s.reps ?? 0) * (s.weight ?? 0),
-                  0
+                  0,
                 );
                 return (
                   <View key={i} style={{ width: SCREEN_WIDTH }}>
@@ -106,9 +111,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
                       <View style={styles.lastPerfSetsRow}>
                         {session.sets.map((set, k) => (
                           <View key={k} style={styles.lastPerfPill}>
-                            <Text style={styles.lastPerfPillLabel}>
-                              S{k + 1}
-                            </Text>
+                            <Text style={styles.lastPerfPillLabel}>S{k + 1}</Text>
                             {muscleGroup !== 'Cardio' ? (
                               <Text style={styles.lastPerfPillText}>
                                 {set.reps} reps · {set.weight} kg
@@ -123,9 +126,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
                       </View>
                       {muscleGroup !== 'Cardio' && sessionTotal > 0 && (
                         <View style={styles.lastPerfTotalRow}>
-                          <Text style={styles.lastPerfTotalLabel}>
-                            Volume total
-                          </Text>
+                          <Text style={styles.lastPerfTotalLabel}>Volume total</Text>
                           <Text style={styles.lastPerfTotalValue}>
                             {sessionTotal.toLocaleString('fr-FR')} kg
                           </Text>
@@ -173,8 +174,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
                       <Text
                         style={[
                           styles.dropdownItemText,
-                          selectedPeriod === period.key &&
-                            styles.dropdownItemTextActive,
+                          selectedPeriod === period.key && styles.dropdownItemTextActive,
                         ]}
                       >
                         {period.label}
@@ -270,7 +270,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
             </Text>
           ) : (
             <View style={styles.chartContainer}>
-              <LineChart
+              <LineChartExtended
                 key={selectedPeriod}
                 data={chartPoints}
                 areaChart
@@ -309,7 +309,7 @@ export default function ExerciseStatsScreen({ navigation, route }) {
                   pointerLabelHeight: 170,
                   activatePointersOnLongPress: false,
                   autoAdjustPointerLabelPosition: true,
-                  pointerLabelComponent: (items) => {
+                  pointerLabelComponent: (items: ChartDataPoint[]) => {
                     const item = items[0];
                     return (
                       <View style={styles.tooltip}>
