@@ -1,43 +1,43 @@
-import { StyleSheet } from "react-native";
-import { COLORS } from "../../../../constants/theme";
+import { StyleSheet } from 'react-native';
+import { COLORS } from '../../../../constants/theme';
 
 export const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   modalView: {
-    width: "85%",
+    width: '85%',
     backgroundColor: COLORS.modalBackground,
     borderRadius: 20,
     padding: 20,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.4,
     shadowRadius: 8,
     elevation: 8,
   },
   crossContainer: {
-    width: "100%",
-    alignItems: "flex-end",
+    width: '100%',
+    alignItems: 'flex-end',
     marginBottom: 12,
   },
   modalTitleContainer: {
-    width: "100%",
+    width: '100%',
     marginBottom: 12,
   },
   modalTitle: {
     fontSize: 20,
     color: COLORS.textPrimary,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   infoContainer: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "flex-start",
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     paddingHorizontal: 4,
     marginBottom: 20,
   },
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     lineHeight: 18,
   },
   inputsContainer: {
-    width: "100%",
+    width: '100%',
     gap: 4,
   },
   inputText: {
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     marginBottom: 6,
   },
   input: {
-    width: "100%",
+    width: '100%',
     height: 44,
     backgroundColor: COLORS.cardBackground,
     borderRadius: 10,
@@ -73,13 +73,13 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
   },
   restTimeContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 12,
   },
   restInput: {
-    width: "38%",
+    width: '38%',
     height: 44,
     backgroundColor: COLORS.cardBackground,
     borderRadius: 10,
@@ -90,22 +90,22 @@ export const styles = StyleSheet.create({
     fontSize: 15,
   },
   errorMessage: {
-    color: "#FF4500",
+    color: '#FF4500',
     fontSize: 13,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 12,
   },
   button: {
     backgroundColor: COLORS.primary,
     height: 44,
     borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 4,
   },
   buttonText: {
-    color: "black",
+    color: 'black',
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 });

@@ -1,17 +1,21 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import { Pressable, ScrollView, Text, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import ExerciseCard from "../../components/ExerciseCard";
-import Loader from "../../components/Loader";
-import Underline from "../../components/Underline";
-import { COLORS } from "../../constants/theme";
-import CustomSetsModal from "./modals/CustomSetsModal";
-import TitleModal from "./modals/TitleModal";
-import { styles } from "./StartWorkoutScreen.styles";
-import { useStartWorkout } from "./useStartWorkout";
+import { FontAwesome6 } from '@expo/vector-icons';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import ExerciseCard from '../../components/ExerciseCard';
+import Loader from '../../components/Loader';
+import Underline from '../../components/Underline';
+import { COLORS } from '../../constants/theme';
+import { RootStackParamList } from '../../models/navigation';
+import CustomSetsModal from './modals/CustomSetsModal';
+import TitleModal from './modals/TitleModal';
+import { styles } from './StartWorkoutScreen.styles';
+import { useStartWorkout } from './useStartWorkout';
 
-export default function StartWorkoutScreen({ navigation, route }) {
-  const { workoutID } = route.params || {};
+type Props = NativeStackScreenProps<RootStackParamList, 'startWorkout'>;
+
+export default function StartWorkoutScreen({ navigation, route }: Props) {
+  const { workoutID } = route.params;
 
   const {
     isEditable,
@@ -90,7 +94,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
 
         <View style={styles.workoutNameSection}>
           <FontAwesome6
-            name={workoutSelected.image || "dumbbell"}
+            name={workoutSelected.image || 'dumbbell'}
             size={18}
             color={COLORS.accent}
           />
@@ -108,10 +112,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
         </View>
 
         {isEditable ? (
-          <Pressable
-            style={styles.binContainer}
-            onPress={openAlertDeleteWorkout}
-          >
+          <Pressable style={styles.binContainer} onPress={openAlertDeleteWorkout}>
             <FontAwesome name="trash" size={16} color={COLORS.primary} />
           </Pressable>
         ) : (
@@ -128,7 +129,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
       <View style={styles.mainContainer}>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 150 }}
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           alwaysBounceHorizontal={false}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -164,7 +165,6 @@ export default function StartWorkoutScreen({ navigation, route }) {
       </View>
 
       <View style={styles.bottomContainer}>
-        {/* Retour */}
         <Pressable
           style={styles.sideBtn}
           onPress={handleGoToHome}
@@ -174,23 +174,19 @@ export default function StartWorkoutScreen({ navigation, route }) {
           <Text style={styles.sideBtnText}>Retour</Text>
         </Pressable>
 
-        {/* CTA central */}
         <Pressable
           style={[styles.ctaBtn, !isEditable && styles.ctaBtnEnd]}
           onPress={handlePressButton}
-          accessibilityLabel={isEditable ? "Commencer la séance" : "Terminer la séance"}
+          accessibilityLabel={isEditable ? 'Commencer la séance' : 'Terminer la séance'}
         >
           <FontAwesome6
-            name={isEditable ? "play" : "flag-checkered"}
+            name={isEditable ? 'play' : 'flag-checkered'}
             size={15}
             color={COLORS.background}
           />
-          <Text style={styles.ctaBtnText}>
-            {isEditable ? "Commencer" : "Terminer"}
-          </Text>
+          <Text style={styles.ctaBtnText}>{isEditable ? 'Commencer' : 'Terminer'}</Text>
         </Pressable>
 
-        {/* Ajouter un exercice */}
         <Pressable
           style={styles.sideBtn}
           onPress={handleAddExercise}
@@ -203,7 +199,7 @@ export default function StartWorkoutScreen({ navigation, route }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <Loader></Loader>
+          <Loader />
         </View>
       )}
     </View>

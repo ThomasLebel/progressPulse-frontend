@@ -6,11 +6,30 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Underline from "../../../../components/Underline";
-import { COLORS } from "../../../../constants/theme";
-import { styles } from "./CustomSetsModal.styles";
+} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Underline from '../../../../components/Underline';
+import { COLORS } from '../../../../constants/theme';
+import { styles } from './CustomSetsModal.styles';
+
+interface CustomSetsModalProps {
+  visible: boolean;
+  exerciseName: string;
+  muscleGroup: string;
+  charge: string;
+  onChangeCharge: (value: string) => void;
+  nbSets: string;
+  onChangeNbSets: (value: string) => void;
+  nbReps: string;
+  onChangeNbReps: (value: string) => void;
+  restMinutes: string;
+  onChangeRestMinutes: (value: string) => void;
+  restSeconds: string;
+  onChangeRestSeconds: (value: string) => void;
+  emptyFields: boolean;
+  onClose: () => void;
+  onUpdateExercise: () => void;
+}
 
 export default function CustomSetsModal({
   visible,
@@ -29,17 +48,17 @@ export default function CustomSetsModal({
   emptyFields,
   onClose,
   onUpdateExercise,
-}) {
+}: CustomSetsModalProps) {
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
       <KeyboardAvoidingView
         style={styles.modalBackground}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.modalView}>
           <View style={styles.crossContainer}>
             <FontAwesome
-              name={"times"}
+              name={'times'}
               size={24}
               color={COLORS.textSecondary}
               accessibilityLabel="Fermer la modale"
@@ -52,7 +71,7 @@ export default function CustomSetsModal({
           </View>
           <View style={styles.infoContainer}>
             <FontAwesome
-              name={"info-circle"}
+              name={'info-circle'}
               size={18}
               color={COLORS.primary}
               style={styles.infoIcon}
@@ -63,22 +82,18 @@ export default function CustomSetsModal({
           </View>
           <View style={styles.inputsContainer}>
             <Text style={styles.inputText}>
-              {muscleGroup === "Cardio"
-                ? "Résistance/Inclinaison"
-                : "Charge (Kg)"}
+              {muscleGroup === 'Cardio' ? 'Résistance/Inclinaison' : 'Charge (Kg)'}
             </Text>
             <TextInput
               style={styles.input}
               accessibilityLabel="Permet de modifier la charge ou l'inclinaison de l'exercice"
-              placeholder={
-                muscleGroup === "Cardio" ? "Résistance/Inclinaison" : "Charge"
-              }
+              placeholder={muscleGroup === 'Cardio' ? 'Résistance/Inclinaison' : 'Charge'}
               placeholderTextColor={COLORS.textSecondary}
               keyboardType="numeric"
               onChangeText={onChangeCharge}
               value={charge}
             />
-            {muscleGroup != "Cardio" && (
+            {muscleGroup != 'Cardio' && (
               <>
                 <Text style={styles.inputText}>Nombre de séries</Text>
                 <TextInput
@@ -114,7 +129,7 @@ export default function CustomSetsModal({
                 value={restMinutes}
               />
               <Text style={styles.inputText}>
-                {muscleGroup != "Cardio" ? "min" : "h"}
+                {muscleGroup != 'Cardio' ? 'min' : 'h'}
               </Text>
               <TextInput
                 style={styles.restInput}
@@ -126,14 +141,12 @@ export default function CustomSetsModal({
                 value={restSeconds}
               />
               <Text style={styles.inputText}>
-                {muscleGroup != "Cardio" ? "sec" : "min"}
+                {muscleGroup != 'Cardio' ? 'sec' : 'min'}
               </Text>
             </View>
           </View>
           {emptyFields && (
-            <Text style={styles.errorMessage}>
-              Veuillez remplir tous les champs
-            </Text>
+            <Text style={styles.errorMessage}>Veuillez remplir tous les champs</Text>
           )}
           <TouchableOpacity
             activeOpacity={0.8}

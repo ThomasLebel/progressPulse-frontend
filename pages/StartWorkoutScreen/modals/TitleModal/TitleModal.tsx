@@ -1,4 +1,4 @@
-import { FontAwesome6 } from "@expo/vector-icons";
+import { FontAwesome6 } from '@expo/vector-icons';
 import {
   KeyboardAvoidingView,
   Modal,
@@ -8,35 +8,51 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { COLORS } from "../../../../constants/theme";
-import { styles } from "./TitleModal.styles";
+} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { COLORS } from '../../../../constants/theme';
+import { styles } from './TitleModal.styles';
 
-const WORKOUT_ICONS = [
-  { name: "dumbbell" },
-  { name: "fire" },
-  { name: "bolt" },
-  { name: "rocket" },
-  { name: "bomb" },
-  { name: "heart" },
-  { name: "heart-circle-bolt" },
-  { name: "explosion" },
-  { name: "weight-hanging" },
-  { name: "trophy" },
-  { name: "medal" },
-  { name: "crown" },
-  { name: "star" },
-  { name: "shield" },
-  { name: "stopwatch" },
-  { name: "hand-fist" },
-  { name: "crosshairs" },
-  { name: "bolt-lightning" },
-  { name: "brain" },
-  { name: "gem" },
-  { name: "flask" },
-  { name: "skull" },
+interface WorkoutIcon {
+  name: string;
+}
+
+const WORKOUT_ICONS: WorkoutIcon[] = [
+  { name: 'dumbbell' },
+  { name: 'fire' },
+  { name: 'bolt' },
+  { name: 'rocket' },
+  { name: 'bomb' },
+  { name: 'heart' },
+  { name: 'heart-circle-bolt' },
+  { name: 'explosion' },
+  { name: 'weight-hanging' },
+  { name: 'trophy' },
+  { name: 'medal' },
+  { name: 'crown' },
+  { name: 'star' },
+  { name: 'shield' },
+  { name: 'stopwatch' },
+  { name: 'hand-fist' },
+  { name: 'crosshairs' },
+  { name: 'bolt-lightning' },
+  { name: 'brain' },
+  { name: 'gem' },
+  { name: 'flask' },
+  { name: 'skull' },
 ];
+
+interface TitleModalProps {
+  visible: boolean;
+  onClose: () => void;
+  workoutNameInput: string;
+  onChangeWorkoutName: (value: string) => void;
+  selectedIcon: string;
+  onSelectIcon: (iconName: string) => void;
+  emptyFields: boolean;
+  iconError: boolean;
+  onChangeName: () => void;
+}
 
 export default function TitleModal({
   visible,
@@ -48,7 +64,7 @@ export default function TitleModal({
   emptyFields,
   iconError,
   onChangeName,
-}) {
+}: TitleModalProps) {
   return (
     <Modal
       animationType="fade"
@@ -58,12 +74,12 @@ export default function TitleModal({
     >
       <KeyboardAvoidingView
         style={styles.modalBackground}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <View style={styles.modalTitleView}>
           <View style={styles.crossContainer}>
             <FontAwesome
-              name={"times"}
+              name={'times'}
               size={24}
               color={COLORS.textSecondary}
               onPress={onClose}
@@ -71,7 +87,7 @@ export default function TitleModal({
           </View>
           <View style={styles.infoContainer}>
             <FontAwesome
-              name={"info-circle"}
+              name={'info-circle'}
               size={18}
               color={COLORS.primary}
               style={styles.infoIcon}
@@ -90,9 +106,7 @@ export default function TitleModal({
           </View>
 
           <View style={styles.iconPickerSection}>
-            <Text style={styles.iconPickerTitle}>
-              Choisis un logo pour ta séance
-            </Text>
+            <Text style={styles.iconPickerTitle}>Choisis un logo pour ta séance</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -103,10 +117,7 @@ export default function TitleModal({
                 return (
                   <TouchableOpacity
                     key={icon.name}
-                    style={[
-                      styles.iconItem,
-                      isSelected && styles.iconItemSelected,
-                    ]}
+                    style={[styles.iconItem, isSelected && styles.iconItemSelected]}
                     onPress={() => onSelectIcon(icon.name)}
                     activeOpacity={0.7}
                   >
