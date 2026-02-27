@@ -3,6 +3,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HystoryWorkouts from "../../components/HystoryWorkout";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../models/navigation";
 import { styles } from "./HistoryWorkoutsScreen.styles";
 import {
   buildStarArray,
@@ -11,7 +13,9 @@ import {
 } from "./historyWorkoutsScreen.service";
 import { useHistoryWorkoutsScreen } from "./useHistoryWorkoutsScreen";
 
-export default function HistoryWorkoutsScreen({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, "historyWorkout">;
+
+export default function HistoryWorkoutsScreen({ navigation, route }: Props) {
   const { workoutName, sortedWorkouts, navigateBack } =
     useHistoryWorkoutsScreen(navigation, route);
 
@@ -29,6 +33,7 @@ export default function HistoryWorkoutsScreen({ navigation, route }) {
     ));
 
     const groupedWorkouts = element.performances.map((performance, j) => {
+      if (typeof performance.exercise === "string") return null;
       const muscleGroupe = performance.exercise.muscleGroupe;
       const name = performance.exercise.name;
       return (

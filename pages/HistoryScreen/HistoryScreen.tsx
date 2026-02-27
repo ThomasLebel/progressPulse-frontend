@@ -2,10 +2,14 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../models/navigation";
 import { styles } from "./HistoryScreen.styles";
 import { useHistoryScreen } from "./useHistoryScreen";
 
-export default function HistoryScreen({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "history">;
+
+export default function HistoryScreen({ navigation }: Props) {
   const { history, uniqueWorkoutNames, navigateToStats, navigateToWorkout } =
     useHistoryScreen(navigation);
 
