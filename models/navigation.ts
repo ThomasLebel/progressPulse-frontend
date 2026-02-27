@@ -19,7 +19,7 @@ export type RootStackParamList = {
   workoutChoice: { name: string };
   workoutSummary: { backTo: string; name?: string; categorie?: Record<string, unknown> };
   muscleGroup: { isWorkoutAlreadyCreated?: boolean; workoutID?: string } | undefined;
-  exercicesChoices: undefined;
+  exercicesChoices: { name: string; isWorkoutAlreadyCreated?: boolean; workoutID?: string | null };
   startWorkout: { workoutID: string };
   exercice: { exerciseID: string; workoutID: string };
   timer: { exerciseID: string; workoutID: string };

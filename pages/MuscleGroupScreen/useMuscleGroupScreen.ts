@@ -1,13 +1,27 @@
 import { useSelector } from "react-redux";
-import { getExercisesLength, getFinishButtonLabel, getFinishButtonWidth } from "./muscleGroup.service";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../models/navigation";
+import { RootState } from "../../reducers/store.types";
+import {
+  getExercisesLength,
+  getFinishButtonLabel,
+  getFinishButtonWidth,
+} from "./muscleGroup.service";
 
-export function useMuscleGroupScreen(navigation, route) {
+type MuscleGroupNavProp = NativeStackNavigationProp<RootStackParamList, "muscleGroup">;
+type MuscleGroupRouteProp = RouteProp<RootStackParamList, "muscleGroup">;
+
+export function useMuscleGroupScreen(
+  navigation: MuscleGroupNavProp,
+  route: MuscleGroupRouteProp
+) {
   const { isWorkoutAlreadyCreated = false, workoutID = null } = route.params || {};
 
   const workoutCreationLength = useSelector(
-    (state) => state.workoutCreation.value.exercises.length
+    (state: RootState) => state.workoutCreation.value.exercises.length
   );
-  const workouts = useSelector((state) => state.workouts.value);
+  const workouts = useSelector((state: RootState) => state.workouts.value);
 
   const exercisesLength = getExercisesLength(
     isWorkoutAlreadyCreated,
@@ -23,11 +37,11 @@ export function useMuscleGroupScreen(navigation, route) {
     if (!isWorkoutAlreadyCreated) {
       navigation.navigate("workoutSummary", { backTo: "muscleGroup" });
     } else {
-      navigation.navigate("startWorkout", { workoutID });
+      navigation.navigate("startWorkout", { workoutID: workoutID! });
     }
   };
 
-  const handleNavigateToExercice = (name) => {
+  const handleNavigateToExercice = (name: string) => {
     navigation.navigate("exercicesChoices", { name, isWorkoutAlreadyCreated, workoutID });
   };
 

@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     color: "white",
-    fontWeight: 600,
+    fontWeight: "600",
   },
   btnContainer: {
     flex: 4,

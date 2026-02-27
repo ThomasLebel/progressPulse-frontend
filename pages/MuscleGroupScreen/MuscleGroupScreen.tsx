@@ -1,14 +1,18 @@
 import { FlatList, Pressable, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import BtnMuscleGroup from "../../components/BtnMuscleGroup";
 import Button from "../../components/Button";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
 import muscleGroupIcons from "../../utils/muscleGroupIcons";
+import { RootStackParamList } from "../../models/navigation";
 import { styles } from "./MuscleGroupScreen.styles";
 import { useMuscleGroupScreen } from "./useMuscleGroupScreen";
 
-export default function MuscleGroupScreen({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, "muscleGroup">;
+
+export default function MuscleGroupScreen({ navigation, route }: Props) {
   const {
     isWorkoutAlreadyCreated,
     exercisesLength,
