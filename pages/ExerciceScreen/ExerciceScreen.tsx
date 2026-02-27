@@ -1,6 +1,6 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome6 } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   Platform,
   Pressable,
@@ -9,13 +9,18 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { COLORS } from "../../constants/theme";
-import { styles } from "./ExerciceScreen.styles";
-import InstructionsModal from "./modals/InstructionsModal";
-import { useExercice } from "./useExercice";
+} from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { COLORS } from '../../constants/theme';
+import { RootStackParamList } from '../../models/navigation';
+import { styles } from './ExerciceScreen.styles';
+import InstructionsModal from './modals/InstructionsModal';
+import { useExercice } from './useExercice';
+import { Performance } from '../../shared/types';
 
-export default function ExerciceScreen({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, 'exercice'>;
+
+export default function ExerciceScreen({ navigation, route }: Props) {
   const {
     exerciseSelected,
     muscleGroup,
@@ -37,7 +42,7 @@ export default function ExerciceScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
+      {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
       <InstructionsModal
         visible={modalVisible}
         onClose={closeModal}
@@ -49,7 +54,7 @@ export default function ExerciceScreen({ navigation, route }) {
       <View style={styles.imageWrapper}>
         <Image style={styles.image} source={imagePath} contentFit="contain" />
         <LinearGradient
-          colors={["transparent", "#2A1B5A"]}
+          colors={['transparent', '#2A1B5A']}
           style={styles.imageGradient}
         />
       </View>
@@ -92,7 +97,8 @@ export default function ExerciceScreen({ navigation, route }) {
               {sortedCurrentWorkoutHistory.map((history, i) => {
                 const fullDate = formatHistoryDate(history.date);
                 return history.performances
-                  .map((performance, j) => {
+                  .map((performance: Performance, j: number) => {
+                    if (typeof performance.exercise === 'string') return null;
                     if (performance.exercise._id !== exerciseID) return null;
                     return (
                       <View
@@ -107,17 +113,16 @@ export default function ExerciceScreen({ navigation, route }) {
                             );
                             return (
                               <View key={k} style={styles.perfCard}>
-                                <View style={styles.perfAccentBar} />
                                 <Text style={styles.perfSerieLabel}>
                                   S{k + 1}
                                 </Text>
-                                {muscleGroup !== "Cardio" ? (
+                                {muscleGroup !== 'Cardio' ? (
                                   <Text style={styles.perfText}>
                                     {set.reps} reps · {set.weight} kg
                                   </Text>
                                 ) : (
                                   <Text style={styles.perfText}>
-                                    {set.rest / 60} min · Résistance{" "}
+                                    {set.rest / 60} min · Résistance{' '}
                                     {set.weight}
                                   </Text>
                                 )}
@@ -150,7 +155,7 @@ export default function ExerciceScreen({ navigation, route }) {
           </View>
 
           {/* Goal cards */}
-          {muscleGroup !== "Cardio" && (
+          {muscleGroup !== 'Cardio' && (
             <View style={styles.goalCard}>
               <Text style={styles.goalText}>
                 Répétitions : {exerciseSelected.customSets[0].reps}
@@ -160,16 +165,16 @@ export default function ExerciceScreen({ navigation, route }) {
 
           <View style={styles.goalCard}>
             <Text style={styles.goalText}>
-              {muscleGroup !== "Cardio" ? "Charge" : "Résistance / Inclinaison"}{" "}
+              {muscleGroup !== 'Cardio' ? 'Charge' : 'Résistance / Inclinaison'}{' '}
               : {exerciseSelected.customSets[0].weight}
-              {muscleGroup !== "Cardio" && " kg"}
+              {muscleGroup !== 'Cardio' && ' kg'}
             </Text>
           </View>
 
-          {muscleGroup === "Cardio" && (
+          {muscleGroup === 'Cardio' && (
             <View style={styles.goalCard}>
               <Text style={styles.goalText}>
-                Durée : {formatCardioDuration(exerciseSelected.rest).hours} h{" "}
+                Durée : {formatCardioDuration(exerciseSelected.rest).hours} h{' '}
                 {formatCardioDuration(exerciseSelected.rest).minutes} min
               </Text>
             </View>
@@ -198,12 +203,12 @@ export default function ExerciceScreen({ navigation, route }) {
           accessibilityLabel="Valider la série et démarrer le repos"
         >
           <FontAwesome6
-            name={muscleGroup !== "Cardio" ? "check" : "play"}
+            name={muscleGroup !== 'Cardio' ? 'check' : 'play'}
             size={15}
             color={COLORS.background}
           />
           <Text style={styles.validateBtnText}>
-            {muscleGroup !== "Cardio"
+            {muscleGroup !== 'Cardio'
               ? `Valider · S${currentSet}`
               : `Démarrer · S${currentSet}`}
           </Text>

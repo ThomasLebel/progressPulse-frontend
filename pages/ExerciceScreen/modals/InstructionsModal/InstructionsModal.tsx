@@ -4,25 +4,32 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Underline from "../../../../components/Underline";
-import { COLORS } from "../../../../constants/theme";
-import { styles } from "./InstructionsModal.styles";
+} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Underline from '../../../../components/Underline';
+import { COLORS } from '../../../../constants/theme';
+import { styles } from './InstructionsModal.styles';
+
+interface InstructionsModalProps {
+  visible: boolean;
+  onClose: () => void;
+  exerciseName: string;
+  descriptionSentences: string[];
+}
 
 export default function InstructionsModal({
   visible,
   onClose,
   exerciseName,
   descriptionSentences,
-}) {
+}: InstructionsModalProps) {
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
           <View style={styles.crossContainer}>
             <FontAwesome
-              name={"times"}
+              name={'times'}
               size={24}
               color={COLORS.textSecondary}
               onPress={onClose}
