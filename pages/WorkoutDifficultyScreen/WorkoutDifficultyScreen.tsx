@@ -1,12 +1,16 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
+import { RootStackParamList } from "../../models/navigation";
 import { useWorkoutDifficultyScreen } from "./useWorkoutDifficultyScreen";
 import { styles } from "./WorkoutDifficultyScreen.styles";
 
-export default function WorkoutDifficultyScreen({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "WorkoutDifficulty">;
+
+export default function WorkoutDifficultyScreen({ navigation }: Props) {
   const { difficultyOptions, handleNavigateToWorkout, handleGoBack } =
     useWorkoutDifficultyScreen(navigation);
 

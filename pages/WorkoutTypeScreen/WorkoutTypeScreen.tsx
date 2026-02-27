@@ -1,11 +1,15 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { COLORS } from "../../constants/theme";
+import { RootStackParamList } from "../../models/navigation";
 import { useWorkoutTypeScreen } from "./useWorkoutTypeScreen";
 import { styles } from "./WorkoutTypeScreen.styles";
 
-export default function WorkoutTypeScreen({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "WorkoutType">;
+
+export default function WorkoutTypeScreen({ navigation }: Props) {
   const { handleGoHome, handleGoToPersonalized, handleGoToPredefined } =
     useWorkoutTypeScreen(navigation);
 

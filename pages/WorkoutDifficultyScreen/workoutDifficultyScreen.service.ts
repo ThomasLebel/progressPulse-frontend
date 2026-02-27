@@ -1,8 +1,11 @@
-/**
- * Retourne la liste des niveaux de difficulté disponibles avec leur nom, icône et identifiant.
- * @returns {{ name: string, icon: string, subText: string, id: number }[]}
- */
-export function getDifficultyOptions() {
+export type DifficultyOption = {
+  name: string;
+  icon: string;
+  subText: string;
+  id: number;
+};
+
+export function getDifficultyOptions(): DifficultyOption[] {
   return [
     {
       name: "Débutant",

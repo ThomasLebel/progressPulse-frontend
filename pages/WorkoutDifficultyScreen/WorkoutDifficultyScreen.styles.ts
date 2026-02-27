@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
   btn: {
     borderRadius: 16,
     overflow: "hidden",
-    flexDirection: "center",
+    flexDirection: "row",
     alignItems: "center",
   },
   card: {

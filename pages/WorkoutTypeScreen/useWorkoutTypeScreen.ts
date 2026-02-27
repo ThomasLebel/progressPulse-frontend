@@ -1,11 +1,15 @@
 import { useDispatch } from "react-redux";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { resetWorkoutCreation } from "../../reducers/workoutCreation";
+import { RootStackParamList } from "../../models/navigation";
 
-export function useWorkoutTypeScreen(navigation) {
+type Navigation = NativeStackNavigationProp<RootStackParamList, "WorkoutType">;
+
+export function useWorkoutTypeScreen(navigation: Navigation) {
   const dispatch = useDispatch();
 
   const handleGoHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("TabNavigator", { screen: "Home" });
   };
 
   const handleGoToPersonalized = () => {
