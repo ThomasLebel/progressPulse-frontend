@@ -1,0 +1,7 @@
+/**
+ * Vérifie que l'adresse email respecte le format attendu.
+ */
+export function validateEmail(email: string): boolean {
+  const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return regex.test(email);
+}

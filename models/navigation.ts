@@ -24,10 +24,10 @@ export type RootStackParamList = {
   exercice: { exerciseID: string; workoutID: string };
   timer: { exerciseID: string; workoutID: string };
   workoutEnding: { workoutID: string };
-  historyWorkout: undefined;
+  historyWorkout: { workoutName: string };
   history: undefined;
   exerciseStats: { exerciseName: string };
-  allExercises: undefined;
-  allWorkouts: undefined;
+  allExercises: { exercises: { name: string; muscleGroupe: string; count: number }[] };
+  allWorkouts: { workouts: { name: string; count: number }[] };
   exercisesByMuscle: undefined;
 };
