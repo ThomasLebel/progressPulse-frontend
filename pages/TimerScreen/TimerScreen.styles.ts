@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 30,
     marginRight: 20,
-    flexDirection: "collumn",
+    flexDirection: "column",
     gap: 10,
   },
 

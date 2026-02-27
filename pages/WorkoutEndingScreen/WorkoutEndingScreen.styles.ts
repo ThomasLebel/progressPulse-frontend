@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color: "white",
-    fontWeight: 600,
+    fontWeight: "600",
   },
 
   note: {

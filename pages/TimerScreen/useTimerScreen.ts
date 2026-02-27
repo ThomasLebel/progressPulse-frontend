@@ -1,7 +1,11 @@
 import { Audio } from "expo-av";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
 import { addExerciseSet } from "../../reducers/currentWorkout";
+import { RootState } from "../../reducers/store.types";
+import { RootStackParamList } from "../../models/navigation";
 import sounds from "../../utils/sounds";
 import {
   buildSetPayload,
@@ -10,19 +14,25 @@ import {
   formatSecondTime,
 } from "./timerScreen.service";
 
-export function useTimerScreen(navigation, route) {
-  const { workoutID, exerciseID } = route.params || {};
-  const [currentSound, setCurrentSound] = useState(null);
+type TimerNavProp = NativeStackNavigationProp<RootStackParamList, "timer">;
+type TimerRouteProp = RouteProp<RootStackParamList, "timer">;
+
+export function useTimerScreen(
+  navigation: TimerNavProp,
+  route: TimerRouteProp
+) {
+  const { workoutID, exerciseID } = route.params;
+  const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value);
+  const user = useSelector((state: RootState) => state.user.value);
 
   async function playSound() {
     if (currentSound) {
       await currentSound.stopAsync();
       await currentSound.unloadAsync();
     }
-    const { sound } = await Audio.Sound.createAsync(sounds[user.sound]);
+    const { sound } = await Audio.Sound.createAsync(sounds[user.sound as keyof typeof sounds]);
     setCurrentSound(sound);
     await sound.playAsync();
   }
@@ -40,47 +50,36 @@ export function useTimerScreen(navigation, route) {
   const [input, setInput] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
 
-  // Récupération des données de la séance en cours
-  const currentWorkout = useSelector((state) => state.currentWorkout.value);
-  // Récupération de l'exercice en cours
+  const currentWorkout = useSelector((state: RootState) => state.currentWorkout.value);
   const currentExercise = currentWorkout.performances.find(
-    (e) => e.exercise === exerciseID,
+    (e) => e.exercise === exerciseID
   );
 
-  // Récupération de la séance en cours
-  const workouts = useSelector((state) => state.workouts.value);
+  const workouts = useSelector((state: RootState) => state.workouts.value);
   const workoutSelected = workouts.find((workout) => workout._id === workoutID);
-  // Récupération de l'exercice sélectionné dans la séance
-  const exerciseSelected = workoutSelected.exercises.find(
-    (exercise) => exercise.exercise._id === exerciseID,
+  const exerciseSelected = workoutSelected!.exercises.find(
+    (exercise) => exercise.exercise._id === exerciseID
   );
-  // Stockage du nom du groupe musculaire de l'exercice sélectionné
-  const muscleGroup = exerciseSelected.exercise.muscleGroupe;
-  // Récupération du nombre de série à faire
-  const nbSets = exerciseSelected.customSets.length;
-  // Récupération du temps de repos de l'exercice
-  const restTime = exerciseSelected.rest;
+  const muscleGroup = exerciseSelected!.exercise.muscleGroupe;
+  const nbSets = exerciseSelected!.customSets.length;
+  const restTime = exerciseSelected!.rest;
 
-  const { minutes: restMinutes, seconds: restSeconds } =
-    convertRestTime(restTime);
+  const { minutes: restMinutes, seconds: restSeconds } = convertRestTime(restTime);
 
   const [minutes, setMinutes] = useState(restMinutes);
   const [secondes, setSecondes] = useState(restSeconds);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isTimerVisible, setIsTimerVisible] = useState(false);
 
-  // Converti les minutes et les secondes formaté en nombre de secondes
-  const time = minutes * 60 + parseFloat(secondes);
+  const time = parseInt(minutes) * 60 + parseFloat(secondes);
 
-  // Permet de lancer et de rendre visible le minuteur
   const timerClick = () => {
     setIsPlaying(true);
     setIsTimerVisible(true);
   };
 
-  // Vérifie si les input sont bien remplis et sauvegarde les données rentrées
   const addSet = () => {
-    if (muscleGroup != "Cardio") {
+    if (muscleGroup !== "Cardio") {
       if (!reps || !weight) {
         setEmptyFields(true);
         setInput(false);
@@ -99,13 +98,11 @@ export function useTimerScreen(navigation, route) {
     }
   };
 
-  // Je passe un argument à la fonction qui me sert de condition pour savoir où la fonction a été apellé.
-  // Parce qu' elle est utilisée 2 fois dans le code. Je veux que le son se joue à la fin du timer et non pas lors de la navigation
-  const validateSet = (endTimer) => {
+  const validateSet = (endTimer?: string) => {
     if (endTimer === "onComplete") {
       playSound();
     }
-    if (muscleGroup != "Cardio") {
+    if (muscleGroup !== "Cardio") {
       if (input) {
         const setToAdd = buildSetPayload({
           exerciseID,
@@ -117,23 +114,17 @@ export function useTimerScreen(navigation, route) {
         dispatch(addExerciseSet(setToAdd));
         if (currentExercise) {
           if (currentExercise.sets.length + 1 < nbSets) {
-            navigation.navigate("exercice", {
-              exerciseID: exerciseID,
-              workoutID: workoutID,
-            });
+            navigation.navigate("exercice", { exerciseID, workoutID });
           } else {
-            navigation.navigate("startWorkout", { workoutID: workoutID });
+            navigation.navigate("startWorkout", { workoutID });
             stopSound();
           }
         } else {
           if (nbSets === 1) {
-            navigation.navigate("startWorkout", { workoutID: workoutID });
+            navigation.navigate("startWorkout", { workoutID });
             stopSound();
           } else {
-            navigation.navigate("exercice", {
-              exerciseID: exerciseID,
-              workoutID: workoutID,
-            });
+            navigation.navigate("exercice", { exerciseID, workoutID });
             stopSound();
           }
         }
@@ -151,7 +142,7 @@ export function useTimerScreen(navigation, route) {
           secondes,
         });
         dispatch(addExerciseSet(setToAdd));
-        navigation.navigate("startWorkout", { workoutID: workoutID });
+        navigation.navigate("startWorkout", { workoutID });
       } else {
         setEmptyFields(true);
       }
@@ -166,9 +157,11 @@ export function useTimerScreen(navigation, route) {
 
   const handleOpenPicker = () => setShowPicker(true);
   const handleCancelPicker = () => setShowPicker(false);
-  const handleConfirmPicker = (pickedDuration) => {
-    setMinutes(formatMinuteTime(pickedDuration));
-    setSecondes(formatSecondTime(pickedDuration));
+  const handleConfirmPicker = (pickedDuration: { minutes?: number; seconds?: number }) => {
+    const m = formatMinuteTime(pickedDuration);
+    const s = formatSecondTime(pickedDuration);
+    if (m !== undefined) setMinutes(m);
+    if (s !== undefined) setSecondes(s);
     setShowPicker(false);
   };
 

@@ -9,14 +9,18 @@ import {
 } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Button from "../../components/Button";
 import Loader from "../../components/Loader";
 import Underline from "../../components/Underline";
 import { COLORS } from "../../constants/theme";
+import { RootStackParamList } from "../../models/navigation";
 import { useWorkoutEndingScreen } from "./useWorkoutEndingScreen";
 import { styles } from "./WorkoutEndingScreen.styles";
 
-export default function WorkoutEndingScreen({ navigation, route }) {
+type Props = NativeStackScreenProps<RootStackParamList, "workoutEnding">;
+
+export default function WorkoutEndingScreen({ navigation, route }: Props) {
   const {
     personnalNote,
     setPersonnalNote,
@@ -94,7 +98,7 @@ export default function WorkoutEndingScreen({ navigation, route }) {
         </View>
         {isLoading && (
           <View style={styles.backgroundLoading}>
-            <Loader></Loader>
+            <Loader />
           </View>
         )}
         <ConfettiCannon
