@@ -32,7 +32,11 @@ export function useAllExercisesScreen(
   const title: string = route.params?.title ?? 'Tous les exercices';
 
   const filteredHistory = filterHistoryByPeriod(history, selectedPeriod);
-  const exercises: ExerciseItem[] = getMostFrequentExercises(filteredHistory);
+  const allExercises: ExerciseItem[] = getMostFrequentExercises(filteredHistory);
+  const muscleGroup = route.params?.muscleGroup;
+  const exercises: ExerciseItem[] = muscleGroup
+    ? allExercises.filter((e) => e.muscleGroupe?.toLowerCase() === muscleGroup.toLowerCase())
+    : allExercises;
   const maxCount = exercises.length > 0 ? exercises[0].count : 0;
 
   function handlePress(item: ExerciseItem) {
