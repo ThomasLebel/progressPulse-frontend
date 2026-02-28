@@ -1,4 +1,4 @@
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { DimensionValue, FlatList, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { COLORS } from "../../constants/theme";
@@ -63,9 +63,9 @@ export default function AllExercisesScreen({ navigation, route }: Props) {
               style={[
                 styles.barFill,
                 {
-                  width: barWidth,
+                  width: barWidth as DimensionValue,
                   backgroundColor: isPodium ? rankColor : COLORS.primary,
-                } as any,
+                },
               ]}
             />
           </View>

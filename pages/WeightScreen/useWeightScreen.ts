@@ -90,10 +90,10 @@ export function useWeightScreen(navigation: NativeStackNavigationProp<RootStackP
     }
     setIsLoading(true);
     closeModalWeight();
-    const data: AddWeightResponse = await apiAddWeight(
+    const data: AddWeightResponse | null = await apiAddWeight(
       weight,
-      user.token,
-    ).catch((err) => {
+      user.token ?? '',
+    ).catch((err: unknown): null => {
       console.error("addWeight fetch error:", err);
       return null;
     });
@@ -110,7 +110,7 @@ export function useWeightScreen(navigation: NativeStackNavigationProp<RootStackP
       setIsLoading(false);
       setModalVisibleWeight(true);
     } else {
-      dispatch(addWeight(data.newWeight));
+      dispatch(addWeight(data.newWeight!));
       setIsLoading(false);
     }
   };
@@ -129,11 +129,11 @@ export function useWeightScreen(navigation: NativeStackNavigationProp<RootStackP
     closeModalTarget();
     const data = await apiWeightTarget(
       weightTarget,
-      user.token,
+      user.token ?? '',
       date,
       objectif,
       initialWeightInput,
-    ).catch((err) => {
+    ).catch((err: unknown): null => {
       console.error("weightTarget fetch error:", err);
       return null;
     });
@@ -146,7 +146,7 @@ export function useWeightScreen(navigation: NativeStackNavigationProp<RootStackP
     }
     if (data.result === true) {
       const now = new Date().toISOString();
-      dispatch(updateTarget({ ...data.weightTarget, startDate: now }));
+      dispatch(updateTarget({ ...data.weightTarget!, startDate: now }));
       dispatch(
         addWeight({
           weight: parseFloat(

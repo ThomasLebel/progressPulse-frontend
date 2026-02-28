@@ -20,7 +20,7 @@ export function useSongScreen(navigation: SongNavigationProp) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setSoundChoice(user.sound);
+    setSoundChoice(user.sound ?? '');
   }, []);
 
   const stopSound = async () => {
@@ -53,7 +53,7 @@ export function useSongScreen(navigation: SongNavigationProp) {
       navigation.navigate("TabNavigator", { screen: "Settings" });
       setIsLoading(false);
     } else {
-      dispatch(changeSound(data.soundUpdated));
+      dispatch(changeSound(data.soundUpdated!));
       setSoundChoice("");
       navigation.navigate("TabNavigator", { screen: "Settings" });
       setIsLoading(false);

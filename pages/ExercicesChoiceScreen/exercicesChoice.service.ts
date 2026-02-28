@@ -1,6 +1,7 @@
 import { Exercise } from "../../shared/types";
 import { CustomSet } from "../../shared/types";
 import { WorkoutExerciseCreation } from "../../reducers/workoutCreation/workoutCreation.types";
+import { ExerciseImageMap } from "../../utils/images";
 
 export function sortExercisesByName(exercisesList: Exercise[]): Exercise[] {
   return [...exercisesList].sort((a, b) => a.name.localeCompare(b.name));
@@ -8,8 +9,8 @@ export function sortExercisesByName(exercisesList: Exercise[]): Exercise[] {
 
 export function getExerciseImagePath(
   exercise: Exercise,
-  images: Record<string, Record<string, any>>
-): any {
+  images: ExerciseImageMap
+): number | undefined {
   const muscleGroup = exercise.muscleGroupe.toLowerCase();
   return images[muscleGroup]?.[exercise.image ?? ""];
 }
@@ -41,7 +42,7 @@ export function buildStrengthExercise(
   nbReps: string,
   restMinutes: string,
   restSeconds: string,
-  imagePath: any
+  imagePath: number | undefined
 ): WorkoutExerciseCreation {
   const customSets: CustomSet[] = [];
   for (let i = 0; i < parseInt(nbSets); i++) {
@@ -79,6 +80,6 @@ export function buildCardioExercise(
     muscleGroup: muscleGroupName,
     rest,
     customSets,
-    imagePath: "",
+    imagePath: undefined,
   };
 }

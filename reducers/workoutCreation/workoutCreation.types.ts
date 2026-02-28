@@ -6,7 +6,7 @@ export interface WorkoutExerciseCreation {
   muscleGroup: string;
   rest: number;
   customSets: CustomSet[];
-  imagePath: string;
+  imagePath: number | undefined;
 }
 
 export interface WorkoutCreationState {

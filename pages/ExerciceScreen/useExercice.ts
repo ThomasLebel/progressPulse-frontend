@@ -34,7 +34,7 @@ export function useExercice(
     (exercise: WorkoutExercise) => exercise.exercise._id === exerciseID,
   )!;
   const muscleGroup = exerciseSelected.exercise.muscleGroupe;
-  const imagePath = findExerciseImage(exerciseSelected.exercise, images as Record<string, Record<string, unknown>>);
+  const imagePath = findExerciseImage(exerciseSelected.exercise, images);
   const descriptionSentences = splitDescriptionIntoSentences(
     exerciseSelected.exercise.description ?? '',
   );

@@ -1,4 +1,4 @@
-import images from "../../utils/images";
+import images, { ExerciseImageMap } from "../../utils/images";
 import { WorkoutExerciseCreation } from "../../reducers/workoutCreation/workoutCreation.types";
 import { WorkoutExerciseDataAPI } from "./workoutChoice.api";
 
@@ -31,15 +31,15 @@ export function findWorkoutImage(imageName: string, imageList: ImageWorkout[]): 
 }
 
 export function buildExercisesToAdd(exercicesData: WorkoutExerciseDataAPI[]): WorkoutExerciseCreation[] {
-  const imagesMap = images as Record<string, Record<string, unknown>>;
+  const imagesMap = images as ExerciseImageMap;
   return exercicesData.map((exercise) => {
     const customSets = exercise.sets.map((set) => ({
       weight: set.weight,
       reps: set.rep,
     }));
-    const imagePath = imagesMap[exercise.exercice.muscleGroupe.toLowerCase()][
+    const imagePath = imagesMap[exercise.exercice.muscleGroupe.toLowerCase()]?.[
       exercise.exercice.image
-    ] as string;
+    ];
     return {
       exercise: exercise.exercice._id,
       exerciseName: exercise.exercice.name,

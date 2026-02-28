@@ -124,9 +124,9 @@ export default function TimerScreen({ navigation, route }: Props) {
                 <CountdownCircleTimer
                   isPlaying={isPlaying}
                   duration={time}
-                  colors={[COLORS.primary as any, "#E57373", "#EF5350", "#C62828"]}
+                  colors={[COLORS.primary as `#${string}`, "#E57373", "#EF5350", "#C62828"]}
                   colorsTime={[5, 3, 2, 1]}
-                  trailColor={COLORS.cardBackground as any}
+                  trailColor={COLORS.cardBackground as `#${string}`}
                   onComplete={handleTimerComplete}
                   updateInterval={1}
                   strokeWidth={5}

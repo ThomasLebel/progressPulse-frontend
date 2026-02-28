@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootState } from '../../reducers/store.types';
 import { login } from '../../reducers/user';
 import { addAllUserWorkouts } from '../../reducers/workouts';
 import { addAllWorkoutsHistory } from '../../reducers/workoutsHistory';
@@ -12,7 +13,7 @@ type SigninNavigation = NativeStackNavigationProp<RootStackParamList, 'Signin'>;
 
 export function useSigninScreen(navigation: SigninNavigation) {
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.user.value);
+  const user = useSelector((state: RootState) => state.user.value);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,7 +58,7 @@ export function useSigninScreen(navigation: SigninNavigation) {
     }
 
     const historiesData = await fetchUserHistory(userToken);
-    dispatch(addAllWorkoutsHistory(historiesData.histories));
+    dispatch(addAllWorkoutsHistory(historiesData.histories ?? []));
 
     navigation.navigate('TabNavigator', { screen: 'Home' });
     setIsLoading(false);

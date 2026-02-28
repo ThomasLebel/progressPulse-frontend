@@ -1,15 +1,12 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    // Permissive — migration progressive JS → TS
+    // Strict checks activés
     "strict": false,
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "strictFunctionTypes": false,
-    "strictBindCallApply": false,
-    "strictPropertyInitialization": false,
-    "noImplicitThis": false,
-    "alwaysStrict": false,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
 
     // Autoriser les fichiers JS sans les vérifier
     "allowJs": true,

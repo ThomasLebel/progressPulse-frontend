@@ -3,7 +3,7 @@ import { COLORS } from "../constants/theme";
 
 interface BtnMuscleGroupProps {
   name: string;
-  source: unknown;
+  source: number;
   onPress: (name: string) => void;
   accessibilityLabel?: string;
   accessibilityHint?: string;
@@ -26,7 +26,7 @@ const BtnMuscleGroup = ({
     >
       <View style={styles.card}>
         <Text style={styles.btnText}>{name}</Text>
-        <Image source={source as any} style={styles.image} />
+        <Image source={source} style={styles.image} />
       </View>
     </TouchableOpacity>
   );

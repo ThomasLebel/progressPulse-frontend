@@ -31,7 +31,7 @@ interface ExerciseCardProps {
   startExercise?: (exerciseID: string) => void;
   accessibilityLabel?: string;
   image?: string;
-  exerciseAddedImg?: string;
+  exerciseAddedImg?: number;
 }
 
 const ExerciseCard = ({

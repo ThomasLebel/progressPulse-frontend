@@ -17,7 +17,7 @@ import {
 } from "./exercicesChoice.service";
 import { fetchExercisesByMuscle, addExerciseToWorkout } from "./exercicesChoice.api";
 
-type ExerciseWithPath = Exercise & { imagePath: any };
+type ExerciseWithPath = Exercise & { imagePath: number | undefined };
 
 export function useExercicesChoice(
   navigation: NativeStackNavigationProp<RootStackParamList>,
@@ -30,7 +30,7 @@ export function useExercicesChoice(
   const [modalVisible, setModalVisible] = useState(false);
   const [exerciseID, setExerciseID] = useState("");
   const [exerciseName, setExerciseName] = useState("");
-  const [imagePath, setImagePath] = useState<any>("");
+  const [imagePath, setImagePath] = useState<number | undefined>(undefined);
   const [charge, setCharge] = useState("");
   const [nbSets, setNbSets] = useState("");
   const [nbReps, setNbReps] = useState("");
@@ -68,7 +68,7 @@ export function useExercicesChoice(
     ? "Retourner à ma séance"
     : "Voir le récap";
 
-  const openModal = (textButton: string, id: string, image: any) => {
+  const openModal = (textButton: string, id: string, image: number | undefined) => {
     setModalVisible(true);
     setExerciseName(textButton);
     setExerciseID(id);

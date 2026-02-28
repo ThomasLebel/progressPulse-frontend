@@ -38,12 +38,12 @@ export function useSettingsScreen(navigation: NativeStackNavigationProp<RootStac
       setError(true);
       return;
     }
-    const data = await apiChangeEmail(email, password, user.token);
+    const data = await apiChangeEmail(email, password, user.token ?? '');
     if (data.result === false) {
       setError(true);
       setErrorMessage(data.error ?? '');
     } else {
-      dispatch(updateEmail(data.newEmail));
+      dispatch(updateEmail(data.newEmail!));
       closeModal('email');
     }
   };
@@ -59,7 +59,7 @@ export function useSettingsScreen(navigation: NativeStackNavigationProp<RootStac
       setError(true);
       return;
     }
-    const data = await apiChangePassword(email, password, newPassword, user.token);
+    const data = await apiChangePassword(email, password, newPassword, user.token ?? '');
     if (data.result === false) {
       setError(true);
       setErrorMessage(data.error ?? '');
@@ -79,12 +79,12 @@ export function useSettingsScreen(navigation: NativeStackNavigationProp<RootStac
       setError(true);
       return;
     }
-    const data = await apiChangeUsername(email, password, username, user.token);
+    const data = await apiChangeUsername(email, password, username, user.token ?? '');
     if (data.result === false) {
       setError(true);
       setErrorMessage(data.error ?? '');
     } else {
-      dispatch(updateUsername(data.newUsername));
+      dispatch(updateUsername(data.newUsername!));
       closeModal('username');
     }
   };

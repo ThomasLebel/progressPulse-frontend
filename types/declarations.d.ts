@@ -1,12 +1,12 @@
 declare module 'react-native-vector-icons/FontAwesome' {
   import { Component } from 'react';
-  import { TextStyle, ViewStyle } from 'react-native';
+  import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
   interface IconProps {
     name: string;
     size?: number;
     color?: string;
-    style?: TextStyle | ViewStyle | any;
+    style?: StyleProp<TextStyle | ViewStyle>;
     onPress?: () => void;
     accessibilityLabel?: string;
     accessibilityHint?: string;
@@ -18,13 +18,13 @@ declare module 'react-native-vector-icons/FontAwesome' {
 
 declare module 'react-native-vector-icons/FontAwesome6' {
   import { Component } from 'react';
-  import { TextStyle, ViewStyle } from 'react-native';
+  import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
   interface IconProps {
     name: string;
     size?: number;
     color?: string;
-    style?: TextStyle | ViewStyle | any;
+    style?: StyleProp<TextStyle | ViewStyle>;
     onPress?: () => void;
     accessibilityLabel?: string;
     accessibilityHint?: string;
@@ -36,13 +36,13 @@ declare module 'react-native-vector-icons/FontAwesome6' {
 
 declare module 'react-native-vector-icons/Ionicons' {
   import { Component } from 'react';
-  import { TextStyle, ViewStyle } from 'react-native';
+  import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
   interface IconProps {
     name: string;
     size?: number;
     color?: string;
-    style?: TextStyle | ViewStyle | any;
+    style?: StyleProp<TextStyle | ViewStyle>;
     onPress?: () => void;
     accessibilityLabel?: string;
   }

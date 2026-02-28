@@ -10,8 +10,8 @@ import { RootState } from "../reducers/store.types";
 interface ExerciseBtnProps {
   exerciseID: string;
   textButton: string;
-  image: any;
-  openModal: (textButton: string, id: string, image: any) => void;
+  image: number | undefined;
+  openModal: (textButton: string, id: string, image: number | undefined) => void;
   accessibilityLabel?: string;
   accessibilityHint?: string;
   isWorkoutAlreadyCreated?: boolean;

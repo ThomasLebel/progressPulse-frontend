@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, TouchableOpacity } from "react-native";
+import { DimensionValue, Text, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants/theme";
 
 interface ButtonProps {
@@ -44,7 +44,7 @@ const Button: FC<ButtonProps> = ({
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={hint}
         style={{
-          width: width as any,
+          width: width as DimensionValue,
           shadowColor: COLORS.accent,
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.35,
@@ -52,7 +52,7 @@ const Button: FC<ButtonProps> = ({
         }}
       >
         <LinearGradient
-          colors={(colorsGradiant ?? [COLORS.primary, COLORS.accent]) as any}
+          colors={(colorsGradiant ?? [COLORS.primary, COLORS.accent]) as [string, string, ...string[]]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{

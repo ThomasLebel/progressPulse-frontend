@@ -1,13 +1,14 @@
 import { Exercise } from '../../shared/types';
+import { ExerciseImageMap } from '../../utils/images';
 
 /**
  * Retourne le chemin de l'image correspondant à un exercice.
  */
 export function findExerciseImage(
   exercise: Exercise,
-  images: Record<string, Record<string, unknown>>,
-): unknown {
-  return images[exercise.muscleGroupe.toLowerCase()][exercise.image ?? ''];
+  images: ExerciseImageMap,
+): number | undefined {
+  return images[exercise.muscleGroupe.toLowerCase()]?.[exercise.image ?? ''];
 }
 
 /**
