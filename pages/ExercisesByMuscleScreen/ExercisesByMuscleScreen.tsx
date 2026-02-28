@@ -1,13 +1,17 @@
-import { FlatList, Pressable, Text, TouchableOpacity, View } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import BtnMuscleGroup from '../../components/BtnMuscleGroup';
-import Underline from '../../components/Underline';
-import { COLORS } from '../../constants/theme';
-import muscleGroupIcons from '../../utils/muscleGroupIcons';
-import { styles } from './ExercisesByMuscleScreen.styles';
-import { useExercisesByMuscleScreen } from './useExercisesByMuscleScreen';
+import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import BtnMuscleGroup from "../../components/BtnMuscleGroup";
+import Underline from "../../components/Underline";
+import { COLORS } from "../../constants/theme";
+import muscleGroupIcons from "../../utils/muscleGroupIcons";
+import { RootStackParamList } from "../../models/navigation";
+import { styles } from "./ExercisesByMuscleScreen.styles";
+import { useExercisesByMuscleScreen } from "./useExercisesByMuscleScreen";
 
-export default function ExercisesByMuscleScreen({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "exercisesByMuscle">;
+
+export default function ExercisesByMuscleScreen({ navigation }: Props) {
   const { handleSelectMuscleGroup, handleSelectAll, handleBack } =
     useExercisesByMuscleScreen(navigation);
 
@@ -30,7 +34,7 @@ export default function ExercisesByMuscleScreen({ navigation }) {
       <View style={styles.listContainer}>
         <FlatList
           data={muscleGroupIcons}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(_item, index) => index.toString()}
           numColumns={2}
           contentContainerStyle={styles.listContent}
           columnWrapperStyle={styles.columnWrapper}

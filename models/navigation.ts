@@ -27,7 +27,7 @@ export type RootStackParamList = {
   historyWorkout: { workoutName: string };
   history: undefined;
   exerciseStats: { exerciseName: string };
-  allExercises: { exercises: { name: string; muscleGroupe: string; count: number }[] };
+  allExercises: { exercises: { name: string; muscleGroupe: string; count: number }[]; title?: string };
   allWorkouts: { workouts: { name: string; count: number }[] };
   exercisesByMuscle: undefined;
 };

@@ -1,11 +1,15 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Loader from "../../components/Loader";
 import { COLORS } from "../../constants/theme";
+import { RootStackParamList } from "../../models/navigation";
 import { styles } from "./SongScreen.styles";
 import { useSongScreen } from "./useSongScreen";
 
-export default function SongScreen({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "song">;
+
+export default function SongScreen({ navigation }: Props) {
   const {
     soundChoice,
     isLoading,
@@ -72,7 +76,7 @@ export default function SongScreen({ navigation }) {
 
       {isLoading && (
         <View style={styles.backgroundLoading}>
-          <Loader></Loader>
+          <Loader />
         </View>
       )}
     </View>

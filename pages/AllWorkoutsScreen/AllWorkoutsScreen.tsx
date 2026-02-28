@@ -1,22 +1,32 @@
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { COLORS } from "../../constants/theme";
-import { styles } from "./AllExercisesScreen.styles";
-import { useAllExercisesScreen } from "./useAllExercisesScreen";
+import { RootStackParamList } from "../../models/navigation";
+import { styles } from "./AllWorkoutsScreen.styles";
+import { useAllWorkoutsScreen, WorkoutItem } from "./useAllWorkoutsScreen";
 
 const RANK_COLORS = [COLORS.rankGold, COLORS.rankSilver, COLORS.rankBronze];
 
-function getRankColor(index) {
+function getRankColor(index: number): string {
   return index < 3 ? RANK_COLORS[index] : COLORS.textSecondary;
 }
 
-export default function AllExercisesScreen({ navigation, route }) {
-  const { exercises, title, maxCount, handlePress } = useAllExercisesScreen(
+type Props = NativeStackScreenProps<RootStackParamList, "allWorkouts">;
+
+export default function AllWorkoutsScreen({ navigation, route }: Props) {
+  const { workouts, maxCount, handlePress } = useAllWorkoutsScreen(
     navigation,
-    route
+    route,
   );
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: WorkoutItem;
+    index: number;
+  }) => {
     const rankColor = getRankColor(index);
     const isPodium = index < 3;
     const barWidth =
@@ -38,16 +48,13 @@ export default function AllExercisesScreen({ navigation, route }) {
 
         <View style={styles.itemContent}>
           <View style={styles.itemTopRow}>
-            <Text style={styles.itemName} numberOfLines={1}>
+            <Text style={styles.itemName} numberOfLines={2}>
               {item.name}
             </Text>
             <View style={styles.countPill}>
               <Text style={styles.countText}>×{item.count}</Text>
             </View>
           </View>
-          {item.muscleGroupe ? (
-            <Text style={styles.itemMuscle}>{item.muscleGroupe}</Text>
-          ) : null}
           <View style={styles.barBg}>
             <View
               style={[
@@ -55,7 +62,7 @@ export default function AllExercisesScreen({ navigation, route }) {
                 {
                   width: barWidth,
                   backgroundColor: isPodium ? rankColor : COLORS.primary,
-                },
+                } as any,
               ]}
             />
           </View>
@@ -76,7 +83,7 @@ export default function AllExercisesScreen({ navigation, route }) {
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 120 }}
       showsVerticalScrollIndicator={false}
-      data={exercises}
+      data={workouts}
       keyExtractor={(item) => item.name}
       renderItem={renderItem}
       ListHeaderComponent={
@@ -88,13 +95,11 @@ export default function AllExercisesScreen({ navigation, route }) {
           >
             <FontAwesome name="chevron-left" size={16} color={COLORS.accent} />
           </TouchableOpacity>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>Toutes les séances</Text>
         </View>
       }
       ListEmptyComponent={
-        <Text style={styles.emptyText}>
-          Aucun exercice enregistré pour cette période.
-        </Text>
+        <Text style={styles.emptyText}>Aucune séance enregistrée.</Text>
       }
     />
   );
