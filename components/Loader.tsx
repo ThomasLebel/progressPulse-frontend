@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 
-export default function NeonSpinner() {
+export default function Loader() {
   const spin = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

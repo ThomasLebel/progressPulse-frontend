@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import {
   Animated,
   StyleSheet,
@@ -9,6 +9,15 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { COLORS } from "../constants/theme";
 
+interface HystoryWorkoutProps {
+  name: string;
+  date: string;
+  stars: ReactNode;
+  ressenti: string;
+  workouts: ReactNode;
+  accessibilityLabel?: string;
+}
+
 export default function HystoryWorkout({
   name,
   date,
@@ -16,7 +25,7 @@ export default function HystoryWorkout({
   ressenti,
   workouts,
   accessibilityLabel,
-}) {
+}: HystoryWorkoutProps) {
   const [expanded, setExpanded] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
@@ -124,7 +133,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 2,
   },
-
   starContainer: {
     flexDirection: "row",
     marginTop: 6,

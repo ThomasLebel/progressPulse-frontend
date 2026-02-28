@@ -4,7 +4,35 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import { COLORS } from "../constants/theme";
+import { RootState } from "../reducers/store.types";
 import images from "../utils/images";
+
+interface ExerciseCardProps {
+  exerciseName: string;
+  muscleGroup: string;
+  numberOfSets: number;
+  numberOfReps: number;
+  weight: number;
+  restMinutes: number;
+  restSeconds: number;
+  isEditable?: boolean;
+  exerciseID: string;
+  openModalCustomSets?: (
+    exerciseName: string,
+    exerciseID: string,
+    weight: number,
+    numberOfReps: number,
+    numberOfSets: number,
+    restMinutes: number,
+    restSeconds: number,
+    muscleGroup: string,
+  ) => void;
+  handleDelete?: (exerciseID: string) => void;
+  startExercise?: (exerciseID: string) => void;
+  accessibilityLabel?: string;
+  image?: string;
+  exerciseAddedImg?: string;
+}
 
 const ExerciseCard = ({
   exerciseName,
@@ -22,8 +50,10 @@ const ExerciseCard = ({
   accessibilityLabel,
   image,
   exerciseAddedImg,
-}) => {
-  const currentWorkout = useSelector((state) => state.currentWorkout.value);
+}: ExerciseCardProps) => {
+  const currentWorkout = useSelector(
+    (state: RootState) => state.currentWorkout.value,
+  );
   const currentExercise = currentWorkout.performances.find(
     (e) => e.exercise === exerciseID,
   );
@@ -41,20 +71,22 @@ const ExerciseCard = ({
   }, [currentExercise]);
 
   const handleUpdate = () => {
-    openModalCustomSets(
-      exerciseName,
-      exerciseID,
-      weight,
-      numberOfReps,
-      numberOfSets,
-      restMinutes,
-      restSeconds,
-      muscleGroup,
-    );
+    if (openModalCustomSets) {
+      openModalCustomSets(
+        exerciseName,
+        exerciseID,
+        weight,
+        numberOfReps,
+        numberOfSets,
+        restMinutes,
+        restSeconds,
+        muscleGroup,
+      );
+    }
   };
 
   const handlePress = () => {
-    if (!isEditable && !isCompleted) startExercise(exerciseID);
+    if (!isEditable && !isCompleted && startExercise) startExercise(exerciseID);
   };
 
   const isCardio = muscleGroup === "Cardio";
@@ -140,7 +172,7 @@ const ExerciseCard = ({
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => handleDelete(exerciseID)}
+              onPress={() => handleDelete && handleDelete(exerciseID)}
               accessibilityLabel="Supprimer l'exercice de la séance"
               style={styles.actionBtn}
             >

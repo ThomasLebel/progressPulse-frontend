@@ -5,6 +5,18 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from "../constants/theme";
 import { removeExercise } from "../reducers/workoutCreation";
+import { RootState } from "../reducers/store.types";
+
+interface ExerciseBtnProps {
+  exerciseID: string;
+  textButton: string;
+  image: any;
+  openModal: (textButton: string, id: string, image: any) => void;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+  isWorkoutAlreadyCreated?: boolean;
+  workoutID?: string | null;
+}
 
 const ExerciseBtn = ({
   exerciseID,
@@ -15,29 +27,31 @@ const ExerciseBtn = ({
   accessibilityHint,
   isWorkoutAlreadyCreated,
   workoutID,
-}) => {
+}: ExerciseBtnProps) => {
   const dispatch = useDispatch();
   const [isAdded, setIsAdded] = useState(false);
 
   const workoutCreationExercises = useSelector(
-    (state) => state.workoutCreation.value.exercises,
+    (state: RootState) => state.workoutCreation.value.exercises,
   );
 
-  const workoutSelected = useSelector((state) =>
+  const workoutSelected = useSelector((state: RootState) =>
     state.workouts.value.find((e) => e._id === workoutID),
   );
 
   useEffect(() => {
-    let exerciseAlreadyAdded;
+    let exerciseAlreadyAdded: boolean;
     if (!isWorkoutAlreadyCreated) {
       exerciseAlreadyAdded = workoutCreationExercises.some(
         (exercise) => exercise.exercise === exerciseID,
       );
       setIsAdded(exerciseAlreadyAdded);
     } else {
-      exerciseAlreadyAdded = workoutSelected.exercises.some((exercise) => {
-        return exercise.exercise._id === exerciseID;
-      });
+      exerciseAlreadyAdded = workoutSelected
+        ? workoutSelected.exercises.some((exercise) => {
+            return exercise.exercise._id === exerciseID;
+          })
+        : false;
       setIsAdded(exerciseAlreadyAdded);
     }
   }, [workoutCreationExercises, workoutSelected]);

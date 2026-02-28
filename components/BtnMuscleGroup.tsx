@@ -1,13 +1,21 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../constants/theme";
 
+interface BtnMuscleGroupProps {
+  name: string;
+  source: unknown;
+  onPress: (name: string) => void;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+}
+
 const BtnMuscleGroup = ({
   name,
   source,
   onPress,
   accessibilityLabel,
   accessibilityHint,
-}) => {
+}: BtnMuscleGroupProps) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -18,7 +26,7 @@ const BtnMuscleGroup = ({
     >
       <View style={styles.card}>
         <Text style={styles.btnText}>{name}</Text>
-        <Image source={source} style={styles.image} />
+        <Image source={source as any} style={styles.image} />
       </View>
     </TouchableOpacity>
   );

@@ -1,8 +1,24 @@
+import { FC } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants/theme";
 
-const Button = ({
+interface ButtonProps {
+  textButton: string;
+  textColor: string;
+  width?: number | string;
+  height?: number | string;
+  background?: string;
+  borderWidth?: number;
+  borderColor?: string;
+  onPress: () => void;
+  isLinearGradiant?: boolean;
+  colorsGradiant?: string[];
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+}
+
+const Button: FC<ButtonProps> = ({
   textButton,
   textColor,
   width,
@@ -28,7 +44,7 @@ const Button = ({
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={hint}
         style={{
-          width,
+          width: width as any,
           shadowColor: COLORS.accent,
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.35,
@@ -36,7 +52,7 @@ const Button = ({
         }}
       >
         <LinearGradient
-          colors={colorsGradiant ?? [COLORS.primary, COLORS.accent]}
+          colors={(colorsGradiant ?? [COLORS.primary, COLORS.accent]) as any}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{
@@ -69,7 +85,7 @@ const Button = ({
       accessibilityHint={hint}
       style={{
         backgroundColor: background,
-        width,
+        width: width as any,
         height: h,
         borderWidth: borderWidth,
         borderColor: borderColor,

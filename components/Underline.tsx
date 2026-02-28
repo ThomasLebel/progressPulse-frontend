@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { COLORS } from "../constants/theme";
 
-export default function Underline({ width }) {
+export default function Underline({ width }: { width: number }) {
   return (
     <View
       style={{
@@ -10,6 +10,6 @@ export default function Underline({ width }) {
         marginVertical: 5,
         width: width,
       }}
-    ></View>
+    />
   );
 }

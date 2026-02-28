@@ -9,7 +9,19 @@ import {
 } from "react-native";
 import { COLORS } from "../constants/theme";
 
-export default function WorkoutSessionButton({
+interface BtnWorkoutSessionProps {
+  name: string;
+  time: string;
+  nbExercise: string;
+  onPress: (...args: unknown[]) => void;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+  image?: unknown;
+  textBtn?: string;
+  isActive?: boolean;
+}
+
+export default function BtnWorkoutSession({
   name,
   time,
   nbExercise,
@@ -19,7 +31,7 @@ export default function WorkoutSessionButton({
   image,
   textBtn,
   isActive,
-}) {
+}: BtnWorkoutSessionProps) {
   const glowAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -79,7 +91,7 @@ export default function WorkoutSessionButton({
 
           <View style={styles.imageContainer}>
             <FontAwesome6
-              name={image || "dumbbell"}
+              name={(image as string) || "dumbbell"}
               size={30}
               color={"rgba(255, 255, 255, 0.70)"}
               solid
@@ -133,7 +145,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.cardBackground,
     overflow: "hidden",
   },
-
+  accentBar: {
+    width: 4,
+    height: "100%",
+    backgroundColor: COLORS.primary,
+  },
   imageContainer: {
     marginLeft: 14,
     width: 68,

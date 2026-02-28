@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer, Theme, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -44,19 +45,11 @@ import WorkoutDifficultyScreen from "./pages/WorkoutDifficultyScreen";
 import WorkoutEndingScreen from "./pages/WorkoutEndingScreen";
 import WorkoutSummaryScreen from "./pages/WorkoutSummaryScreen";
 import WorkoutTypeScreen from "./pages/WorkoutTypeScreen";
+import { RootStackParamList, TabParamList } from "./models/navigation";
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<TabParamList>();
 
-// const store = configureStore({
-//   reducer: {
-//     user,
-//     workouts,
-//     workoutCreation,
-//     currentWorkout,
-//     workoutsHistory,
-//   },
-// });
 const reducers = combineReducers({
   user,
   workouts,
@@ -76,9 +69,23 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
+type AppDispatch = typeof store.dispatch;
+
+const navigationTheme: Theme = {
+  dark: true,
+  colors: {
+    background: "transparent",
+    primary: COLORS.primary,
+    card: COLORS.cardBackground,
+    text: COLORS.textPrimary,
+    border: "transparent",
+    notification: COLORS.primary,
+  },
+};
+
 const TabNavigator = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handleLogout = () => {
     Alert.alert("Déconnexion", "Es-tu sûr de vouloir te déconnecter ?", [
@@ -89,7 +96,7 @@ const TabNavigator = () => {
         onPress: () => {
           dispatch(removeAllWorkout());
           dispatch(resetWorkoutsHistory());
-          dispatch(logout());
+          dispatch(logout(undefined));
           navigation.navigate("Signin");
         },
       },
@@ -99,7 +106,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, focused }) => {
+        tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
           if (route.name === "Home") {
             return (
               <View
@@ -158,7 +165,7 @@ const TabNavigator = () => {
               alignItems: "center",
               borderWidth: 1,
               borderColor: "rgba(255,255,255,0.05)",
-              backgroundColor: "rgba(30, 30, 30, 0.85)", // gris foncé semi-opaque
+              backgroundColor: "rgba(30, 30, 30, 0.85)",
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.3,
@@ -229,19 +236,7 @@ export default function App() {
             colors={["#0D0D36", "#2A1B5A", "#09091F"]}
             style={StyleSheet.absoluteFill}
           />
-          <NavigationContainer
-            theme={{
-              dark: true,
-              colors: {
-                background: "transparent",
-                primary: COLORS.primary,
-                card: COLORS.cardBackground,
-                text: COLORS.textPrimary,
-                border: "transparent",
-                notification: COLORS.primary,
-              },
-            }}
-          >
+          <NavigationContainer theme={navigationTheme}>
             <Stack.Navigator
               screenOptions={{
                 headerShown: false,
