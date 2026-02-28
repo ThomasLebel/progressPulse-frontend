@@ -15,10 +15,16 @@ function getRankColor(index: number): string {
 type Props = NativeStackScreenProps<RootStackParamList, "allWorkouts">;
 
 export default function AllWorkoutsScreen({ navigation, route }: Props) {
-  const { workouts, maxCount, handlePress } = useAllWorkoutsScreen(
-    navigation,
-    route,
-  );
+  const {
+    workouts,
+    maxCount,
+    handlePress,
+    selectedPeriod,
+    dropdownOpen,
+    setDropdownOpen,
+    handleSetPeriod,
+    PERIODS,
+  } = useAllWorkoutsScreen(navigation, route);
 
   const renderItem = ({
     item,
@@ -79,28 +85,71 @@ export default function AllWorkoutsScreen({ navigation, route }: Props) {
   };
 
   return (
-    <FlatList
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: 120 }}
-      showsVerticalScrollIndicator={false}
-      data={workouts}
-      keyExtractor={(item) => item.name}
-      renderItem={renderItem}
-      ListHeaderComponent={
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backBtn}
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}
-          >
-            <FontAwesome name="chevron-left" size={16} color={COLORS.accent} />
-          </TouchableOpacity>
-          <Text style={styles.title}>Toutes les séances</Text>
+    <View style={styles.container}>
+      <FlatList
+        contentContainerStyle={{ paddingBottom: 120 }}
+        showsVerticalScrollIndicator={false}
+        data={workouts}
+        keyExtractor={(item) => item.name}
+        renderItem={renderItem}
+        ListHeaderComponent={
+          <View>
+            <View style={styles.header}>
+              <TouchableOpacity
+                style={styles.backBtn}
+                activeOpacity={0.7}
+                onPress={() => navigation.goBack()}
+              >
+                <FontAwesome name="chevron-left" size={16} color={COLORS.accent} />
+              </TouchableOpacity>
+              <Text style={styles.title}>Toutes les séances</Text>
+            </View>
+            <View style={styles.filterRow}>
+              <TouchableOpacity
+                style={styles.filterButton}
+                activeOpacity={0.7}
+                onPress={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <Text style={styles.filterButtonText} numberOfLines={1}>
+                  {PERIODS.find((p) => p.key === selectedPeriod)?.label}
+                </Text>
+                <FontAwesome
+                  name={dropdownOpen ? "chevron-up" : "chevron-down"}
+                  size={10}
+                  color={COLORS.accent}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        }
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>Aucune séance enregistrée pour cette période.</Text>
+        }
+      />
+      {dropdownOpen && (
+        <View style={styles.dropdown}>
+          {PERIODS.map((period) => (
+            <TouchableOpacity
+              key={period.key}
+              style={[
+                styles.dropdownItem,
+                selectedPeriod === period.key && styles.dropdownItemActive,
+              ]}
+              activeOpacity={0.7}
+              onPress={() => handleSetPeriod(period.key)}
+            >
+              <Text
+                style={[
+                  styles.dropdownItemText,
+                  selectedPeriod === period.key && styles.dropdownItemTextActive,
+                ]}
+              >
+                {period.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      }
-      ListEmptyComponent={
-        <Text style={styles.emptyText}>Aucune séance enregistrée.</Text>
-      }
-    />
+      )}
+    </View>
   );
 }

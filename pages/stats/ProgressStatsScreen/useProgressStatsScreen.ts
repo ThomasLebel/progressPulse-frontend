@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { addAllWorkoutsHistory } from '../../../reducers/workoutsHistory';
+import { setStatsPeriod } from '../../../reducers/user';
 import { RootStackParamList } from '../../../models/navigation';
 import { RootState } from '../../../reducers/store.types';
 import { apiFetchHistories } from './progressStatsScreen.api';
@@ -21,8 +22,9 @@ export function useProgressStatsScreen(navigation: NativeStackNavigationProp<Roo
   const user = useSelector((state: RootState) => state.user.value);
   const history = useSelector((state: RootState) => state.workoutsHistory.value);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState('month');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const selectedPeriod = user.statsPeriod ?? 'month';
 
   useEffect(() => {
     if (!user.token) return;
@@ -50,13 +52,11 @@ export function useProgressStatsScreen(navigation: NativeStackNavigationProp<Roo
   };
 
   const handleNavigateToAllExercises = () => {
-    navigation.navigate('allExercises', { exercises: topExercises });
+    navigation.navigate('allExercises', {});
   };
 
   const handleNavigateToAllWorkouts = () => {
-    navigation.navigate('allWorkouts', {
-      workouts: getMostFrequentWorkouts(history),
-    });
+    navigation.navigate('allWorkouts', {});
   };
 
   const handleNavigateToExercisesByMuscle = () => {
@@ -76,7 +76,7 @@ export function useProgressStatsScreen(navigation: NativeStackNavigationProp<Roo
     handleNavigateToAllWorkouts,
     handleNavigateToExercisesByMuscle,
     selectedPeriod,
-    setSelectedPeriod,
+    setSelectedPeriod: (period: string) => dispatch(setStatsPeriod(period)),
     dropdownOpen,
     setDropdownOpen,
     PERIODS,

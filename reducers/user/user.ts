@@ -10,6 +10,7 @@ const initialState: { value: UserState } = {
     sound: null,
     weight: [],
     target: {},
+    statsPeriod: 'month',
   },
 };
 
@@ -34,6 +35,7 @@ export const userSlice = createSlice({
         sound: null,
         weight: [],
         target: {},
+        statsPeriod: 'month',
       };
     },
 
@@ -56,6 +58,10 @@ export const userSlice = createSlice({
     updateTarget: (state, action: PayloadAction<FitnessTarget>) => {
       state.value.target = action.payload;
     },
+
+    setStatsPeriod: (state, action: PayloadAction<string>) => {
+      state.value.statsPeriod = action.payload;
+    },
   },
 });
 
@@ -67,6 +73,7 @@ export const {
   updateEmail,
   updateTarget,
   updateUsername,
+  setStatsPeriod,
 } = userSlice.actions;
 
 export default userSlice.reducer;

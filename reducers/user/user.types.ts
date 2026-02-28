@@ -7,6 +7,7 @@ export interface UserState {
   sound: string | null;
   weight: WeightEntry[];
   target: FitnessTarget | Record<string, never>;
+  statsPeriod: string;
 }
 
 export interface LoginPayload {
