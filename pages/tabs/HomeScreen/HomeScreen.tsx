@@ -1,5 +1,6 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ScrollView, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import BtnWorkoutSession from "../../../components/BtnWorkoutSession";
 import Button from "../../../components/Button";
@@ -8,7 +9,11 @@ import { RootStackParamList } from "../../../models/navigation";
 import { styles } from "./HomeScreen.styles";
 import { useHomeScreen } from "./useHomeScreen";
 
-export default function HomeScreen({ navigation }: { navigation: NativeStackNavigationProp<RootStackParamList> }) {
+export default function HomeScreen({
+  navigation,
+}: {
+  navigation: NativeStackNavigationProp<RootStackParamList>;
+}) {
   const {
     user,
     workouts,
@@ -18,22 +23,20 @@ export default function HomeScreen({ navigation }: { navigation: NativeStackNavi
     handleWorkoutNavigation,
   } = useHomeScreen(navigation);
 
-  const workoutsToShow = workoutsDisplayData.map(
-    (workout, index) => (
-      <BtnWorkoutSession
-        key={index}
-        name={workout.name}
-        nbExercise={workout.nbExercises}
-        time={workout.duration + " min"}
-        onPress={() => handleWorkoutNavigation(workout._id)}
-        accessibilityLabel={`Commencer la séance ${workout.name}`}
-        accessibilityHint="On va être diriger vers le résumé de notre séance avant de la commencer"
-        image={workout.image}
-        textBtn={currentWorkoutID === workout._id ? "Reprendre" : "Démarrer"}
-        isActive={currentWorkoutID === workout._id}
-      />
-    ),
-  );
+  const workoutsToShow = workoutsDisplayData.map((workout, index) => (
+    <BtnWorkoutSession
+      key={index}
+      name={workout.name}
+      nbExercise={workout.nbExercises}
+      time={workout.duration + " min"}
+      onPress={() => handleWorkoutNavigation(workout._id)}
+      accessibilityLabel={`Commencer la séance ${workout.name}`}
+      accessibilityHint="On va être diriger vers le résumé de notre séance avant de la commencer"
+      image={workout.image}
+      textBtn={currentWorkoutID === workout._id ? "Reprendre" : "Démarrer"}
+      isActive={currentWorkoutID === workout._id}
+    />
+  ));
 
   return (
     <View style={styles.container}>
@@ -74,11 +77,15 @@ export default function HomeScreen({ navigation }: { navigation: NativeStackNavi
           />
         </View>
         {workouts.length === 0 && (
-          <View style={styles.imageWrapper}>
-            <Image
-              style={styles.image}
-              source={require("../../assets/illustrations/homePage.png")}
+          <View style={styles.emptyStateWrapper}>
+            <FontAwesome6
+              name="folder-open"
+              size={64}
+              color={COLORS.textSecondary}
             />
+            <Text style={styles.emptyStateText}>
+              Aucune séance ajoutée pour l'instant
+            </Text>
           </View>
         )}
         <View style={styles.btn}>

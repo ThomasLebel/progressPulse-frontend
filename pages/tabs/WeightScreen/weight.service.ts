@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { FitnessTarget, WeightEntry } from '../../../shared/types';
+import moment from "moment";
+import { FitnessTarget, WeightEntry } from "../../../shared/types";
 
 /**
  * Retourne le poids de départ (premier enregistrement) ou 0 si absent.
@@ -12,13 +12,16 @@ export function getStartWeight(weights: WeightEntry[]): number {
  * Retourne la date de départ formatée ou un placeholder si absente.
  * Priorise target.startDate (ajouté côté client lors de la création de l'objectif).
  */
-export function getStartDate(weights: WeightEntry[], target?: Partial<FitnessTarget> & { startDate?: string }): string {
+export function getStartDate(
+  weights: WeightEntry[],
+  target?: Partial<FitnessTarget> & { startDate?: string },
+): string {
   if (target?.startDate) {
-    return moment(target.startDate).format('Do MMM YYYY');
+    return moment(target.startDate).format("Do MMM YYYY");
   }
   return weights?.length === 0
-    ? 'DD/MM/YYYY'
-    : moment(weights[0].date).format('Do MMM YYYY');
+    ? "DD/MM/YYYY"
+    : moment(weights[0].date).format("Do MMM YYYY");
 }
 
 /**
@@ -33,8 +36,8 @@ export function getCurrentWeight(weights: WeightEntry[]): number {
  */
 export function getCurrentDate(weights: WeightEntry[]): string {
   return weights?.length === 0
-    ? 'DD/MM/YYYY'
-    : moment(weights.at(-1)!.date).format('Do MMM YYYY');
+    ? "DD/MM/YYYY"
+    : moment(weights.at(-1)!.date).format("Do MMM YYYY");
 }
 
 /**
@@ -49,8 +52,8 @@ export function getTargetWeight(target: Partial<FitnessTarget>): number {
  */
 export function getTargetDate(target: Partial<FitnessTarget>): string {
   return !target.date
-    ? 'DD/MM/YYYY'
-    : moment(target.date).format('Do MMM YYYY');
+    ? "DD/MM/YYYY"
+    : moment(target.date).format("Do MMM YYYY");
 }
 
 /**
@@ -116,8 +119,26 @@ export function getWeightChartPoints(weights: WeightEntry[]): {
   const points = sorted.map((entry) => ({
     value: parseFloat((entry.weight - minValue).toFixed(1)),
     originalValue: entry.weight,
-    label: moment(entry.date).format('DD/MM'),
-    date: moment(entry.date).format('Do MMM YYYY'),
+    label: moment(entry.date).format("DD/MM"),
+    date: moment(entry.date).format("Do MMM YYYY"),
   }));
   return { points, minValue };
+}
+
+export function getYAxisOffset(weightChartPoints: WeightChartPoint[]): number {
+  const values = weightChartPoints.map((p) => p.value);
+
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+
+  const range = max - min;
+
+  // Si toutes les valeurs sont identiques (range = 0)
+  const safeRange = range === 0 ? min * 0.05 : range;
+
+  const padding = safeRange * 0.1; // 10% du range
+
+  const yAxisOffset = min - padding;
+
+  return yAxisOffset;
 }

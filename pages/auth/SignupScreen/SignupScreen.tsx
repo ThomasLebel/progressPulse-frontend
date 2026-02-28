@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Image,
   Keyboard,
@@ -8,16 +9,15 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Button from '../../../components/Button';
-import Loader from '../../../components/Loader';
-import { COLORS } from '../../../constants/theme';
-import { RootStackParamList } from '../../../models/navigation';
-import { styles } from './SignupScreen.styles';
-import { useSignupScreen } from './useSignupScreen';
+} from "react-native";
+import Button from "../../../components/Button";
+import Loader from "../../../components/Loader";
+import { COLORS } from "../../../constants/theme";
+import { RootStackParamList } from "../../../models/navigation";
+import { styles } from "./SignupScreen.styles";
+import { useSignupScreen } from "./useSignupScreen";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
+type Props = NativeStackScreenProps<RootStackParamList, "Signup">;
 
 export default function SignupScreen({ navigation }: Props) {
   const {
@@ -38,12 +38,12 @@ export default function SignupScreen({ navigation }: Props) {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
+        <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
           <Image
-            source={require('../../assets/illustrations/imageSigninSignup.webp')}
+            source={require("../../../assets/illustrations/imageSigninSignup.webp")}
             style={styles.image}
           />
           <Text style={styles.mainTitle}>Commence ton aventure avec</Text>

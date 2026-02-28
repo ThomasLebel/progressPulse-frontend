@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   Image,
   Keyboard,
@@ -8,17 +9,16 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Button from '../../../components/Button';
-import Loader from '../../../components/Loader';
-import { COLORS } from '../../../constants/theme';
-import { RootStackParamList } from '../../../models/navigation';
-import { styles } from './PasswordForgottenScreen.styles';
-import { usePasswordForgottenScreen } from './usePasswordForgottenScreen';
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Button from "../../../components/Button";
+import Loader from "../../../components/Loader";
+import { COLORS } from "../../../constants/theme";
+import { RootStackParamList } from "../../../models/navigation";
+import { styles } from "./PasswordForgottenScreen.styles";
+import { usePasswordForgottenScreen } from "./usePasswordForgottenScreen";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'passwordForgotten'>;
+type Props = NativeStackScreenProps<RootStackParamList, "passwordForgotten">;
 
 export default function PasswordForgottenScreen({ navigation }: Props) {
   const {
@@ -50,7 +50,7 @@ export default function PasswordForgottenScreen({ navigation }: Props) {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
@@ -59,16 +59,12 @@ export default function PasswordForgottenScreen({ navigation }: Props) {
             onPress={handleGoToSignin}
             accessibilityLabel="Redirection vers la page pour se connecter"
           >
-            <FontAwesome
-              name="chevron-left"
-              size={20}
-              color={COLORS.primary}
-            />
+            <FontAwesome name="chevron-left" size={20} color={COLORS.primary} />
           </Pressable>
           {!isKeyboardVisible && (
             <View style={styles.imageContainer}>
               <Image
-                source={require('../../assets/illustrations/imageSigninSignup.webp')}
+                source={require("../../../assets/illustrations/imageSigninSignup.webp")}
                 style={styles.image}
               />
             </View>

@@ -38,7 +38,7 @@ export default function SigninScreen({ navigation }: Props) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
           <Image
-            source={require('../../assets/illustrations/imageSigninSignup.webp')}
+            source={require('../../../assets/illustrations/imageSigninSignup.webp')}
             style={styles.image}
           />
           <Text style={styles.mainTitle}>Atteins tes objectifs avec</Text>

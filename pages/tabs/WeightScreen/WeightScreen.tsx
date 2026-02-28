@@ -1,34 +1,40 @@
-import moment from 'moment';
-import { ComponentType } from 'react';
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import moment from "moment";
+import { ComponentType } from "react";
 import {
   Dimensions,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import ConfettiCannon from 'react-native-confetti-cannon';
-import { LineChart } from 'react-native-gifted-charts';
-import * as Progress from 'react-native-progress';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import Loader from '../../../components/Loader';
-import Underline from '../../../components/Underline';
-import { COLORS } from '../../../constants/theme';
-import { RootStackParamList } from '../../../models/navigation';
-import { WeightChartPoint } from './weight.service';
-import AddWeightModal from './modals/AddWeightModal';
-import TargetWeightModal from './modals/TargetWeightModal';
-import { useWeightScreen } from './useWeightScreen';
-import { styles } from './WeightScreen.styles';
+} from "react-native";
+import ConfettiCannon from "react-native-confetti-cannon";
+import { LineChart } from "react-native-gifted-charts";
+import * as Progress from "react-native-progress";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import Loader from "../../../components/Loader";
+import Underline from "../../../components/Underline";
+import { COLORS } from "../../../constants/theme";
+import { RootStackParamList } from "../../../models/navigation";
+import AddWeightModal from "./modals/AddWeightModal";
+import TargetWeightModal from "./modals/TargetWeightModal";
+import { useWeightScreen } from "./useWeightScreen";
+import { WeightChartPoint } from "./weight.service";
+import { styles } from "./WeightScreen.styles";
 
-type LineChartExtendedProps = Parameters<typeof LineChart>[0] & { yAxisSuffix?: string };
+type LineChartExtendedProps = Parameters<typeof LineChart>[0] & {
+  yAxisSuffix?: string;
+};
 const LineChartExtended = LineChart as ComponentType<LineChartExtendedProps>;
 
-const SCREEN_WIDTH = Dimensions.get('window').width - 40;
+const SCREEN_WIDTH = Dimensions.get("window").width - 40;
 const Y_AXIS_WIDTH = 52;
 
-export default function WeightScreen({ navigation }: { navigation: NativeStackNavigationProp<RootStackParamList> }) {
+export default function WeightScreen({
+  navigation,
+}: {
+  navigation: NativeStackNavigationProp<RootStackParamList>;
+}) {
   const {
     modalVisibleWeight,
     setModalVisibleWeight,
@@ -126,7 +132,7 @@ export default function WeightScreen({ navigation }: { navigation: NativeStackNa
                   progress={progressValue}
                   animated={true}
                   color={COLORS.primary}
-                  unfilledColor={'transparent'}
+                  unfilledColor={"transparent"}
                   borderWidth={0.2}
                   size={90}
                   showsText={false}
@@ -139,16 +145,16 @@ export default function WeightScreen({ navigation }: { navigation: NativeStackNa
 
             <View style={styles.column}>
               <Text style={styles.columnTitle}>
-                Objectif{' '}
-                {targetObjectif === 'Gain' ? (
+                Objectif{" "}
+                {targetObjectif === "Gain" ? (
                   <FontAwesome6
-                    name={'arrow-trend-up'}
+                    name={"arrow-trend-up"}
                     size={13}
                     color={COLORS.primary}
                   />
-                ) : targetObjectif === 'Loss' ? (
+                ) : targetObjectif === "Loss" ? (
                   <FontAwesome6
-                    name={'arrow-trend-down'}
+                    name={"arrow-trend-down"}
                     size={13}
                     color={COLORS.primary}
                   />
@@ -172,7 +178,7 @@ export default function WeightScreen({ navigation }: { navigation: NativeStackNa
               width={160}
               animated={true}
               color={COLORS.primary}
-              unfilledColor={'transparent'}
+              unfilledColor={"transparent"}
               borderWidth={0}
               height={8}
               borderRadius={4}
@@ -246,7 +252,7 @@ export default function WeightScreen({ navigation }: { navigation: NativeStackNa
               hideDataPoints={false}
               pointerConfig={{
                 pointerStripUptoDataPoint: true,
-                pointerStripColor: 'rgba(163, 253, 1, 0.25)',
+                pointerStripColor: "rgba(163, 253, 1, 0.25)",
                 pointerStripWidth: 1,
                 pointerColor: COLORS.accent,
                 radius: 6,
@@ -288,7 +294,7 @@ export default function WeightScreen({ navigation }: { navigation: NativeStackNa
               >
                 <Text style={styles.historyWeight}>{element.weight} kg</Text>
                 <Text style={styles.historyDate}>
-                  {moment(element.date).format('Do MMM YYYY')}
+                  {moment(element.date).format("Do MMM YYYY")}
                 </Text>
               </View>
             ))

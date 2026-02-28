@@ -1,13 +1,16 @@
-import moment from 'moment';
-import 'moment/locale/fr';
-import { WorkoutHistory, PerformanceSet } from '../../../shared/types';
-import { Exercise } from '../../../shared/types';
+import moment from "moment";
+import "moment/locale/fr";
 import {
-  ChartDataPoint,
+  Exercise,
+  PerformanceSet,
+  WorkoutHistory,
+} from "../../../shared/types";
+import {
   BestPerformance,
+  ChartDataPoint,
   LastPerformance,
   VolumeChartData,
-} from './ExerciseStatsScreen.types';
+} from "./ExerciseStatsScreen.types";
 
 export function getSessionsForExercise(
   history: WorkoutHistory[],
@@ -16,7 +19,7 @@ export function getSessionsForExercise(
   return history
     .filter((workout) =>
       workout.performances?.some((perf) => {
-        if (typeof perf.exercise === 'string') return false;
+        if (typeof perf.exercise === "string") return false;
         return (perf.exercise as Exercise).name === exerciseName;
       }),
     )
@@ -37,7 +40,7 @@ export function getTotalVolume(
 ): number {
   return sessions.reduce((total, workout) => {
     const perf = workout.performances?.find((p) => {
-      if (typeof p.exercise === 'string') return false;
+      if (typeof p.exercise === "string") return false;
       return (p.exercise as Exercise).name === exerciseName;
     });
     if (!perf) return total;
@@ -56,11 +59,11 @@ export function getVolumeProgressionChart(
   const points = sessions
     .map((workout) => {
       const perf = workout.performances?.find((p) => {
-        if (typeof p.exercise === 'string') return false;
+        if (typeof p.exercise === "string") return false;
         return (p.exercise as Exercise).name === exerciseName;
       });
       const volume = perf ? calculateSessionVolume(perf.sets ?? []) : 0;
-      const label = moment(workout.date).locale('fr').format('DD/MM');
+      const label = moment(workout.date).locale("fr").format("DD/MM");
       return { label, value: volume };
     })
     .filter((p) => p.value > 0);
@@ -71,13 +74,15 @@ export function getVolumeProgressionChart(
 
   const MAX_POINTS = 15;
   const trimmed =
-    points.length > MAX_POINTS ? points.slice(points.length - MAX_POINTS) : points;
+    points.length > MAX_POINTS
+      ? points.slice(points.length - MAX_POINTS)
+      : points;
 
   const MAX_LABELS = 6;
   const step =
     trimmed.length > MAX_LABELS ? Math.ceil(trimmed.length / MAX_LABELS) : 1;
   const labels = trimmed.map((p, i) =>
-    i % step === 0 || i === trimmed.length - 1 ? p.label : '',
+    i % step === 0 || i === trimmed.length - 1 ? p.label : "",
   );
 
   return {
@@ -104,7 +109,7 @@ export function getBestPerformance(
 
   sessions.forEach((workout) => {
     const perf = workout.performances?.find((p) => {
-      if (typeof p.exercise === 'string') return false;
+      if (typeof p.exercise === "string") return false;
       return (p.exercise as Exercise).name === exerciseName;
     });
     if (!perf) return;
@@ -113,7 +118,7 @@ export function getBestPerformance(
     if (volume > bestVolume) {
       bestVolume = volume;
       best = {
-        date: moment(workout.date).locale('fr').format('D MMM YYYY'),
+        date: moment(workout.date).locale("fr").format("D MMM YYYY"),
         sets: perf.sets ?? [],
         volume,
       };
@@ -130,15 +135,17 @@ export function getVolumeProgression(
   if (sessions.length < 2) return null;
 
   const firstPerf = sessions[0].performances?.find((p) => {
-    if (typeof p.exercise === 'string') return false;
+    if (typeof p.exercise === "string") return false;
     return (p.exercise as Exercise).name === exerciseName;
   });
   const lastPerf = sessions[sessions.length - 1].performances?.find((p) => {
-    if (typeof p.exercise === 'string') return false;
+    if (typeof p.exercise === "string") return false;
     return (p.exercise as Exercise).name === exerciseName;
   });
 
-  const firstVolume = firstPerf ? calculateSessionVolume(firstPerf.sets ?? []) : 0;
+  const firstVolume = firstPerf
+    ? calculateSessionVolume(firstPerf.sets ?? [])
+    : 0;
   const lastVolume = lastPerf ? calculateSessionVolume(lastPerf.sets ?? []) : 0;
 
   if (firstVolume === 0) return null;
@@ -150,21 +157,25 @@ export function getVolumeProgression(
 export function getChartDataPoints(
   sessions: WorkoutHistory[],
   exerciseName: string,
-  period = '3months',
+  period = "3months",
 ): ChartDataPoint[] {
-  const isCurrentMonth = period === 'month';
+  const isCurrentMonth = period === "month";
   const points = sessions
     .map((workout) => {
       const perf = workout.performances?.find((p) => {
-        if (typeof p.exercise === 'string') return false;
+        if (typeof p.exercise === "string") return false;
         return (p.exercise as Exercise).name === exerciseName;
       });
       const sets = perf?.sets ?? [];
       const volume = calculateSessionVolume(sets);
       const label = isCurrentMonth
-        ? moment(workout.date).locale('fr').format('D')
-        : moment(workout.date).locale('fr').format('MMM').replace('.', '').substring(0, 3);
-      const date = moment(workout.date).locale('fr').format('D MMM YYYY');
+        ? moment(workout.date).locale("fr").format("D")
+        : moment(workout.date)
+            .locale("fr")
+            .format("MMM")
+            .replace(".", "")
+            .substring(0, 3);
+      const date = moment(workout.date).locale("fr").format("D MMM YYYY");
       return { label, value: volume, date, sets };
     })
     .filter((p) => p.value > 0);
@@ -173,7 +184,9 @@ export function getChartDataPoints(
 
   const MAX_POINTS = 20;
   const trimmed =
-    points.length > MAX_POINTS ? points.slice(points.length - MAX_POINTS) : points;
+    points.length > MAX_POINTS
+      ? points.slice(points.length - MAX_POINTS)
+      : points;
 
   const MAX_LABELS = 6;
   const step =
@@ -181,10 +194,28 @@ export function getChartDataPoints(
 
   return trimmed.map((p, i) => ({
     value: p.value,
-    label: i % step === 0 || i === trimmed.length - 1 ? p.label : '',
+    label: i % step === 0 || i === trimmed.length - 1 ? p.label : "",
     date: p.date,
     sets: (p.sets ?? []).map((s) => ({ ...s })),
   }));
+}
+
+export function getYAxisOffset(chartPoints: ChartDataPoint[]): number {
+  const values = chartPoints.map((p) => p.value);
+
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+
+  const range = max - min;
+
+  // Si toutes les valeurs sont identiques (range = 0)
+  const safeRange = range === 0 ? min * 0.05 : range;
+
+  const padding = safeRange * 0.1; // 10% du range
+
+  const yAxisOffset = min - padding;
+
+  return yAxisOffset;
 }
 
 export function getLastPerformances(
@@ -194,11 +225,11 @@ export function getLastPerformances(
   const recent = [...sessions].reverse().slice(0, 10);
   return recent.map((workout) => {
     const perf = workout.performances?.find((p) => {
-      if (typeof p.exercise === 'string') return false;
+      if (typeof p.exercise === "string") return false;
       return (p.exercise as Exercise).name === exerciseName;
     });
     return {
-      date: moment(workout.date).locale('fr').format('D MMM YYYY'),
+      date: moment(workout.date).locale("fr").format("D MMM YYYY"),
       sets: perf?.sets ?? [],
     };
   });

@@ -1,27 +1,30 @@
-import { ComponentType } from 'react';
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ComponentType } from "react";
 import {
   Dimensions,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { COLORS } from '../../../constants/theme';
-import { RootStackParamList } from '../../../models/navigation';
-import { ChartDataPoint } from './ExerciseStatsScreen.types';
-import { styles } from './ExerciseStatsScreen.styles';
-import { useExerciseStatsScreen } from './useExerciseStatsScreen';
+} from "react-native";
+import { LineChart } from "react-native-gifted-charts";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { COLORS } from "../../../constants/theme";
+import { RootStackParamList } from "../../../models/navigation";
+import { getYAxisOffset } from "./exerciseStatsScreen.service";
+import { styles } from "./ExerciseStatsScreen.styles";
+import { ChartDataPoint } from "./ExerciseStatsScreen.types";
+import { useExerciseStatsScreen } from "./useExerciseStatsScreen";
 
-type LineChartExtendedProps = Parameters<typeof LineChart>[0] & { yAxisSuffix?: string };
+type LineChartExtendedProps = Parameters<typeof LineChart>[0] & {
+  yAxisSuffix?: string;
+};
 const LineChartExtended = LineChart as ComponentType<LineChartExtendedProps>;
 
-const SCREEN_WIDTH = Dimensions.get('window').width - 40;
+const SCREEN_WIDTH = Dimensions.get("window").width - 40;
 const Y_AXIS_WIDTH = 44;
 
-type Props = NativeStackScreenProps<RootStackParamList, 'exerciseStats'>;
+type Props = NativeStackScreenProps<RootStackParamList, "exerciseStats">;
 
 export default function ExerciseStatsScreen({ navigation, route }: Props) {
   const {
@@ -44,14 +47,18 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
     handleBack,
   } = useExerciseStatsScreen(navigation, route);
 
-  const isCardio = muscleGroup === 'Cardio';
+  const isCardio = muscleGroup === "Cardio";
   const chartSpacing =
     chartPoints.length > 1
-      ? Math.floor((SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8) / (chartPoints.length - 1))
+      ? Math.floor(
+          (SCREEN_WIDTH - Y_AXIS_WIDTH - 16 - 8) / (chartPoints.length - 1),
+        )
       : SCREEN_WIDTH - Y_AXIS_WIDTH - 16;
 
   const chartMinValue =
     chartPoints.length > 0 ? Math.min(...chartPoints.map((p) => p.value)) : 0;
+
+  const yAxisOffset = getYAxisOffset(chartPoints);
 
   return (
     <ScrollView
@@ -66,7 +73,11 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
           activeOpacity={0.7}
           onPress={handleBack}
         >
-          <FontAwesome name="chevron-left" size={16} color={COLORS.textPrimary} />
+          <FontAwesome
+            name="chevron-left"
+            size={16}
+            color={COLORS.textPrimary}
+          />
         </TouchableOpacity>
         <View style={styles.titleBlock}>
           <Text style={styles.title}>{exerciseName}</Text>
@@ -111,8 +122,10 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                       <View style={styles.lastPerfSetsRow}>
                         {session.sets.map((set, k) => (
                           <View key={k} style={styles.lastPerfPill}>
-                            <Text style={styles.lastPerfPillLabel}>S{k + 1}</Text>
-                            {muscleGroup !== 'Cardio' ? (
+                            <Text style={styles.lastPerfPillLabel}>
+                              S{k + 1}
+                            </Text>
+                            {muscleGroup !== "Cardio" ? (
                               <Text style={styles.lastPerfPillText}>
                                 {set.reps} reps · {set.weight} kg
                               </Text>
@@ -124,11 +137,13 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                           </View>
                         ))}
                       </View>
-                      {muscleGroup !== 'Cardio' && sessionTotal > 0 && (
+                      {muscleGroup !== "Cardio" && sessionTotal > 0 && (
                         <View style={styles.lastPerfTotalRow}>
-                          <Text style={styles.lastPerfTotalLabel}>Volume total</Text>
+                          <Text style={styles.lastPerfTotalLabel}>
+                            Volume total
+                          </Text>
                           <Text style={styles.lastPerfTotalValue}>
-                            {sessionTotal.toLocaleString('fr-FR')} kg
+                            {sessionTotal.toLocaleString("fr-FR")} kg
                           </Text>
                         </View>
                       )}
@@ -151,7 +166,7 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                   {PERIODS.find((p) => p.key === selectedPeriod)?.label}
                 </Text>
                 <FontAwesome
-                  name={dropdownOpen ? 'chevron-up' : 'chevron-down'}
+                  name={dropdownOpen ? "chevron-up" : "chevron-down"}
                   size={10}
                   color={COLORS.accent}
                 />
@@ -163,7 +178,8 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                       key={period.key}
                       style={[
                         styles.dropdownItem,
-                        selectedPeriod === period.key && styles.dropdownItemActive,
+                        selectedPeriod === period.key &&
+                          styles.dropdownItemActive,
                       ]}
                       activeOpacity={0.7}
                       onPress={() => {
@@ -174,7 +190,8 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                       <Text
                         style={[
                           styles.dropdownItemText,
-                          selectedPeriod === period.key && styles.dropdownItemTextActive,
+                          selectedPeriod === period.key &&
+                            styles.dropdownItemTextActive,
                         ]}
                       >
                         {period.label}
@@ -193,16 +210,22 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
               <View style={styles.bestPerfCard}>
                 <View style={styles.bestPerfHeader}>
                   <View style={styles.bestPerfBadge}>
-                    <FontAwesome name="trophy" size={11} color={COLORS.background} />
+                    <FontAwesome
+                      name="trophy"
+                      size={11}
+                      color={COLORS.background}
+                    />
                     <Text style={styles.bestPerfBadgeText}>Top 1</Text>
                   </View>
-                  <Text style={styles.bestPerfDate}>{bestPerformance.date}</Text>
+                  <Text style={styles.bestPerfDate}>
+                    {bestPerformance.date}
+                  </Text>
                 </View>
                 <View style={styles.lastPerfSetsRow}>
                   {bestPerformance.sets.map((set, k) => (
                     <View key={k} style={styles.lastPerfPill}>
                       <Text style={styles.lastPerfPillLabel}>S{k + 1}</Text>
-                      {muscleGroup !== 'Cardio' ? (
+                      {muscleGroup !== "Cardio" ? (
                         <Text style={styles.lastPerfPillText}>
                           {set.reps} reps · {set.weight} kg
                         </Text>
@@ -214,11 +237,11 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                     </View>
                   ))}
                 </View>
-                {muscleGroup !== 'Cardio' && bestPerformance.volume > 0 && (
+                {muscleGroup !== "Cardio" && bestPerformance.volume > 0 && (
                   <View style={styles.lastPerfTotalRow}>
                     <Text style={styles.lastPerfTotalLabel}>Volume total</Text>
                     <Text style={styles.lastPerfTotalValue}>
-                      {bestPerformance.volume.toLocaleString('fr-FR')} kg
+                      {bestPerformance.volume.toLocaleString("fr-FR")} kg
                     </Text>
                   </View>
                 )}
@@ -250,7 +273,7 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                       : styles.progressionNegative,
                   ]}
                 >
-                  {volumeProgression >= 0 ? '+' : ''}
+                  {volumeProgression >= 0 ? "+" : ""}
                   {volumeProgression}%
                 </Text>
                 <Text style={styles.statUnit}>vs 1ère séance</Text>
@@ -296,12 +319,12 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                 rulesType="solid"
                 yAxisLabelWidth={Y_AXIS_WIDTH}
                 noOfSections={4}
-                yAxisOffset={chartMinValue}
+                yAxisOffset={yAxisOffset}
                 yAxisSuffix=" kg"
                 hideDataPoints={false}
                 pointerConfig={{
                   pointerStripUptoDataPoint: true,
-                  pointerStripColor: 'rgba(163, 253, 1, 0.25)',
+                  pointerStripColor: "rgba(163, 253, 1, 0.25)",
                   pointerStripWidth: 1,
                   pointerColor: COLORS.accent,
                   radius: 6,
@@ -326,7 +349,7 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                         )}
                         {!isCardio && item.value > 0 && (
                           <Text style={styles.tooltipVolume}>
-                            {item.value.toLocaleString('fr-FR')} kg
+                            {item.value.toLocaleString("fr-FR")} kg
                           </Text>
                         )}
                       </View>
@@ -345,14 +368,14 @@ export default function ExerciseStatsScreen({ navigation, route }: Props) {
                 <View style={styles.statCard}>
                   <Text style={styles.statLabel}>Volume total soulevé</Text>
                   <Text style={styles.statValue}>
-                    {totalVolume.toLocaleString('fr-FR')}
+                    {totalVolume.toLocaleString("fr-FR")}
                   </Text>
                   <Text style={styles.statUnit}>kg</Text>
                 </View>
                 <View style={styles.statCard}>
                   <Text style={styles.statLabel}>Moyenne / séance</Text>
                   <Text style={styles.statValue}>
-                    {averageVolume.toLocaleString('fr-FR')}
+                    {averageVolume.toLocaleString("fr-FR")}
                   </Text>
                   <Text style={styles.statUnit}>kg</Text>
                 </View>

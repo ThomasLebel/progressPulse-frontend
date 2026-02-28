@@ -1,30 +1,30 @@
-import { StyleSheet } from 'react-native';
-import { COLORS } from '../../../constants/theme';
+import { StyleSheet } from "react-native";
+import { COLORS } from "../../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    height: '100%',
-    backgroundColor: 'transparent',
+    display: "flex",
+    height: "100%",
+    backgroundColor: "transparent",
     paddingTop: 50,
     paddingHorizontal: 20,
   },
 
   topContainer: {
-    display: 'flex',
+    display: "flex",
     marginTop: 10,
   },
 
   title: {
     fontSize: 40,
-    fontWeight: '600',
-    color: 'white',
+    fontWeight: "600",
+    color: "white",
     paddingTop: 10,
   },
 
   infoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 20,
   },
 
@@ -37,24 +37,24 @@ export const styles = StyleSheet.create({
   },
 
   textInfo: {
-    color: 'white',
+    color: "white",
   },
 
   btnContainer: {
-    display: 'flex',
+    display: "flex",
     marginTop: 20,
   },
 
   btn: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 20,
   },
 
   text: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   seances: {
@@ -62,13 +62,16 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  imageWrapper: {
-    alignItems: 'center',
-    marginTop: 30,
+  emptyStateWrapper: {
+    alignItems: "center",
+
+    marginTop: 125,
+    gap: 16,
   },
 
-  image: {
-    width: 350,
-    height: 350,
+  emptyStateText: {
+    color: COLORS.textSecondary,
+    fontSize: 15,
+    textAlign: "center",
   },
 });
