@@ -87,8 +87,6 @@ export default function BtnWorkoutSession({
         onPress={() => onPress(name)}
       >
         <View style={styles.card}>
-          <View style={styles.accentBar} />
-
           <View style={styles.imageContainer}>
             <FontAwesome6
               name={(image as string) || "dumbbell"}
@@ -144,11 +142,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: COLORS.cardBackground,
     overflow: "hidden",
-  },
-  accentBar: {
-    width: 4,
-    height: "100%",
-    backgroundColor: COLORS.primary,
   },
   imageContainer: {
     marginLeft: 14,
