@@ -6,10 +6,10 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { COLORS } from '../../../../../constants/theme';
-import { styles } from './ChangePasswordModal.styles';
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { COLORS } from "../../../../../constants/theme";
+import { styles } from "./ChangePasswordModal.styles";
 
 interface Props {
   visible: boolean;
@@ -47,23 +47,23 @@ export default function ChangePasswordModal({
     >
       <KeyboardAvoidingView
         style={styles.modalBackground}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.modalView}>
           <View style={styles.topModal}>
             <View style={styles.crossContainer}>
               <View style={styles.infoContainer}>
                 <FontAwesome
-                  name={'exclamation-triangle'}
+                  name={"exclamation-triangle"}
                   size={20}
                   color={COLORS.primary}
                   style={styles.infoIcon}
-                  accessibilityLabel="Message d'attention lorsque vous voulez changer vos coordonnées"
+                  accessibilityLabel="Message d'attention lorsque vous voulez changez vos coordonnées"
                 />
                 <Text style={styles.span}>ATTENTION</Text>
               </View>
               <FontAwesome
-                name={'times'}
+                name={"times"}
                 size={24}
                 color={COLORS.textSecondary}
                 onPress={onClose}
@@ -78,7 +78,7 @@ export default function ChangePasswordModal({
           <View style={styles.bottomModal}>
             <TextInput
               style={styles.input}
-              placeholder={'Entrer votre adresse email'}
+              placeholder={"Entrer votre adresse email"}
               placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setEmail(value)}
               value={email}
@@ -87,7 +87,7 @@ export default function ChangePasswordModal({
             <TextInput
               style={styles.input}
               secureTextEntry={true}
-              placeholder={'Mot de passe actuel'}
+              placeholder={"Mot de passe actuel"}
               placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setPassword(value)}
               value={password}
@@ -96,7 +96,7 @@ export default function ChangePasswordModal({
             <TextInput
               style={styles.input}
               secureTextEntry={true}
-              placeholder={'Nouveau mot de passe'}
+              placeholder={"Nouveau mot de passe"}
               placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setNewPassword(value)}
               value={newPassword}

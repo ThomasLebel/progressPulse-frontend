@@ -6,10 +6,10 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { COLORS } from '../../../../../constants/theme';
-import { styles } from './ChangeEmailModal.styles';
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { COLORS } from "../../../../../constants/theme";
+import { styles } from "./ChangeEmailModal.styles";
 
 interface Props {
   visible: boolean;
@@ -43,14 +43,14 @@ export default function ChangeEmailModal({
     >
       <KeyboardAvoidingView
         style={styles.modalBackground}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.modalView}>
           <View style={styles.topModal}>
             <View style={styles.crossContainer}>
               <View style={styles.infoContainer}>
                 <FontAwesome
-                  name={'exclamation-triangle'}
+                  name={"exclamation-triangle"}
                   size={20}
                   color={COLORS.primary}
                   style={styles.infoIcon}
@@ -59,7 +59,7 @@ export default function ChangeEmailModal({
                 <Text style={styles.span}>ATTENTION</Text>
               </View>
               <FontAwesome
-                name={'times'}
+                name={"times"}
                 size={24}
                 color={COLORS.textSecondary}
                 onPress={onClose}
@@ -75,16 +75,16 @@ export default function ChangeEmailModal({
           <View style={styles.bottomModal}>
             <TextInput
               style={styles.input}
-              placeholder={'Entrer votre nouvelle adresse email'}
+              placeholder={"Entrez votre nouvelle adresse email"}
               placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setEmail(value)}
               value={email}
-              accessibilityLabel="Entrez votre nouvelle adress mail"
+              accessibilityLabel="Entrez votre nouvelle adresse mail"
             />
             <TextInput
               style={styles.input}
               secureTextEntry={true}
-              placeholder={'Mot de passe'}
+              placeholder={"Mot de passe"}
               placeholderTextColor={COLORS.textSecondary}
               onChangeText={(value) => setPassword(value)}
               value={password}
