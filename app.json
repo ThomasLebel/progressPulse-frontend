@@ -14,7 +14,8 @@
       "backgroundColor": "#0D0D36"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.progresspule"
     },
     "android": {
       "adaptiveIcon": {
