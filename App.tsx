@@ -1,75 +1,57 @@
+import { FontAwesome6 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, Theme, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  NavigationContainer,
+  Theme,
+  useNavigation,
+} from "@react-navigation/native";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider, useDispatch } from "react-redux";
-import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import currentWorkout from "./reducers/currentWorkout";
-import user, { logout } from "./reducers/user";
-import workoutCreation from "./reducers/workoutCreation";
-import workouts, { removeAllWorkout } from "./reducers/workouts";
-import workoutsHistory, {
-  resetWorkoutsHistory,
-} from "./reducers/workoutsHistory";
-
-import { FontAwesome6 } from "@expo/vector-icons";
 import { COLORS } from "./constants/theme";
+import { RootStackParamList, TabParamList } from "./models/navigation";
+import PasswordForgottenScreen from "./pages/auth/PasswordForgottenScreen";
+import SigninScreen from "./pages/auth/SigninScreen";
+import SignupScreen from "./pages/auth/SignupScreen";
+import SongScreen from "./pages/settings/SongScreen";
 import AllExercisesScreen from "./pages/stats/AllExercisesScreen";
 import AllWorkoutsScreen from "./pages/stats/AllWorkoutsScreen";
-import ExercicesChoiceScreen from "./pages/workoutCreation/ExercicesChoiceScreen";
-import ExerciceScreen from "./pages/workoutExecution/ExerciceScreen";
 import ExercisesByMuscleScreen from "./pages/stats/ExercisesByMuscleScreen";
 import ExerciseStatsScreen from "./pages/stats/ExerciseStatsScreen";
 import HistoryScreen from "./pages/stats/HistoryScreen";
 import HystoryWorkoutScreen from "./pages/stats/HistoryWorkoutsScreen";
-import HomeScreen from "./pages/tabs/HomeScreen";
-import MuscleGroupScreen from "./pages/workoutCreation/MuscleGroupScreen";
-import PasswordForgottenScreen from "./pages/auth/PasswordForgottenScreen";
 import ProgressStatsScreen from "./pages/stats/ProgressStatsScreen";
+import HomeScreen from "./pages/tabs/HomeScreen";
 import SettingsScreen from "./pages/tabs/SettingsScreen";
-import SigninScreen from "./pages/auth/SigninScreen";
-import SignupScreen from "./pages/auth/SignupScreen";
-import SongScreen from "./pages/settings/SongScreen";
-import StartWorkoutScreen from "./pages/workoutExecution/StartWorkoutScreen";
-import TimerScreen from "./pages/workoutExecution/TimerScreen";
 import WeightScreen from "./pages/tabs/WeightScreen";
+import ExercicesChoiceScreen from "./pages/workoutCreation/ExercicesChoiceScreen";
+import MuscleGroupScreen from "./pages/workoutCreation/MuscleGroupScreen";
 import WorkoutChoiceScreen from "./pages/workoutCreation/WorkoutChoiceScreen";
 import WorkoutDifficultyScreen from "./pages/workoutCreation/WorkoutDifficultyScreen";
-import WorkoutEndingScreen from "./pages/workoutExecution/WorkoutEndingScreen";
 import WorkoutSummaryScreen from "./pages/workoutCreation/WorkoutSummaryScreen";
 import WorkoutTypeScreen from "./pages/workoutCreation/WorkoutTypeScreen";
-import { RootStackParamList, TabParamList } from "./models/navigation";
+import ExerciceScreen from "./pages/workoutExecution/ExerciceScreen";
+import StartWorkoutScreen from "./pages/workoutExecution/StartWorkoutScreen";
+import TimerScreen from "./pages/workoutExecution/TimerScreen";
+import WorkoutEndingScreen from "./pages/workoutExecution/WorkoutEndingScreen";
+
+import { watchService } from "./services/watchService";
+
+watchService.init(store);
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const reducers = combineReducers({
-  user,
-  workouts,
-  workoutCreation,
-  currentWorkout,
-  workoutsHistory,
-});
-const persistConfig = {
-  key: "progressPulse",
-  storage: AsyncStorage,
-};
-const store = configureStore({
-  reducer: persistReducer(persistConfig, reducers),
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
-});
-
-const persistor = persistStore(store);
-
-type AppDispatch = typeof store.dispatch;
+import { logout } from "./reducers/user";
+import { removeAllWorkout } from "./reducers/workouts";
+import { resetWorkoutsHistory } from "./reducers/workoutsHistory";
+import { AppDispatch, persistor, store } from "./store";
 
 const navigationTheme: Theme = {
   dark: true,
@@ -85,7 +67,8 @@ const navigationTheme: Theme = {
 
 const TabNavigator = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handleLogout = () => {
     Alert.alert("Déconnexion", "Es-tu sûr de vouloir te déconnecter ?", [
@@ -106,7 +89,13 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+        tabBarIcon: ({
+          color,
+          focused,
+        }: {
+          color: string;
+          focused: boolean;
+        }) => {
           if (route.name === "Home") {
             return (
               <View

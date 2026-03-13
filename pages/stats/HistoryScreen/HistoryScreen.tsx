@@ -1,6 +1,5 @@
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Underline from "../../../components/Underline";
 import { COLORS } from "../../../constants/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../models/navigation";
@@ -10,8 +9,13 @@ import { useHistoryScreen } from "./useHistoryScreen";
 type Props = NativeStackScreenProps<RootStackParamList, "history">;
 
 export default function HistoryScreen({ navigation }: Props) {
-  const { history, uniqueWorkoutNames, navigateToStats, navigateToWorkout } =
-    useHistoryScreen(navigation);
+  const {
+    history,
+    uniqueWorkoutNames,
+    sessionCounts,
+    navigateToStats,
+    navigateToWorkout,
+  } = useHistoryScreen(navigation);
 
   return (
     <View style={styles.container}>
@@ -22,10 +26,22 @@ export default function HistoryScreen({ navigation }: Props) {
           accessibilityLabel="Permet de revenir a la page Statistiques"
           accessibilityHint="On va se diriger vers la page Statistiques"
         >
-          <FontAwesome name={"chevron-left"} size={20} color={COLORS.primary} />
+          <FontAwesome name={"chevron-left"} size={18} color={COLORS.primary} />
         </TouchableOpacity>
-        <Text style={styles.topTitle}>Suivi de séance</Text>
-        <Underline width={120} />
+
+        <View style={styles.titleRow}>
+          <Text style={styles.topTitle}>Suivi de séance</Text>
+          {history.length > 0 && (
+            <View style={styles.totalBadge}>
+              <Text style={styles.totalBadgeText}>{history.length}</Text>
+            </View>
+          )}
+        </View>
+        <Text style={styles.subtitle}>
+          {history.length === 0
+            ? "Aucune séance enregistrée"
+            : `${history.length} séance${history.length > 1 ? "s" : ""} au total`}
+        </Text>
       </View>
 
       <ScrollView
@@ -39,7 +55,7 @@ export default function HistoryScreen({ navigation }: Props) {
               size={22}
               color={COLORS.primary}
               style={styles.infoIcon}
-              accessibilityLabel="Donne une information pour avoir l'historique des séances"
+              accessibilityLabel="Information pour avoir l'historique des séances"
             />
             <Text style={styles.textInfo}>
               Lancez une séance pour commencer votre suivi personnalisé !
@@ -48,19 +64,30 @@ export default function HistoryScreen({ navigation }: Props) {
         ) : (
           <View>
             <TouchableOpacity
-              style={styles.card}
+              style={styles.featuredCard}
               onPress={() => navigateToWorkout("Toutes les séances")}
-              activeOpacity={0.7}
+              activeOpacity={0.8}
               accessibilityLabel="Permet de voir l'historique de toutes les séances"
               accessibilityHint="On va arriver sur la page de l'historique de toutes les séances"
             >
-              <Text style={styles.text}>Toutes les séances</Text>
-              <FontAwesome
-                name={"chevron-right"}
-                size={16}
-                color={COLORS.accent}
-              />
+              <View style={styles.featuredAccentBar} />
+              <View style={styles.featuredContent}>
+                <View style={styles.featuredLeft}>
+                  <FontAwesome name={"history"} size={15} color={COLORS.accent} />
+                  <Text style={styles.featuredText}>Toutes les séances</Text>
+                </View>
+                <View style={styles.featuredRight}>
+                  <View style={styles.featuredCountBadge}>
+                    <Text style={styles.featuredCountText}>{history.length}</Text>
+                  </View>
+                  <FontAwesome name={"chevron-right"} size={13} color={COLORS.accent} />
+                </View>
+              </View>
             </TouchableOpacity>
+
+            {uniqueWorkoutNames.length > 0 && (
+              <Text style={styles.sectionLabel}>Par programme</Text>
+            )}
 
             {uniqueWorkoutNames.map((name, i) => (
               <TouchableOpacity
@@ -70,12 +97,16 @@ export default function HistoryScreen({ navigation }: Props) {
                 activeOpacity={0.7}
                 accessibilityLabel={`Permet de voir l'historique de ${name}`}
               >
-                <Text style={styles.text}>{name}</Text>
-                <FontAwesome
-                  name={"chevron-right"}
-                  size={16}
-                  color={COLORS.accent}
-                />
+                <View style={styles.cardLeft}>
+                  <View style={styles.cardDot} />
+                  <Text style={styles.cardText} numberOfLines={1}>{name}</Text>
+                </View>
+                <View style={styles.cardRight}>
+                  <View style={styles.countPill}>
+                    <Text style={styles.countPillText}>{sessionCounts[name] ?? 0}</Text>
+                  </View>
+                  <FontAwesome name={"chevron-right"} size={13} color={COLORS.textSecondary} />
+                </View>
               </TouchableOpacity>
             ))}
           </View>

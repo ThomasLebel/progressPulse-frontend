@@ -12,3 +12,14 @@ export function getUniqueWorkoutNames(history: WorkoutHistory[]): string[] {
   }
   return names;
 }
+
+/**
+ * Retourne un dictionnaire { nomSéance → nombre de fois réalisée }.
+ */
+export function getWorkoutSessionCounts(history: WorkoutHistory[]): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const entry of history) {
+    counts[entry.workoutName] = (counts[entry.workoutName] ?? 0) + 1;
+  }
+  return counts;
+}
