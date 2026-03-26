@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   Keyboard,
@@ -14,7 +15,6 @@ import {
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { TimerPickerModal } from "react-native-timer-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Button from "../../../components/Button";
 import Underline from "../../../components/Underline";
 import { COLORS } from "../../../constants/theme";
@@ -28,6 +28,8 @@ export default function TimerScreen({ navigation, route }: Props) {
   const {
     muscleGroup,
     reps,
+    currentSet,
+    nbSets,
     setReps,
     weight,
     setWeight,
@@ -73,7 +75,7 @@ export default function TimerScreen({ navigation, route }: Props) {
             </Pressable>
             <View>
               <Text style={styles.title}>
-                {muscleGroup !== "Cardio" ? "Temps de repos" : "Cardio"}
+                Série {currentSet} / {nbSets}
               </Text>
               <Underline width={80} />
             </View>
@@ -103,7 +105,13 @@ export default function TimerScreen({ navigation, route }: Props) {
                 visible={showPicker}
                 setIsVisible={setShowPicker}
                 onConfirm={handleConfirmPicker}
-                modalTitle="Rest"
+                modalTitle="Temps de repos"
+                confirmButtonText="Valider"
+                cancelButtonText="Annuler"
+                initialValue={{
+                  minutes: parseInt(minutes),
+                  seconds: parseInt(secondes),
+                }}
                 onCancel={handleCancelPicker}
                 closeOnOverlayPress
                 hideHours
@@ -124,7 +132,12 @@ export default function TimerScreen({ navigation, route }: Props) {
                 <CountdownCircleTimer
                   isPlaying={isPlaying}
                   duration={time}
-                  colors={[COLORS.primary as `#${string}`, "#E57373", "#EF5350", "#C62828"]}
+                  colors={[
+                    COLORS.primary as `#${string}`,
+                    "#E57373",
+                    "#EF5350",
+                    "#C62828",
+                  ]}
                   colorsTime={[5, 3, 2, 1]}
                   trailColor={COLORS.cardBackground as `#${string}`}
                   onComplete={handleTimerComplete}
@@ -175,12 +188,9 @@ export default function TimerScreen({ navigation, route }: Props) {
                 end={{ x: 0, y: 1 }}
               >
                 {muscleGroup !== "Cardio" && (
-                  <>
+                  <View style={styles.input}>
                     <View style={styles.data}>
-                      <Text style={styles.textTitle}>
-                        Nombre de répétitions effectuées :
-                      </Text>
-                      <Underline width={60} />
+                      <Text style={styles.textTitle}>Reps :</Text>
                     </View>
                     <View style={styles.inputContainer}>
                       <TextInput
@@ -192,15 +202,14 @@ export default function TimerScreen({ navigation, route }: Props) {
                         value={reps}
                       />
                     </View>
-                  </>
+                  </View>
                 )}
                 <View style={styles.data}>
                   <Text style={styles.textTitle}>
                     {muscleGroup !== "Cardio"
-                      ? "Charge de l'exercice :"
+                      ? "Charge :"
                       : "Résistance/Inclinaison"}
                   </Text>
-                  <Underline width={60} />
                 </View>
                 <View style={styles.inputContainer}>
                   <TextInput
@@ -250,7 +259,9 @@ export default function TimerScreen({ navigation, route }: Props) {
                 {muscleGroup !== "Cardio" && (
                   <>
                     <View style={styles.dataInput}>
-                      <Text style={styles.textTitle}>Répétitions effectuées</Text>
+                      <Text style={styles.textTitle}>
+                        Répétitions effectuées
+                      </Text>
                       <Underline width={60} />
                     </View>
                     <Text style={styles.textInput}>{reps} répétitions</Text>

@@ -1,11 +1,11 @@
+import { RouteProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Audio } from "expo-av";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../../models/navigation";
 import { addExerciseSet } from "../../../reducers/currentWorkout";
 import { RootState } from "../../../reducers/store.types";
-import { RootStackParamList } from "../../../models/navigation";
 import sounds from "../../../utils/sounds";
 import {
   buildSetPayload,
@@ -19,7 +19,7 @@ type TimerRouteProp = RouteProp<RootStackParamList, "timer">;
 
 export function useTimerScreen(
   navigation: TimerNavProp,
-  route: TimerRouteProp
+  route: TimerRouteProp,
 ) {
   const { workoutID, exerciseID } = route.params;
   const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
@@ -32,7 +32,9 @@ export function useTimerScreen(
       await currentSound.stopAsync();
       await currentSound.unloadAsync();
     }
-    const { sound } = await Audio.Sound.createAsync(sounds[user.sound as keyof typeof sounds]);
+    const { sound } = await Audio.Sound.createAsync(
+      sounds[user.sound as keyof typeof sounds],
+    );
     setCurrentSound(sound);
     await sound.playAsync();
   }
@@ -44,28 +46,34 @@ export function useTimerScreen(
     }
   }
 
-  const [reps, setReps] = useState("");
-  const [weight, setWeight] = useState("");
   const [emptyFields, setEmptyFields] = useState(false);
   const [input, setInput] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
 
-  const currentWorkout = useSelector((state: RootState) => state.currentWorkout.value);
+  const currentWorkout = useSelector(
+    (state: RootState) => state.currentWorkout.value,
+  );
   const currentExercise = currentWorkout.performances.find(
-    (e) => e.exercise === exerciseID
+    (e) => e.exercise === exerciseID,
   );
 
   const workouts = useSelector((state: RootState) => state.workouts.value);
   const workoutSelected = workouts.find((workout) => workout._id === workoutID);
   const exerciseSelected = workoutSelected!.exercises.find(
-    (exercise) => exercise.exercise._id === exerciseID
+    (exercise) => exercise.exercise._id === exerciseID,
   );
   const muscleGroup = exerciseSelected!.exercise.muscleGroupe;
+  const currentSet = currentExercise ? currentExercise.sets.length + 1 : 1;
   const nbSets = exerciseSelected!.customSets.length;
   const restTime = exerciseSelected!.rest;
+  const repsGoal = exerciseSelected!.customSets[0].reps;
+  const weightGoal = exerciseSelected!.customSets[0].weight;
 
-  const { minutes: restMinutes, seconds: restSeconds } = convertRestTime(restTime);
+  const { minutes: restMinutes, seconds: restSeconds } =
+    convertRestTime(restTime);
 
+  const [reps, setReps] = useState(repsGoal.toString());
+  const [weight, setWeight] = useState(weightGoal.toString());
   const [minutes, setMinutes] = useState(restMinutes);
   const [secondes, setSecondes] = useState(restSeconds);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -157,7 +165,10 @@ export function useTimerScreen(
 
   const handleOpenPicker = () => setShowPicker(true);
   const handleCancelPicker = () => setShowPicker(false);
-  const handleConfirmPicker = (pickedDuration: { minutes?: number; seconds?: number }) => {
+  const handleConfirmPicker = (pickedDuration: {
+    minutes?: number;
+    seconds?: number;
+  }) => {
     const m = formatMinuteTime(pickedDuration);
     const s = formatSecondTime(pickedDuration);
     if (m !== undefined) setMinutes(m);
@@ -167,6 +178,8 @@ export function useTimerScreen(
 
   return {
     muscleGroup,
+    currentSet,
+    nbSets,
     reps,
     setReps,
     weight,

@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 20,
     flexDirection: "column",
-    gap: 10,
+    gap: 20,
   },
 
   backButton: {
@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
   btnInput: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 25,
   },
 
   /* ── Section saisie (commune) ───────────────────────────── */
@@ -180,10 +180,11 @@ export const styles = StyleSheet.create({
 
   textTitle: {
     color: COLORS.textSecondary,
-    fontSize: 13,
-    fontWeight: "500",
+    fontSize: 14,
+    fontWeight: "300",
     textTransform: "uppercase",
     letterSpacing: 0.8,
+    paddingBottom: 5,
   },
 
   textInput: {
