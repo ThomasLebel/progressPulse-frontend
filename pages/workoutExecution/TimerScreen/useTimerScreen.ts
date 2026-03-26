@@ -135,12 +135,24 @@ export function useTimerScreen(
   };
 
   const addWeight = () => {
-    const newWeight = parseFloat(weight) + 1.25;
+    let newWeight = 0;
+    if (muscleGroup === "Cardio") {
+      newWeight = parseFloat(weight) + 0.5;
+    } else {
+      newWeight = parseFloat(weight) + 1.25;
+    }
+
     setWeight(newWeight.toString());
   };
 
   const removeWeight = () => {
-    const newWeight = parseFloat(weight) - 1.25;
+    let newWeight = 0;
+    if (muscleGroup === "Cardio") {
+      newWeight = parseFloat(weight) - 0.5;
+    } else {
+      newWeight = parseFloat(weight) - 1.25;
+    }
+
     if (newWeight < 0) {
       setWeight("0");
     } else {

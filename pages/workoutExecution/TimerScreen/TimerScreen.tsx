@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useEffect, useRef } from "react";
 import {
+  Animated,
   Keyboard,
-  KeyboardAvoidingView,
   Platform,
   Pressable,
   StatusBar,
@@ -18,7 +19,6 @@ import {
   default as Icon,
 } from "react-native-vector-icons/FontAwesome";
 import Button from "../../../components/Button";
-import Underline from "../../../components/Underline";
 import { COLORS } from "../../../constants/theme";
 import { RootStackParamList } from "../../../models/navigation";
 import { styles } from "./TimerScreen.styles";
@@ -61,40 +61,75 @@ export default function TimerScreen({ navigation, route }: Props) {
     handleConfirmPicker,
   } = useTimerScreen(navigation, route);
 
+  const cardOffset = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const showEvent =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+
+    const onShow = Keyboard.addListener(showEvent, (e) => {
+      Animated.timing(cardOffset, {
+        toValue: -e.endCoordinates.height * 0.75,
+        duration: Platform.OS === "ios" ? e.duration : 200,
+        useNativeDriver: true,
+      }).start();
+    });
+    const onHide = Keyboard.addListener(hideEvent, (e) => {
+      Animated.timing(cardOffset, {
+        toValue: 0,
+        duration: Platform.OS === "ios" ? e.duration : 200,
+        useNativeDriver: true,
+      }).start();
+    });
+
+    return () => {
+      onShow.remove();
+      onHide.remove();
+    };
+  }, [cardOffset]);
+
   return (
     <>
       <StatusBar barStyle="light-content" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        <Animated.View
+          style={[
+            styles.container,
+            { transform: [{ translateY: cardOffset }] },
+          ]}
         >
           <View style={styles.topContainer}>
-            <Pressable
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-              accessibilityLabel="Retour à l'exercice"
-            >
-              <FontAwesome
-                name={"chevron-left"}
-                size={16}
-                color={COLORS.primary}
-              />
-            </Pressable>
             <View style={styles.titleContainer}>
+              <Pressable
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+                accessibilityLabel="Retour à l'exercice"
+              >
+                <FontAwesome
+                  name={"chevron-left"}
+                  size={16}
+                  color={COLORS.primary}
+                />
+              </Pressable>
+
               <View style={{ flex: 1 }}>
                 <View>
-                  <Text style={styles.title}>
+                  <Text
+                    style={styles.title}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     {exerciseSelected?.exercise.name}
                   </Text>
-                  <Underline width={80} />
                 </View>
               </View>
-              <View>
-                <Text style={styles.nbSets}>
-                  S{currentSet} / {nbSets}
-                </Text>
-              </View>
+            </View>
+            <View style={styles.setsContainer}>
+              <Text style={styles.nbSets}>
+                Série : {currentSet} / {nbSets}
+              </Text>
             </View>
           </View>
           {/* ── Main Container────────────────────── */}
@@ -169,7 +204,7 @@ export default function TimerScreen({ navigation, route }: Props) {
                 <Icon
                   name={isTimerVisible ? "forward" : "play"}
                   size={20}
-                  color="black"
+                  color={COLORS.accent}
                 />
               </TouchableOpacity>
 
@@ -214,44 +249,51 @@ export default function TimerScreen({ navigation, route }: Props) {
             <View style={styles.perfContainer}>
               {/* Répétitions */}
 
-              <View style={styles.inputSection}>
-                <Text style={styles.inputTitle}>Reps :</Text>
-                <View style={styles.inputContainer}>
-                  {/* Bouton - */}
-                  {!input && (
-                    <TouchableOpacity
-                      style={styles.perfButton}
-                      onPress={removeRep}
-                    >
-                      <Text style={styles.perfButtonText}>−</Text>
-                    </TouchableOpacity>
-                  )}
+              {muscleGroup !== "Cardio" && (
+                <View style={styles.inputSection}>
+                  <Text style={styles.inputTitle}>Reps :</Text>
+                  <View style={styles.inputContainer}>
+                    {/* Bouton - */}
+                    {!input && (
+                      <TouchableOpacity
+                        style={styles.perfButton}
+                        onPress={removeRep}
+                      >
+                        <Text style={styles.perfButtonText}>−</Text>
+                      </TouchableOpacity>
+                    )}
 
-                  {/* Input répétitions */}
-                  <TextInput
-                    style={input ? styles.inputValidate : styles.input}
-                    keyboardType="numeric"
-                    placeholder="0"
-                    placeholderTextColor={COLORS.textSecondary}
-                    value={reps}
-                  />
+                    {/* Input répétitions */}
+                    <TextInput
+                      style={input ? styles.inputValidate : styles.input}
+                      keyboardType="numeric"
+                      placeholder="0"
+                      placeholderTextColor={COLORS.textSecondary}
+                      value={reps}
+                      onChangeText={setReps}
+                    />
 
-                  {/* Bouton + */}
-                  {!input && (
-                    <TouchableOpacity
-                      style={styles.perfButton}
-                      onPress={addRep}
-                    >
-                      <Text style={styles.perfButtonText}>+</Text>
-                    </TouchableOpacity>
-                  )}
+                    {/* Bouton + */}
+                    {!input && (
+                      <TouchableOpacity
+                        style={styles.perfButton}
+                        onPress={addRep}
+                      >
+                        <Text style={styles.perfButtonText}>+</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
                 </View>
-              </View>
+              )}
 
               {/* Charge */}
 
               <View style={styles.inputSection}>
-                <Text style={styles.inputTitle}>Charge :</Text>
+                <Text style={styles.inputTitle}>
+                  {muscleGroup === "Cardio"
+                    ? "Res / Incl / Vitesse :"
+                    : "Charge :"}
+                </Text>
                 <View style={styles.inputContainer}>
                   {/* Bouton - */}
                   {!input && (
@@ -263,13 +305,14 @@ export default function TimerScreen({ navigation, route }: Props) {
                     </TouchableOpacity>
                   )}
 
-                  {/* Input Performance */}
+                  {/* Input Charge */}
                   <TextInput
                     style={input ? styles.inputValidate : styles.input}
                     keyboardType="numeric"
                     placeholder="0"
                     placeholderTextColor={COLORS.textSecondary}
                     value={weight}
+                    onChangeText={setWeight}
                   />
 
                   {/* Bouton + */}
@@ -405,7 +448,7 @@ export default function TimerScreen({ navigation, route }: Props) {
               </LinearGradient>
             )}
           </View> */}
-        </KeyboardAvoidingView>
+        </Animated.View>
       </TouchableWithoutFeedback>
     </>
   );

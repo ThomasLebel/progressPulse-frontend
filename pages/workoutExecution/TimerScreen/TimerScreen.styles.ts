@@ -37,10 +37,16 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  setsContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   nbSets: {
-    fontSize: 20,
+    fontSize: 18,
     color: COLORS.textPrimary,
-    fontWeight: 300,
+    fontWeight: 200,
   },
 
   /* ── Main Container ─────────────────────────── */
@@ -57,10 +63,10 @@ export const styles = StyleSheet.create({
   },
 
   timer: {
-    width: "65%",
+    width: "80%",
     height: 90,
-    backgroundColor: "#1A1740",
-    borderRadius: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: 30,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
     justifyContent: "center",
@@ -72,7 +78,7 @@ export const styles = StyleSheet.create({
   textTimer: {
     fontSize: 52,
     fontWeight: "bold",
-    color: COLORS.accent,
+    color: COLORS.primary,
     letterSpacing: 3,
   },
 
@@ -82,7 +88,9 @@ export const styles = StyleSheet.create({
     width: 80,
     height: 50,
     borderRadius: 30,
-    backgroundColor: COLORS.primary,
+    borderWidth: 1,
+    backgroundColor: COLORS.cardBackground,
+    borderColor: COLORS.accentBorder,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -91,7 +99,10 @@ export const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 30,
-    backgroundColor: COLORS.primary,
+    borderWidth: 1,
+    backgroundColor: COLORS.cardBackground,
+    borderColor: COLORS.accentBorder,
+
     justifyContent: "center",
     alignItems: "center",
   },
@@ -99,6 +110,7 @@ export const styles = StyleSheet.create({
   texttimerTimeButton: {
     fontSize: 14,
     fontWeight: 500,
+    color: "white",
   },
 
   btn: {
@@ -190,7 +202,7 @@ export const styles = StyleSheet.create({
   },
 
   inputTitle: {
-    fontSize: 22,
+    fontSize: 18,
     color: "white",
     fontWeight: 200,
   },
@@ -198,6 +210,7 @@ export const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 15,
     flexDirection: "row",
+    alignItems: "center",
     gap: 20,
   },
 
@@ -213,15 +226,16 @@ export const styles = StyleSheet.create({
   },
 
   perfButtonText: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
     color: "white",
   },
 
   input: {
     width: 100,
-    height: 46,
+    height: 48,
     textAlign: "center",
+    textAlignVertical: "center",
     backgroundColor: COLORS.cardBackground,
     borderRadius: 10,
     borderWidth: 1,
@@ -234,8 +248,9 @@ export const styles = StyleSheet.create({
 
   inputValidate: {
     width: 100,
-    height: 46,
+    height: 48,
     textAlign: "center",
+    textAlignVertical: "center",
     backgroundColor: COLORS.cardBackground,
     borderRadius: 10,
     borderWidth: 1,
