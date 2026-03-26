@@ -3,6 +3,7 @@ import { Workout } from '../shared/types';
 import { CurrentWorkoutState } from './currentWorkout/currentWorkout.types';
 import { WorkoutHistory } from '../shared/types';
 import { WorkoutCreationState } from './workoutCreation/workoutCreation.types';
+import { TimerState } from './timer/timer.types';
 
 export interface RootState {
   user: { value: UserState };
@@ -10,4 +11,5 @@ export interface RootState {
   workoutCreation: { value: WorkoutCreationState };
   currentWorkout: { value: CurrentWorkoutState };
   workoutsHistory: { value: WorkoutHistory[] };
+  timer: { value: TimerState };
 }

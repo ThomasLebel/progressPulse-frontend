@@ -12,6 +12,7 @@ import { Provider, useDispatch } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import currentWorkout from "./reducers/currentWorkout";
+import timer from "./reducers/timer";
 import user, { logout } from "./reducers/user";
 import workoutCreation from "./reducers/workoutCreation";
 import workouts, { removeAllWorkout } from "./reducers/workouts";
@@ -56,6 +57,7 @@ const reducers = combineReducers({
   workoutCreation,
   currentWorkout,
   workoutsHistory,
+  timer,
 });
 const persistConfig = {
   key: "progressPulse",

@@ -45,6 +45,7 @@ export default function TimerScreen({ navigation, route }: Props) {
     isPlaying,
     isTimerVisible,
     time,
+    timerKey,
     timerClick,
     handleAddTime,
     handleRemoveTime,
@@ -137,6 +138,7 @@ export default function TimerScreen({ navigation, route }: Props) {
             {isTimerVisible ? (
               <View style={styles.countdownContainer}>
                 <CountdownCircleTimer
+                  key={timerKey}
                   isPlaying={isPlaying}
                   duration={time}
                   colors={[
