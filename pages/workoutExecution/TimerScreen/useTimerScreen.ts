@@ -3,6 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Audio } from "expo-av";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { RootStackParamList } from "../../../models/navigation";
 import { addExerciseSet } from "../../../reducers/currentWorkout";
 import { RootState } from "../../../reducers/store.types";
@@ -14,18 +15,67 @@ import {
   formatSecondTime,
 } from "./timerScreen.service";
 
+// ─── Types ───────────────────────────────────────────────────────────────────
+
 type TimerNavProp = NativeStackNavigationProp<RootStackParamList, "timer">;
 type TimerRouteProp = RouteProp<RootStackParamList, "timer">;
+
+// ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useTimerScreen(
   navigation: TimerNavProp,
   route: TimerRouteProp,
 ) {
   const { workoutID, exerciseID } = route.params;
-  const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
+
+  // ── Redux ──────────────────────────────────────────────────────────────────
 
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.value);
+  const workouts = useSelector((state: RootState) => state.workouts.value);
+  const currentWorkout = useSelector(
+    (state: RootState) => state.currentWorkout.value,
+  );
+
+  // ── Derived data ───────────────────────────────────────────────────────────
+
+  const currentExercise = currentWorkout.performances.find(
+    (e) => e.exercise === exerciseID,
+  );
+
+  const workoutSelected = workouts.find((w) => w._id === workoutID);
+  const exerciseSelected = workoutSelected!.exercises.find(
+    (e) => e.exercise._id === exerciseID,
+  );
+
+  const muscleGroup = exerciseSelected!.exercise.muscleGroupe;
+  const nbSets = exerciseSelected!.customSets.length;
+  const restTime = exerciseSelected!.rest;
+  const repsGoal = exerciseSelected!.customSets[0].reps;
+  const weightGoal = exerciseSelected!.customSets[0].weight;
+  const currentSet = currentExercise ? currentExercise.sets.length + 1 : 1;
+
+  const { minutes: restMinutes, seconds: restSeconds } =
+    convertRestTime(restTime);
+
+  // ── Local state ────────────────────────────────────────────────────────────
+
+  const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
+
+  const [reps, setReps] = useState(repsGoal.toString());
+  const [weight, setWeight] = useState(weightGoal.toString());
+  const [minutes, setMinutes] = useState(restMinutes);
+  const [secondes, setSecondes] = useState(restSeconds);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isTimerVisible, setIsTimerVisible] = useState(false);
+  const [emptyFields, setEmptyFields] = useState(false);
+  const [input, setInput] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+
+  const time = parseInt(minutes) * 60 + parseFloat(secondes);
+
+  // ── Sound ──────────────────────────────────────────────────────────────────
 
   async function playSound() {
     if (currentSound) {
@@ -46,63 +96,55 @@ export function useTimerScreen(
     }
   }
 
-  const [emptyFields, setEmptyFields] = useState(false);
-  const [input, setInput] = useState(false);
-  const [showPicker, setShowPicker] = useState(false);
+  // ── Navigation helpers ─────────────────────────────────────────────────────
 
-  const currentWorkout = useSelector(
-    (state: RootState) => state.currentWorkout.value,
-  );
-  const currentExercise = currentWorkout.performances.find(
-    (e) => e.exercise === exerciseID,
-  );
+  function navigateAfterSet() {
+    const completedSets = currentExercise ? currentExercise.sets.length + 1 : 1;
 
-  const workouts = useSelector((state: RootState) => state.workouts.value);
-  const workoutSelected = workouts.find((workout) => workout._id === workoutID);
-  const exerciseSelected = workoutSelected!.exercises.find(
-    (exercise) => exercise.exercise._id === exerciseID,
-  );
-  const muscleGroup = exerciseSelected!.exercise.muscleGroupe;
-  const currentSet = currentExercise ? currentExercise.sets.length + 1 : 1;
-  const nbSets = exerciseSelected!.customSets.length;
-  const restTime = exerciseSelected!.rest;
-  const repsGoal = exerciseSelected!.customSets[0].reps;
-  const weightGoal = exerciseSelected!.customSets[0].weight;
+    if (completedSets < nbSets) {
+      navigation.navigate("exercice", { exerciseID, workoutID });
+    } else {
+      navigation.navigate("startWorkout", { workoutID });
+      stopSound();
+    }
+  }
 
-  const { minutes: restMinutes, seconds: restSeconds } =
-    convertRestTime(restTime);
+  // ── Set management ─────────────────────────────────────────────────────────
 
-  const [reps, setReps] = useState(repsGoal.toString());
-  const [weight, setWeight] = useState(weightGoal.toString());
-  const [minutes, setMinutes] = useState(restMinutes);
-  const [secondes, setSecondes] = useState(restSeconds);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isTimerVisible, setIsTimerVisible] = useState(false);
+  const isCardio = muscleGroup === "Cardio";
 
-  const time = parseInt(minutes) * 60 + parseFloat(secondes);
+  function validateFields() {
+    const isValid = isCardio ? !!weight : !!reps && !!weight;
+    setEmptyFields(!isValid);
+    setInput(isValid);
+  }
 
-  const timerClick = () => {
-    setIsPlaying(true);
-    setIsTimerVisible(true);
+  const addSet = () => validateFields();
+
+  const updateSet = () => setInput(false);
+
+  const addRep = () => {
+    const newReps = parseInt(reps) + 1;
+    setReps(newReps.toString());
   };
 
-  const addSet = () => {
-    if (muscleGroup !== "Cardio") {
-      if (!reps || !weight) {
-        setEmptyFields(true);
-        setInput(false);
-      } else {
-        setEmptyFields(false);
-        setInput(true);
-      }
+  const removeRep = () => {
+    if (reps === "0") return;
+    const newReps = parseInt(reps) - 1;
+    setReps(newReps.toString());
+  };
+
+  const addWeight = () => {
+    const newWeight = parseFloat(weight) + 1.25;
+    setWeight(newWeight.toString());
+  };
+
+  const removeWeight = () => {
+    const newWeight = parseFloat(weight) - 1.25;
+    if (newWeight < 0) {
+      setWeight("0");
     } else {
-      if (!weight) {
-        setEmptyFields(true);
-        setInput(false);
-      } else {
-        setEmptyFields(false);
-        setInput(true);
-      }
+      setWeight(newWeight.toString());
     }
   };
 
@@ -110,61 +152,69 @@ export function useTimerScreen(
     if (endTimer === "onComplete") {
       playSound();
     }
-    if (muscleGroup !== "Cardio") {
-      if (input) {
-        const setToAdd = buildSetPayload({
-          exerciseID,
-          weight,
-          reps,
-          minutes,
-          secondes,
-        });
-        dispatch(addExerciseSet(setToAdd));
-        if (currentExercise) {
-          if (currentExercise.sets.length + 1 < nbSets) {
-            navigation.navigate("exercice", { exerciseID, workoutID });
-          } else {
-            navigation.navigate("startWorkout", { workoutID });
-            stopSound();
-          }
-        } else {
-          if (nbSets === 1) {
-            navigation.navigate("startWorkout", { workoutID });
-            stopSound();
-          } else {
-            navigation.navigate("exercice", { exerciseID, workoutID });
-            stopSound();
-          }
-        }
-      } else {
-        setEmptyFields(true);
-      }
-    } else {
-      if (input) {
-        setEmptyFields(false);
-        const setToAdd = buildSetPayload({
-          exerciseID,
-          weight,
-          reps: 1,
-          minutes,
-          secondes,
-        });
-        dispatch(addExerciseSet(setToAdd));
-        navigation.navigate("startWorkout", { workoutID });
-      } else {
-        setEmptyFields(true);
-      }
+
+    if (!input) {
+      setEmptyFields(true);
+      return;
     }
+
+    setEmptyFields(false);
+
+    const setToAdd = buildSetPayload({
+      exerciseID,
+      weight,
+      reps: isCardio ? 1 : reps,
+      minutes,
+      secondes,
+    });
+
+    dispatch(addExerciseSet(setToAdd));
+
+    if (isCardio) {
+      navigation.navigate("startWorkout", { workoutID });
+      return;
+    }
+
+    navigateAfterSet();
   };
 
   const handleTimerComplete = () => validateSet("onComplete");
 
-  const updateSet = () => {
-    setInput(false);
+  // ── Timer ──────────────────────────────────────────────────────────────────
+
+  const timerClick = () => {
+    setIsPlaying(true);
+    setIsTimerVisible(true);
   };
+
+  const handleAddTime = () => {
+    if (secondes == "45") {
+      setSecondes("00");
+      const m = formatMinuteTime({ minutes: parseInt(minutes) + 1 });
+      if (m !== undefined) setMinutes(m);
+    } else {
+      const s = formatSecondTime({ seconds: parseInt(secondes) + 15 });
+      if (s !== undefined) setSecondes(s);
+    }
+  };
+
+  const handleRemoveTime = () => {
+    if (secondes == "00" && minutes == "00") return;
+    if (secondes == "00") {
+      setSecondes("45");
+      const m = formatMinuteTime({ minutes: parseInt(minutes) - 1 });
+      if (m !== undefined) setMinutes(m);
+    } else {
+      const s = formatSecondTime({ seconds: parseInt(secondes) - 15 });
+      if (s !== undefined) setSecondes(s);
+    }
+  };
+
+  // ── Picker ─────────────────────────────────────────────────────────────────
 
   const handleOpenPicker = () => setShowPicker(true);
   const handleCancelPicker = () => setShowPicker(false);
+
   const handleConfirmPicker = (pickedDuration: {
     minutes?: number;
     seconds?: number;
@@ -176,30 +226,44 @@ export function useTimerScreen(
     setShowPicker(false);
   };
 
+  // ── Return ─────────────────────────────────────────────────────────────────
+
   return {
+    // Data
     muscleGroup,
     currentSet,
+    exerciseSelected,
     nbSets,
+    // Form
     reps,
     setReps,
     weight,
     setWeight,
     emptyFields,
     input,
-    showPicker,
-    setShowPicker,
+    // Timer
+    time,
     minutes,
     secondes,
     isPlaying,
     isTimerVisible,
-    time,
     timerClick,
-    addSet,
-    validateSet,
+    handleAddTime,
+    handleRemoveTime,
     handleTimerComplete,
-    updateSet,
+    // Picker
+    showPicker,
+    setShowPicker,
     handleOpenPicker,
     handleCancelPicker,
     handleConfirmPicker,
+    // Actions
+    addSet,
+    validateSet,
+    updateSet,
+    removeRep,
+    addRep,
+    addWeight,
+    removeWeight,
   };
 }

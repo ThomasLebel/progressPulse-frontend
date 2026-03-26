@@ -1,5 +1,4 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -14,7 +13,10 @@ import {
 } from "react-native";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { TimerPickerModal } from "react-native-timer-picker";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {
+  default as FontAwesome,
+  default as Icon,
+} from "react-native-vector-icons/FontAwesome";
 import Button from "../../../components/Button";
 import Underline from "../../../components/Underline";
 import { COLORS } from "../../../constants/theme";
@@ -28,6 +30,7 @@ export default function TimerScreen({ navigation, route }: Props) {
   const {
     muscleGroup,
     reps,
+    exerciseSelected,
     currentSet,
     nbSets,
     setReps,
@@ -43,10 +46,16 @@ export default function TimerScreen({ navigation, route }: Props) {
     isTimerVisible,
     time,
     timerClick,
+    handleAddTime,
+    handleRemoveTime,
     addSet,
     validateSet,
     handleTimerComplete,
     updateSet,
+    addRep,
+    removeRep,
+    addWeight,
+    removeWeight,
     handleOpenPicker,
     handleCancelPicker,
     handleConfirmPicker,
@@ -59,7 +68,6 @@ export default function TimerScreen({ navigation, route }: Props) {
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={200}
         >
           <View style={styles.topContainer}>
             <Pressable
@@ -73,62 +81,26 @@ export default function TimerScreen({ navigation, route }: Props) {
                 color={COLORS.primary}
               />
             </Pressable>
-            <View>
-              <Text style={styles.title}>
-                Série {currentSet} / {nbSets}
-              </Text>
-              <Underline width={80} />
+            <View style={styles.titleContainer}>
+              <View style={{ flex: 1 }}>
+                <View>
+                  <Text style={styles.title}>
+                    {exerciseSelected?.exercise.name}
+                  </Text>
+                  <Underline width={80} />
+                </View>
+              </View>
+              <View>
+                <Text style={styles.nbSets}>
+                  S{currentSet} / {nbSets}
+                </Text>
+              </View>
             </View>
           </View>
-
-          {/* ── Timer inactif : sélecteur ────────────────────── */}
-          {!isTimerVisible && (
-            <View style={styles.timerContainer}>
-              <TouchableOpacity style={styles.timer} onPress={handleOpenPicker}>
-                <Text style={styles.textTimer}>
-                  {minutes}:{secondes}
-                </Text>
-              </TouchableOpacity>
-              <View style={styles.btn}>
-                <Button
-                  textButton="Démarrer le minuteur"
-                  textColor={"black"}
-                  width="70%"
-                  height={50}
-                  background={COLORS.primary}
-                  onPress={timerClick}
-                  accessibilityLabel={"Démarer le minuteur"}
-                  accessibilityHint={"Le minuteur va se mettre en route"}
-                />
-              </View>
-              <TimerPickerModal
-                visible={showPicker}
-                setIsVisible={setShowPicker}
-                onConfirm={handleConfirmPicker}
-                modalTitle="Temps de repos"
-                confirmButtonText="Valider"
-                cancelButtonText="Annuler"
-                initialValue={{
-                  minutes: parseInt(minutes),
-                  seconds: parseInt(secondes),
-                }}
-                onCancel={handleCancelPicker}
-                closeOnOverlayPress
-                hideHours
-                styles={{
-                  theme: "dark",
-                }}
-                modalProps={{
-                  overlayOpacity: 0.4,
-                }}
-              />
-            </View>
-          )}
-
-          {/* ── Timer actif : countdown ──────────────────────── */}
-          {isTimerVisible && (
-            <View style={styles.timerContainerStarted}>
-              <View style={styles.count}>
+          {/* ── Main Container────────────────────── */}
+          <View style={styles.mainContainer}>
+            {isTimerVisible ? (
+              <View style={styles.countdownContainer}>
                 <CountdownCircleTimer
                   isPlaying={isPlaying}
                   duration={time}
@@ -161,25 +133,177 @@ export default function TimerScreen({ navigation, route }: Props) {
                   }}
                 </CountdownCircleTimer>
               </View>
-              <View style={styles.btnInput}>
+            ) : (
+              <TouchableOpacity style={styles.timer} onPress={handleOpenPicker}>
+                <Text style={styles.textTimer}>
+                  {minutes}:{secondes}
+                </Text>
+              </TouchableOpacity>
+            )}
+            <View style={styles.btn}>
+              {/* Bouton enlever 15 secondes */}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={handleRemoveTime}
+                accessibilityLabel="Enlever 15 secondes"
+                accessibilityHint="Enleve 15 secondes au minuteur"
+                style={styles.timerTimeButton}
+              >
+                <Text style={styles.texttimerTimeButton}>-15s</Text>
+              </TouchableOpacity>
+
+              {/* Bouton démarrer / arreter minuteur */}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={isTimerVisible ? () => validateSet() : timerClick}
+                accessibilityLabel={
+                  isTimerVisible ? "Passer le minuteur" : "Démarrer le minuteur"
+                }
+                accessibilityHint={
+                  isTimerVisible
+                    ? "Le minuteur va s'arreter"
+                    : "Le minuteur va se mettre en route"
+                }
+                style={styles.timerActionButton}
+              >
+                <Icon
+                  name={isTimerVisible ? "forward" : "play"}
+                  size={20}
+                  color="black"
+                />
+              </TouchableOpacity>
+
+              {/* Bouton ajout 15 secondes */}
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={handleAddTime}
+                accessibilityLabel="Ajouter 15 secondes"
+                accessibilityHint="Ajoute 15 secondes au minuteur"
+                style={styles.timerTimeButton}
+              >
+                <Text style={styles.texttimerTimeButton}>+15s</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Modale Timer */}
+
+            <TimerPickerModal
+              visible={showPicker}
+              setIsVisible={setShowPicker}
+              onConfirm={handleConfirmPicker}
+              modalTitle="Temps de repos"
+              confirmButtonText="Valider"
+              cancelButtonText="Annuler"
+              initialValue={{
+                minutes: parseInt(minutes),
+                seconds: parseInt(secondes),
+              }}
+              onCancel={handleCancelPicker}
+              closeOnOverlayPress
+              hideHours
+              styles={{
+                theme: "dark",
+              }}
+              modalProps={{
+                overlayOpacity: 0.4,
+              }}
+            />
+
+            {/* Section Peformance */}
+
+            <View style={styles.perfContainer}>
+              {/* Répétitions */}
+
+              <View style={styles.inputSection}>
+                <Text style={styles.inputTitle}>Reps :</Text>
+                <View style={styles.inputContainer}>
+                  {/* Bouton - */}
+                  {!input && (
+                    <TouchableOpacity
+                      style={styles.perfButton}
+                      onPress={removeRep}
+                    >
+                      <Text style={styles.perfButtonText}>−</Text>
+                    </TouchableOpacity>
+                  )}
+
+                  {/* Input répétitions */}
+                  <TextInput
+                    style={input ? styles.inputValidate : styles.input}
+                    keyboardType="numeric"
+                    placeholder="0"
+                    placeholderTextColor={COLORS.textSecondary}
+                    value={reps}
+                  />
+
+                  {/* Bouton + */}
+                  {!input && (
+                    <TouchableOpacity
+                      style={styles.perfButton}
+                      onPress={addRep}
+                    >
+                      <Text style={styles.perfButtonText}>+</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+
+              {/* Charge */}
+
+              <View style={styles.inputSection}>
+                <Text style={styles.inputTitle}>Charge :</Text>
+                <View style={styles.inputContainer}>
+                  {/* Bouton - */}
+                  {!input && (
+                    <TouchableOpacity
+                      style={styles.perfButton}
+                      onPress={removeWeight}
+                    >
+                      <Text style={styles.perfButtonText}>−</Text>
+                    </TouchableOpacity>
+                  )}
+
+                  {/* Input Performance */}
+                  <TextInput
+                    style={input ? styles.inputValidate : styles.input}
+                    keyboardType="numeric"
+                    placeholder="0"
+                    placeholderTextColor={COLORS.textSecondary}
+                    value={weight}
+                  />
+
+                  {/* Bouton + */}
+                  {!input && (
+                    <TouchableOpacity
+                      style={styles.perfButton}
+                      onPress={addWeight}
+                    >
+                      <Text style={styles.perfButtonText}>+</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+
+              {/* Bouton Validation Input */}
+              {emptyFields && (
+                <Text style={styles.errorMessage}>Valide tes performances</Text>
+              )}
+              <View style={styles.btnContainer}>
                 <Button
                   textButton={
-                    muscleGroup !== "Cardio"
-                      ? "Passer à la série suivante"
-                      : "Terminer l'exercice"
+                    input ? "Modifier la saisie" : "Valider la saisie"
                   }
                   textColor={"black"}
-                  width="70%"
+                  width="60%"
                   height={50}
                   background={COLORS.primary}
-                  onPress={validateSet}
+                  onPress={input ? updateSet : addSet}
                 />
               </View>
             </View>
-          )}
+          </View>
 
-          {/* ── Section saisie ───────────────────────────────── */}
-          <View style={styles.inputSection}>
+          {/* <View style={styles.inputSection}>
             {!input && (
               <LinearGradient
                 style={styles.linear}
@@ -280,7 +404,7 @@ export default function TimerScreen({ navigation, route }: Props) {
                 </Text>
               </LinearGradient>
             )}
-          </View>
+          </View> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </>

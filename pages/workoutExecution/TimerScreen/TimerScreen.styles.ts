@@ -16,29 +16,50 @@ export const styles = StyleSheet.create({
   },
 
   backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 45,
+    height: 45,
+    borderRadius: 50,
     backgroundColor: "rgba(255, 255, 255, 0.07)",
     alignItems: "center",
     justifyContent: "center",
   },
 
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 20,
+  },
+
   title: {
-    fontSize: 32,
+    fontSize: 20,
     color: COLORS.textPrimary,
     fontWeight: "bold",
   },
 
-  /* ── Timer inactif (sélecteur) ─────────────────────────── */
-  timerContainer: {
-    height: "30%",
+  nbSets: {
+    fontSize: 20,
+    color: COLORS.textPrimary,
+    fontWeight: 300,
+  },
+
+  /* ── Main Container ─────────────────────────── */
+  mainContainer: {
+    width: "88%",
+    alignSelf: "center",
+    marginTop: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+
+    backgroundColor: COLORS.cardBackground,
+    padding: 20,
   },
 
   timer: {
     width: "65%",
     height: 90,
-    backgroundColor: COLORS.cardBackground,
+    backgroundColor: "#1A1740",
     borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.accentBorder,
@@ -55,7 +76,34 @@ export const styles = StyleSheet.create({
     letterSpacing: 3,
   },
 
+  timerBtnContainer: {},
+
+  timerActionButton: {
+    width: 80,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  timerTimeButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  texttimerTimeButton: {
+    fontSize: 14,
+    fontWeight: 500,
+  },
+
   btn: {
+    flexDirection: "row",
+    gap: 15,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
@@ -63,6 +111,13 @@ export const styles = StyleSheet.create({
   },
 
   /* ── Timer actif (countdown) ────────────────────────────── */
+
+  countdownContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   timerContainerStarted: {
     height: "34%",
   },
@@ -90,8 +145,9 @@ export const styles = StyleSheet.create({
 
   /* ── Section saisie (commune) ───────────────────────────── */
   inputSection: {
-    flex: 1,
-    marginTop: 10,
+    marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   /* Carte dégradée — saisie active */
@@ -123,14 +179,49 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
   },
 
+  perfContainer: {
+    width: "100%",
+    marginTop: 5,
+  },
+
+  perfTitle: {
+    fontSize: 18,
+    color: "white",
+  },
+
+  inputTitle: {
+    fontSize: 22,
+    color: "white",
+    fontWeight: 200,
+  },
+
   inputContainer: {
+    marginTop: 15,
+    flexDirection: "row",
+    gap: 20,
+  },
+
+  perfButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1,
+    backgroundColor: COLORS.cardBackground,
+    borderColor: COLORS.accentBorder,
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 8,
+  },
+
+  perfButtonText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "white",
   },
 
   input: {
-    width: "80%",
+    width: 100,
     height: 46,
+    textAlign: "center",
     backgroundColor: COLORS.cardBackground,
     borderRadius: 10,
     borderWidth: 1,
@@ -138,19 +229,33 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     color: COLORS.textPrimary,
-    fontSize: 15,
+    fontSize: 24,
+  },
+
+  inputValidate: {
+    width: 100,
+    height: 46,
+    textAlign: "center",
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.accentBorder,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    color: COLORS.primary,
+    fontSize: 24,
   },
 
   errorMessage: {
     color: "#FF4500",
     textAlign: "center",
-    marginTop: 8,
-    fontSize: 13,
+    marginTop: 15,
+    fontSize: 16,
   },
 
   btnContainer: {
     alignItems: "center",
-    marginTop: 16,
+    marginTop: 32,
     marginBottom: 16,
   },
 
