@@ -5,6 +5,57 @@
 
  L'application inclut des fonctionnalités avancées comme : l'**authentification**, la **création de séance avec objectifs**, le **suivi de séance**, le **temps de repos intégré**, l'**historique des performances** et le **suivi de poids.**
 
+ ## 📸 Aperçu
+
+<table>
+  <tr>
+    <th>Connexion</th>
+    <th>Accueil</th>
+    <th>Création de séance</th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/5bd4eb54-c015-41cc-9e81-407d7ca7fc50" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/0bd2d9df-d548-4edf-a8ee-a35f69c5bf38" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/eb47604f-1a0d-486a-b2e2-a86a60b9c9b5" width="200"/></td>
+  </tr>
+  <tr>
+    <th>Récap séance</th>
+    <th>Selection groupe musculaire</th>
+    <th>Choix des exercices</th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/10f52222-1b88-45ef-a9b3-478f94cc032c" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/654f0c79-072b-4c2e-9016-d0adbf638463" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/1321e7d4-4a54-4830-ae64-b0b4cead53d6" width="200"/></td>
+  </tr>
+  <tr>
+    <th>Saisie des objectifs</th>
+    <th>Exercice en cours</th>
+    <th>Fin de série</th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/07660796-1b55-4796-9473-768474fe711f" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/75f7cb95-a114-40fb-ab6f-45a8e619798c" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/cd4f23d4-3493-46a5-b610-eecf17126e1c" width="200"/></td>
+  </tr>
+  <tr>
+    <th>Fin de séance</th>
+    <th>Suivi de poids et objectif</th>
+    <th>Statistiques</th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/7d25b2c1-10e3-4c0d-94fa-eea479400869" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/10dcf810-c80a-4d87-8317-fcc233cc79a4" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/36429138-9a60-480d-833a-d6d67e92407c" width="200"/></td>
+  </tr>
+  <tr>
+    <th>Statistiques exercice</th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/9e6e87eb-f033-41cf-b03c-22b6be8313ea" width="200"/></td>
+  </tr>
+</table>
+
 ## 🚀 Démo en ligne
 🔗 Application déployée : [expo.dev/preview](https://expo.dev/preview/update?message=Maj%20expo%20sdk&updateRuntimeVersion=1.0.0&createdAt=2025-05-08T08%3A30%3A30.679Z&slug=exp&projectId=073b9ab9-b0d3-452b-8356-4ca49a271182&group=b0d9a43e-c018-4fd1-af32-b4745f25acb1) (Téléchargez l'application Expo Go sur votre téléphone et scannez le code QR)\
 📹 Vidéo démo : [voir la vidéo démo](https://www.youtube.com/watch?v=sle92Jb4YHo)\
@@ -43,60 +94,6 @@
 *   🛠️ **Modification de profil** email / mot de passe / pseudo / son du timer
 *   🤷‍♂️ **Système de mot de passe oublié** envoi de code de réinitialisation par mail
 
-## 📸 Aperçu
-
-<table>
-  <tr>
-    <th>Connexion</th>
-    <th>Accueil</th>
-    <th>Création de séance</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/5bd4eb54-c015-41cc-9e81-407d7ca7fc50" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/0bd2d9df-d548-4edf-a8ee-a35f69c5bf38" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/eb47604f-1a0d-486a-b2e2-a86a60b9c9b5" width="200"/></td>
-  </tr>
-  <tr>
-    <th>Séances Pré-définies</th>
-    <th>Récap séance</th>
-    <th>Selection groupe musculaire</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/10f52222-1b88-45ef-a9b3-478f94cc032c" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/654f0c79-072b-4c2e-9016-d0adbf638463" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/1321e7d4-4a54-4830-ae64-b0b4cead53d6" width="200"/></td>
-  </tr>
-  <tr>
-    <th>Choix des exercices</th>
-    <th>Saisie des objectifs</th>
-    <th>Exercice en cours</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/07660796-1b55-4796-9473-768474fe711f" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/75f7cb95-a114-40fb-ab6f-45a8e619798c" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/cd4f23d4-3493-46a5-b610-eecf17126e1c" width="200"/></td>
-  </tr>
-  <tr>
-    <th>Fin de série</th>
-    <th>Fin de séance</th>
-    <th>Statistiques</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/7d25b2c1-10e3-4c0d-94fa-eea479400869" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/10dcf810-c80a-4d87-8317-fcc233cc79a4" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/36429138-9a60-480d-833a-d6d67e92407c" width="200"/></td>
-  </tr>
-  <tr>
-    <th>Suivi de poids et objectif</th>
-    <th>Historique de séance</th>
-    <th>Paramètres</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/9e6e87eb-f033-41cf-b03c-22b6be8313ea" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/MANQUANTE_13" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/MANQUANTE_14" width="200"/></td>
-  </tr>
-</table>
 
 ## ⚙️ Librairies utilisées
 * **moment :** Formattage des dates
