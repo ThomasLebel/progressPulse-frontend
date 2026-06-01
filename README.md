@@ -52,9 +52,9 @@
     <th>Création de séance</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/54fc4f13-18c9-43c0-a9c5-d3bdf0d8da13" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/4d67ca60-228c-4adf-a8aa-1dd6c1157f1c" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/f01c66af-7f0b-44bd-b484-cbb82167e6c0" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/5bd4eb54-c015-41cc-9e81-407d7ca7fc50" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/0bd2d9df-d548-4edf-a8ee-a35f69c5bf38" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/eb47604f-1a0d-486a-b2e2-a86a60b9c9b5" width="200"/></td>
   </tr>
   <tr>
     <th>Séances Pré-définies</th>
@@ -62,9 +62,9 @@
     <th>Selection groupe musculaire</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/4c7d81e7-60a5-4d6a-a7e0-11cd91c9400c" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/4ed9ca8a-5ad9-427b-aa0a-e1895b5a8983" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/84dfb17d-04b2-46ff-82ba-69ac471c8798" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/10f52222-1b88-45ef-a9b3-478f94cc032c" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/654f0c79-072b-4c2e-9016-d0adbf638463" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/1321e7d4-4a54-4830-ae64-b0b4cead53d6" width="200"/></td>
   </tr>
   <tr>
     <th>Choix des exercices</th>
@@ -72,9 +72,9 @@
     <th>Exercice en cours</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/2558957a-a1ac-43d7-b1ed-af612b18d64c" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/73faea5a-fb27-406b-b263-be03b5ba724a" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/7dab817c-55e9-4f2b-95e5-84cfe79001e3" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/07660796-1b55-4796-9473-768474fe711f" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/75f7cb95-a114-40fb-ab6f-45a8e619798c" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/cd4f23d4-3493-46a5-b610-eecf17126e1c" width="200"/></td>
   </tr>
   <tr>
     <th>Fin de série</th>
@@ -82,18 +82,19 @@
     <th>Statistiques</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/4302641d-c400-49bb-96c2-c4d516d8da4f" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/12f0a9ea-b7ea-4bad-ac79-9ccafdfe884a" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/22f9e1b5-e771-4a5b-81a4-850d6bf188a4" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/7d25b2c1-10e3-4c0d-94fa-eea479400869" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/10dcf810-c80a-4d87-8317-fcc233cc79a4" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/36429138-9a60-480d-833a-d6d67e92407c" width="200"/></td>
   </tr>
+  <tr>
     <th>Suivi de poids et objectif</th>
     <th>Historique de séance</th>
     <th>Paramètres</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/e703e66f-b555-4e9d-98ab-a6ecfa33f810" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/5c5112e4-bbb7-45a1-96cb-681421852f76" width="200"/></td>
-    <td><img src="https://github.com/user-attachments/assets/c5681b16-88f2-49e6-809d-301156c335ce" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/9e6e87eb-f033-41cf-b03c-22b6be8313ea" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/MANQUANTE_13" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/MANQUANTE_14" width="200"/></td>
   </tr>
 </table>
 
