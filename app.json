@@ -5,25 +5,19 @@
     "description": "Une application de suivi d'entraînement pour les sportifs.",
     "version": "0.1.1",
     "orientation": "portrait",
-    "icon": "./assets/illustrations/LogoV2.png",
+    "icon": "./assets/Illustrations/LogoV2.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/illustrations/LogoV2.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0D0D36"
-    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/illustrations/LogoV2.png",
+        "foregroundImage": "./assets/Illustrations/LogoV2.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/illustrations/LogoV2.png"
+      "favicon": "./assets/Illustrations/LogoV2.png"
     },
     "extra": {
       "eas": {
@@ -35,6 +29,22 @@
     },
     "updates": {
       "url": "https://u.expo.dev/073b9ab9-b0d3-452b-8356-4ca49a271182"
-    }
+    },
+    "plugins": [
+      "expo-image",
+      "expo-font",
+      "@react-native-community/datetimepicker",
+      "expo-status-bar",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/Illustrations/LogoV2.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#0D0D36"
+        }
+      ],
+      "expo-audio",
+      "expo-asset"
+    ]
   }
 }

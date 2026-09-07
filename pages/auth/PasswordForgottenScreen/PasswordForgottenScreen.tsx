@@ -64,7 +64,7 @@ export default function PasswordForgottenScreen({ navigation }: Props) {
           {!isKeyboardVisible && (
             <View style={styles.imageContainer}>
               <Image
-                source={require("../../../assets/illustrations/imageSigninSignup.webp")}
+                source={require("../../../assets/Illustrations/imageSigninSignup.webp")}
                 style={styles.image}
               />
             </View>

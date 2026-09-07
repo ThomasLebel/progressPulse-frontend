@@ -43,7 +43,7 @@ export default function SignupScreen({ navigation }: Props) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
           <Image
-            source={require("../../../assets/illustrations/imageSigninSignup.webp")}
+            source={require("../../../assets/Illustrations/imageSigninSignup.webp")}
             style={styles.image}
           />
           <Text style={styles.mainTitle}>Commence ton aventure avec</Text>
