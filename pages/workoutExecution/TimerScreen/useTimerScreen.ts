@@ -1,13 +1,23 @@
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Audio } from "expo-av";
-import { useState } from "react";
+import { AudioPlayer, createAudioPlayer } from "expo-audio";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootStackParamList } from "../../../models/navigation";
 import { addExerciseSet } from "../../../reducers/currentWorkout";
 import { RootState } from "../../../reducers/store.types";
+import {
+  initTimer,
+  setTimerTime,
+  startTimer,
+  stopTimer,
+} from "../../../reducers/timer";
 import sounds from "../../../utils/sounds";
+import {
+  cancelNotification,
+  scheduleTimerNotification,
+} from "../../../utils/notifications";
 import {
   buildSetPayload,
   convertRestTime,
@@ -36,6 +46,7 @@ export function useTimerScreen(
   const currentWorkout = useSelector(
     (state: RootState) => state.currentWorkout.value,
   );
+  const timerState = useSelector((state: RootState) => state.timer.value);
 
   // ── Derived data ───────────────────────────────────────────────────────────
 
@@ -58,41 +69,69 @@ export function useTimerScreen(
   const { minutes: restMinutes, seconds: restSeconds } =
     convertRestTime(restTime);
 
+  // Initialise le timer au montage si l'exercice a changé
+  useEffect(() => {
+    if (timerState.exerciseID !== exerciseID) {
+      dispatch(
+        initTimer({ exerciseID, minutes: restMinutes, secondes: restSeconds }),
+      );
+    }
+  }, [exerciseID]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Si le timer appartient à un autre exercice, on affiche le temps de repos
+  // de l'exercice courant le temps que le useEffect dispatch initTimer.
+  const isCurrentExercise = timerState.exerciseID === exerciseID;
+
+  const minutes = isCurrentExercise ? timerState.minutes : restMinutes;
+  const secondes = isCurrentExercise ? timerState.secondes : restSeconds;
+  const isPlaying = isCurrentExercise ? timerState.isPlaying : false;
+  const isTimerVisible = isCurrentExercise ? timerState.isTimerVisible : false;
+
+  const fullTime = parseInt(minutes) * 60 + parseFloat(secondes);
+
+  // Si le timer tourne et qu'on revient sur l'écran, on passe directement
+  // le temps restant comme `duration` — évite d'utiliser `initialRemainingTime`
+  // qui provoque un `onComplete` immédiat sur certaines versions de la lib.
+  const time =
+    isCurrentExercise && timerState.isPlaying && timerState.startedAt !== null
+      ? Math.max(
+          1,
+          fullTime - Math.floor((Date.now() - timerState.startedAt) / 1000),
+        )
+      : fullTime;
+
+  // Clé utilisée sur CountdownCircleTimer pour forcer le remount
+  // uniquement quand un nouveau décompte démarre (pas lors d'un retour écran).
+  const timerKey = timerState.startedAt ?? 0;
+
   // ── Local state ────────────────────────────────────────────────────────────
 
-  const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
+  const [currentSound, setCurrentSound] = useState<AudioPlayer | null>(null);
+  const notifIdRef = useRef<string | null>(null);
 
   const [reps, setReps] = useState(repsGoal.toString());
   const [weight, setWeight] = useState(weightGoal.toString());
-  const [minutes, setMinutes] = useState(restMinutes);
-  const [secondes, setSecondes] = useState(restSeconds);
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isTimerVisible, setIsTimerVisible] = useState(false);
   const [emptyFields, setEmptyFields] = useState(false);
   const [input, setInput] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
-
-  const time = parseInt(minutes) * 60 + parseFloat(secondes);
 
   // ── Sound ──────────────────────────────────────────────────────────────────
 
   async function playSound() {
     if (currentSound) {
-      await currentSound.stopAsync();
-      await currentSound.unloadAsync();
+      currentSound.pause();
+      currentSound.remove();
     }
-    const { sound } = await Audio.Sound.createAsync(
-      sounds[user.sound as keyof typeof sounds],
-    );
+    const sound = createAudioPlayer(sounds[user.sound as keyof typeof sounds]);
     setCurrentSound(sound);
-    await sound.playAsync();
+    sound.play();
   }
 
   async function stopSound() {
     if (currentSound) {
-      await currentSound.stopAsync();
-      await currentSound.unloadAsync();
+      currentSound.pause();
+      currentSound.remove();
     }
   }
 
@@ -160,17 +199,15 @@ export function useTimerScreen(
     }
   };
 
-  const validateSet = (endTimer?: string) => {
-    if (endTimer === "onComplete") {
-      playSound();
-    }
-
+  const validateSet = () => {
     if (!input) {
       setEmptyFields(true);
       return;
     }
 
     setEmptyFields(false);
+    cancelPendingNotif();
+    dispatch(stopTimer());
 
     const setToAdd = buildSetPayload({
       exerciseID,
@@ -190,35 +227,74 @@ export function useTimerScreen(
     navigateAfterSet();
   };
 
-  const handleTimerComplete = () => validateSet("onComplete");
+  function cancelPendingNotif() {
+    if (notifIdRef.current) {
+      cancelNotification(notifIdRef.current);
+      notifIdRef.current = null;
+    }
+  }
+
+  // Quand le décompte atteint 0 : son + remise au temps de repos par défaut.
+  // Si les inputs étaient déjà validés, on valide le set et on navigue.
+  const handleTimerComplete = () => {
+    cancelPendingNotif();
+    playSound();
+    dispatch(
+      initTimer({ exerciseID, minutes: restMinutes, secondes: restSeconds }),
+    );
+
+    if (!input) return;
+
+    const setToAdd = buildSetPayload({
+      exerciseID,
+      weight,
+      reps: isCardio ? 1 : reps,
+      minutes,
+      secondes,
+    });
+
+    dispatch(addExerciseSet(setToAdd));
+
+    if (isCardio) {
+      navigation.navigate("startWorkout", { workoutID });
+      return;
+    }
+
+    navigateAfterSet();
+  };
 
   // ── Timer ──────────────────────────────────────────────────────────────────
 
-  const timerClick = () => {
-    setIsPlaying(true);
-    setIsTimerVisible(true);
+  const timerClick = async () => {
+    dispatch(startTimer({ startedAt: Date.now() }));
+    notifIdRef.current = await scheduleTimerNotification(time, {
+      exerciseID,
+      workoutID,
+    });
   };
 
   const handleAddTime = () => {
-    if (secondes == "45") {
-      setSecondes("00");
+    if (secondes === "45") {
       const m = formatMinuteTime({ minutes: parseInt(minutes) + 1 });
-      if (m !== undefined) setMinutes(m);
+      if (m !== undefined)
+        dispatch(setTimerTime({ minutes: m, secondes: "00" }));
     } else {
       const s = formatSecondTime({ seconds: parseInt(secondes) + 15 });
-      if (s !== undefined) setSecondes(s);
+      if (s !== undefined)
+        dispatch(setTimerTime({ minutes, secondes: s }));
     }
   };
 
   const handleRemoveTime = () => {
-    if (secondes == "00" && minutes == "00") return;
-    if (secondes == "00") {
-      setSecondes("45");
+    if (secondes === "00" && minutes === "00") return;
+    if (secondes === "00") {
       const m = formatMinuteTime({ minutes: parseInt(minutes) - 1 });
-      if (m !== undefined) setMinutes(m);
+      if (m !== undefined)
+        dispatch(setTimerTime({ minutes: m, secondes: "45" }));
     } else {
       const s = formatSecondTime({ seconds: parseInt(secondes) - 15 });
-      if (s !== undefined) setSecondes(s);
+      if (s !== undefined)
+        dispatch(setTimerTime({ minutes, secondes: s }));
     }
   };
 
@@ -233,8 +309,9 @@ export function useTimerScreen(
   }) => {
     const m = formatMinuteTime(pickedDuration);
     const s = formatSecondTime(pickedDuration);
-    if (m !== undefined) setMinutes(m);
-    if (s !== undefined) setSecondes(s);
+    if (m !== undefined && s !== undefined) {
+      dispatch(setTimerTime({ minutes: m, secondes: s }));
+    }
     setShowPicker(false);
   };
 
@@ -255,6 +332,7 @@ export function useTimerScreen(
     input,
     // Timer
     time,
+    timerKey,
     minutes,
     secondes,
     isPlaying,

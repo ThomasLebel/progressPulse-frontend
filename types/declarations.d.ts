@@ -1,6 +1,6 @@
-declare module 'react-native-vector-icons/FontAwesome' {
-  import { Component } from 'react';
-  import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+declare module "react-native-vector-icons/FontAwesome" {
+  import { Component } from "react";
+  import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
   interface IconProps {
     name: string;
@@ -16,9 +16,9 @@ declare module 'react-native-vector-icons/FontAwesome' {
   export default Icon;
 }
 
-declare module 'react-native-vector-icons/FontAwesome6' {
-  import { Component } from 'react';
-  import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+declare module "react-native-vector-icons/FontAwesome6" {
+  import { Component } from "react";
+  import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
   interface IconProps {
     name: string;
@@ -34,9 +34,9 @@ declare module 'react-native-vector-icons/FontAwesome6' {
   export default Icon;
 }
 
-declare module 'react-native-vector-icons/Ionicons' {
-  import { Component } from 'react';
-  import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+declare module "react-native-vector-icons/Ionicons" {
+  import { Component } from "react";
+  import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
   interface IconProps {
     name: string;
@@ -50,3 +50,5 @@ declare module 'react-native-vector-icons/Ionicons' {
   class Icon extends Component<IconProps> {}
   export default Icon;
 }
+
+declare module "moment/locale/fr";

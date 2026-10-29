@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Audio } from "expo-av";
+import { AudioPlayer, createAudioPlayer } from "expo-audio";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { changeSound } from "../../../reducers/user";
 import sounds from "../../../utils/sounds";
@@ -13,7 +13,7 @@ type SongNavigationProp = NativeStackNavigationProp<RootStackParamList, "song">;
 
 export function useSongScreen(navigation: SongNavigationProp) {
   const [soundChoice, setSoundChoice] = useState("");
-  const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
+  const [currentSound, setCurrentSound] = useState<AudioPlayer | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const user = useSelector((state: RootState) => state.user.value);
@@ -25,21 +25,19 @@ export function useSongScreen(navigation: SongNavigationProp) {
 
   const stopSound = async () => {
     if (currentSound) {
-      await currentSound.stopAsync();
-      await currentSound.unloadAsync();
+      currentSound.pause();
+      currentSound.remove();
     }
   };
 
   const playSound = async (soundName: string) => {
     if (currentSound) {
-      await currentSound.stopAsync();
-      await currentSound.unloadAsync();
+      currentSound.pause();
+      currentSound.remove();
     }
-    const { sound } = await Audio.Sound.createAsync(
-      sounds[soundName as keyof typeof sounds],
-    );
+    const sound = createAudioPlayer(sounds[soundName as keyof typeof sounds]);
     setCurrentSound(sound);
-    await sound.playAsync();
+    sound.play();
   };
 
   const validateSoundAndNavigate = async () => {
