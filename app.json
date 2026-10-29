@@ -7,12 +7,6 @@
     "orientation": "portrait",
     "icon": "./assets/illustrations/LogoV2.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/illustrations/LogoV2.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0D0D36"
-    },
     "ios": {
       "supportsTablet": true
     },
@@ -41,6 +35,21 @@
         "expo-notifications",
         {
           "color": "#8BC34A"
+        }
+      ],
+      "@react-native-community/datetimepicker",
+      "expo-image",
+      "expo-status-bar",
+      "expo-audio",
+      "expo-font",
+      "expo-asset",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/illustrations/LogoV2.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#0D0D36",
+          "imageWidth": 200
         }
       ]
     ]

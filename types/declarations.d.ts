@@ -50,3 +50,5 @@ declare module "react-native-vector-icons/Ionicons" {
   class Icon extends Component<IconProps> {}
   export default Icon;
 }
+
+declare module "moment/locale/fr";

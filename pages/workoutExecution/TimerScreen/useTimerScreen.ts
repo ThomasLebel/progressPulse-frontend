@@ -1,6 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Audio } from "expo-av";
+import { AudioPlayer, createAudioPlayer } from "expo-audio";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -106,7 +106,7 @@ export function useTimerScreen(
 
   // ── Local state ────────────────────────────────────────────────────────────
 
-  const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
+  const [currentSound, setCurrentSound] = useState<AudioPlayer | null>(null);
   const notifIdRef = useRef<string | null>(null);
 
   const [reps, setReps] = useState(repsGoal.toString());
@@ -120,20 +120,18 @@ export function useTimerScreen(
 
   async function playSound() {
     if (currentSound) {
-      await currentSound.stopAsync();
-      await currentSound.unloadAsync();
+      currentSound.pause();
+      currentSound.remove();
     }
-    const { sound } = await Audio.Sound.createAsync(
-      sounds[user.sound as keyof typeof sounds],
-    );
+    const sound = createAudioPlayer(sounds[user.sound as keyof typeof sounds]);
     setCurrentSound(sound);
-    await sound.playAsync();
+    sound.play();
   }
 
   async function stopSound() {
     if (currentSound) {
-      await currentSound.stopAsync();
-      await currentSound.unloadAsync();
+      currentSound.pause();
+      currentSound.remove();
     }
   }
 
