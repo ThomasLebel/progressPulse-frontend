@@ -35,6 +35,14 @@
     },
     "updates": {
       "url": "https://u.expo.dev/073b9ab9-b0d3-452b-8356-4ca49a271182"
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#8BC34A"
+        }
+      ]
+    ]
   }
 }

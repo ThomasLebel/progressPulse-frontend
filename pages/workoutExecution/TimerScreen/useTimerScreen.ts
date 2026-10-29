@@ -1,7 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Audio } from "expo-av";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootStackParamList } from "../../../models/navigation";
@@ -14,6 +14,10 @@ import {
   stopTimer,
 } from "../../../reducers/timer";
 import sounds from "../../../utils/sounds";
+import {
+  cancelNotification,
+  scheduleTimerNotification,
+} from "../../../utils/notifications";
 import {
   buildSetPayload,
   convertRestTime,
@@ -103,6 +107,7 @@ export function useTimerScreen(
   // ── Local state ────────────────────────────────────────────────────────────
 
   const [currentSound, setCurrentSound] = useState<Audio.Sound | null>(null);
+  const notifIdRef = useRef<string | null>(null);
 
   const [reps, setReps] = useState(repsGoal.toString());
   const [weight, setWeight] = useState(weightGoal.toString());
@@ -203,6 +208,7 @@ export function useTimerScreen(
     }
 
     setEmptyFields(false);
+    cancelPendingNotif();
     dispatch(stopTimer());
 
     const setToAdd = buildSetPayload({
@@ -223,9 +229,17 @@ export function useTimerScreen(
     navigateAfterSet();
   };
 
+  function cancelPendingNotif() {
+    if (notifIdRef.current) {
+      cancelNotification(notifIdRef.current);
+      notifIdRef.current = null;
+    }
+  }
+
   // Quand le décompte atteint 0 : son + remise au temps de repos par défaut.
   // Si les inputs étaient déjà validés, on valide le set et on navigue.
   const handleTimerComplete = () => {
+    cancelPendingNotif();
     playSound();
     dispatch(
       initTimer({ exerciseID, minutes: restMinutes, secondes: restSeconds }),
@@ -253,8 +267,12 @@ export function useTimerScreen(
 
   // ── Timer ──────────────────────────────────────────────────────────────────
 
-  const timerClick = () => {
+  const timerClick = async () => {
     dispatch(startTimer({ startedAt: Date.now() }));
+    notifIdRef.current = await scheduleTimerNotification(time, {
+      exerciseID,
+      workoutID,
+    });
   };
 
   const handleAddTime = () => {

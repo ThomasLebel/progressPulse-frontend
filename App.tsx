@@ -2,7 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, Theme, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Notifications from "expo-notifications";
 import { LinearGradient } from "expo-linear-gradient";
+import { useEffect } from "react";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
@@ -47,6 +49,8 @@ import WorkoutEndingScreen from "./pages/workoutExecution/WorkoutEndingScreen";
 import WorkoutSummaryScreen from "./pages/workoutCreation/WorkoutSummaryScreen";
 import WorkoutTypeScreen from "./pages/workoutCreation/WorkoutTypeScreen";
 import { RootStackParamList, TabParamList } from "./models/navigation";
+import { navigationRef } from "./utils/navigationRef";
+import { requestNotificationPermissions } from "./utils/notifications";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -230,6 +234,27 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    requestNotificationPermissions();
+
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const data = response.notification.request.content.data as {
+          exerciseID?: string;
+          workoutID?: string;
+        };
+        if (data?.exerciseID && data?.workoutID && navigationRef.isReady()) {
+          navigationRef.navigate("timer", {
+            exerciseID: data.exerciseID,
+            workoutID: data.workoutID,
+          });
+        }
+      },
+    );
+
+    return () => subscription.remove();
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -238,7 +263,7 @@ export default function App() {
             colors={["#0D0D36", "#2A1B5A", "#09091F"]}
             style={StyleSheet.absoluteFill}
           />
-          <NavigationContainer theme={navigationTheme}>
+          <NavigationContainer ref={navigationRef} theme={navigationTheme}>
             <Stack.Navigator
               screenOptions={{
                 headerShown: false,
